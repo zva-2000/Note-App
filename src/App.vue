@@ -2,33 +2,24 @@
 
 import { ref, computed } from 'vue'
 
-import NewMessege from './components/NewMessege.vue'
-// import NewImr from './components/NewImpr.vue'
-// import notes from './components/ZametkiNovye.vue'
-// import Search from './components/SearchNote.vue'
-// import newNote from './components/newNote.vue'
-// import icons from './components/IconsChange.vue'
+import baseInput from './components/BaseInput.vue'
 
-const title = 'Notes App'
+const typeText = "text"
 
-const NewMessegeConst = null
+const typeData = "date"
 
-const NewImrConst = null
+const placeholder = 'Введите текст'
 
-const grid = true
+const placeholderData = 'Введите дату окончания действия'
 
-let search = ref('')
-
-const importants = ['Important', 'Normal', 'No matter']
-
-let note = {
+let note = ref({
       title:'',
       descr:'',
-      impr: ''
-    }
+      impr: '',
+      date: ''
+})
 
-var notesArray = 
-  [
+let notes = ref([
       {
         title: 'First note',
         descr: 'Description for first note',
@@ -46,103 +37,17 @@ var notesArray =
         descr: 'Description for third note',
         impr: 'No matter',
         date: new Date(Date.now()).toLocaleString()
-      },
-    ]
-
-function AddNote () {
-      let {title, descr, impr} = note
-
-      if (title === '') {
-
-        NewMessegeConst = 'Wrong note'
-        return false
-
-      } 
-      if (impr === '') {
-
-        NewImrConst = 'Choose the importance of note'
-      return false
-
       }
-      notesArray.push({
-        title,
-        descr,
-        impr,
-        date: new Date(Date.now()).toLocaleString()
-      })
-      NewMessegeConst = null
-      NewImrConst = null
-      note.title = ''
-      note.descr = ''
-      note.impr = ''
-    }
-
-function removeNote (index) {
-  notesArray.splice(index, 1)
-}
-
-function СhangeNote () {
-        let {title} = note
-
-        notesArray.splice({
-          title
-        })
-        note.title = ''
-    }
-
-function ChangeGrid () {
-      grid = !grid
-    }
-
-const notesFilter = computed (() => {
-      let array = notesArray
-
-      if (!search.value) return array //Чтобы поиск не искал пустую строку, т.е. если search равно false
-      search.value = search.value.trim().toLowerCase() //Избовляем то, что будем искать от пробелов (trim()) и приводим это к нижнему регистру (toLowerCase())
-
-      array = array.filter (function (item) {if (item.title.toLowerCase().indexOf(search) !== -1) 
-      return item})
-
-      return array
-})
-
+])
+  
 </script>
 
 <template>
 
-<h1>Привет12</h1>
+<baseInput :placeholder="placeholder" @update:modelValue="note.title = $event" :type="typeText"></baseInput>
 
-<div class="wrapper">
-  <div class="wrapper-content">
+<baseInput :placeholder="placeholderData" @update:modelValue="note.date = $event" type="date"></baseInput>
 
-    <section>
-
-      <div class="container"> 
-  
-        <NewMessege v-if="true" :NewMessege="NewMessegeConst"/> 
-        <!-- <NewImr v-if="NewImr" :NewImr="NewImrConst"/> -->
-
-        <!-- <newNote v-model:note="note" v-model:importants="importants" @addNote="AddNote"/> -->
-
-        <!-- <div class="note-header">
-
-          <h1>{{ title }}</h1>
-
-          <search :value="search"  placeholder="Find the note" @search="search = $event"/>
-
-          <icons :grid="grid" @changeGrid="ChangeGrid"/>
-
-        </div>
-
-        <notes :notes="notesFilter" :grid="grid" @remove="removeNote"/> -->
-
-      </div>
-
-    </section>
-
-  </div>
-
-</div>
 
 </template>
 
