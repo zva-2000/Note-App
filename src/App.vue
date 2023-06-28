@@ -1,54 +1,69 @@
 <script setup>
+import { ref, computed } from "vue";
 
-import { ref, computed } from 'vue'
+import baseInput from "./components/BaseInput.vue";
 
-import baseInput from './components/BaseInput.vue'
+const typeText = "text";
 
-const typeText = "text"
+const typeDate = "date";
 
-const typeData = "date"
+const placeholder = "Введите текст";
 
-const placeholder = 'Введите текст'
+const placeholderTeg = "Введите группу";
 
-const placeholderData = 'Введите дату окончания действия'
+const placeholderDate = "Введите дату окончания действия:";
 
 let note = ref({
-      title:'',
-      descr:'',
-      impr: '',
-      date: ''
-})
+  title: "",
+  descr: "",
+  impr: "",
+  date: "",
+  teg: "",
+});
 
 let notes = ref([
-      {
-        title: 'First note',
-        descr: 'Description for first note',
-        impr: 'Important',
-        date: new Date(Date.now()).toLocaleString()
-      },
-      {
-        title: 'Second note',
-        descr: 'Description for second note',
-        impr: 'Normal',
-        date: new Date(Date.now()).toLocaleString()
-      },
-      {
-        title: 'Third note',
-        descr: 'Description for third note',
-        impr: 'No matter',
-        date: new Date(Date.now()).toLocaleString()
-      }
-])
-  
+  {
+    title: "First note",
+    descr: "Description for first note",
+    impr: "Important",
+    date: new Date(Date.now()).toLocaleString(),
+    teg: "Work",
+  },
+  {
+    title: "Second note",
+    descr: "Description for second note",
+    impr: "Normal",
+    date: new Date(Date.now()).toLocaleString(),
+    teg: "Study",
+  },
+  {
+    title: "Third note",
+    descr: "Description for third note",
+    impr: "No matter",
+    date: new Date(Date.now()).toLocaleString(),
+    teg: "Номе",
+  },
+]);
 </script>
 
 <template>
+  <baseInput
+    :placeholder="placeholder"
+    @update:modelValue="note.title = $event"
+    :type="typeText"
+  ></baseInput>
 
-<baseInput :placeholder="placeholder" @update:modelValue="note.title = $event" :type="typeText"></baseInput>
+  <p>{{ placeholderDate }}</p>
+  <baseInput
+    @update:modelValue="note.date = $event"
+    :type="typeDate"
+  ></baseInput>
 
-<baseInput :placeholder="placeholderData" @update:modelValue="note.date = $event" type="date"></baseInput>
-
-
+  <baseInput
+    :placeholder="placeholderTeg"
+    @update:modelValue="note.teg = $event"
+    :type="typeText"
+  ></baseInput>
 </template>
 
 <style scoped>
