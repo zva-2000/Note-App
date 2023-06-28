@@ -3,6 +3,10 @@ import { ref, computed } from "vue";
 
 import baseInput from "./components/BaseInput.vue";
 
+import baseTextarea from './components/BaseTextarea.vue';
+
+import baseList from './components/BaseList.vue';
+
 const typeText = "text";
 
 const typeDate = "date";
@@ -53,6 +57,11 @@ let notes = ref([
     :type="typeText"
   ></baseInput>
 
+  <baseTextarea
+  :placeholder="placeholder"
+  @update:modelValue="note.descr = $event"
+  ></baseTextarea>
+
   <p>{{ placeholderDate }}</p>
   <baseInput
     @update:modelValue="note.date = $event"
@@ -64,6 +73,15 @@ let notes = ref([
     @update:modelValue="note.teg = $event"
     :type="typeText"
   ></baseInput>
+
+  <baseInput
+    :type="typeText"
+    @update:modelValue="note.impr = $event"
+    :placeholder="placeholder"
+  ></baseInput>
+
+  <baseList></baseList>
+
 </template>
 
 <style scoped>
