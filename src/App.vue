@@ -3,9 +3,9 @@ import { ref, computed } from "vue";
 
 import baseInput from "./components/BaseInput.vue";
 
-import baseTextarea from './components/BaseTextarea.vue';
+import baseTextarea from "./components/BaseTextarea.vue";
 
-import baseList from './components/BaseList.vue';
+import baseList from "./components/BaseList.vue";
 
 const typeText = "text";
 
@@ -16,6 +16,8 @@ const placeholder = "Введите текст";
 const placeholderTeg = "Введите группу";
 
 const placeholderDate = "Введите дату окончания действия:";
+
+const listOpen = ref(false);
 
 let note = ref({
   title: "",
@@ -58,8 +60,8 @@ let notes = ref([
   ></baseInput>
 
   <baseTextarea
-  :placeholder="placeholder"
-  @update:modelValue="note.descr = $event"
+    :placeholder="placeholder"
+    @update:modelValue="note.descr = $event"
   ></baseTextarea>
 
   <p>{{ placeholderDate }}</p>
@@ -76,12 +78,11 @@ let notes = ref([
 
   <baseInput
     :type="typeText"
-    @update:modelValue="note.impr = $event"
+    @update:modelValue="note.impr"
     :placeholder="placeholder"
+    @click="listOpen"
   ></baseInput>
-
-  <baseList></baseList>
-
+  <baseList @update:important="note.impr" :listOpen="listOpen"></baseList>
 </template>
 
 <style scoped>
