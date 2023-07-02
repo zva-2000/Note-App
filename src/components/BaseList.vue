@@ -1,41 +1,24 @@
 <template>
-  <div class="list">
-    <ul v-if="(listOpen = true)">
-      <label v-for="important in importantArray" :key="important.index">
-        {{ important }}
-      </label>
-    </ul>
-  </div>
+  <ul v-show="show" class="dropdown-list">
+    <li v-for="(item, index) in items" :key="index" @click="selectItem(item)">
+      {{ item }}
+    </li>
+  </ul>
 </template>
 
 <script setup>
-import { ref } from "vue";
-
-const importantArray = ref(["Very important", "Important", "Less"]);
+import { ref } from 'vue';
 
 const props = defineProps({
-  // importantArray: {
-  //   type: Array,
-  //   required: false,
-  // },
-  listOpen: {
-    type: Boolean,
-    required: false,
-    default: false,
-  },
+  items: Array,
+  show: Boolean,
 });
 
-const emit = defineEmits(["selectImr"]);
+const emit = defineEmits(['update:selectedItem']);
 
-const selectImr = (important) => {
-  emit("update:important", important);
+const selectItem = (item) => {
+  emit('update:selectedItem', item);
 };
 </script>
 
-<style>
-.list {
-  position: absolute;
-  border-radius: 3px;
-  background-color: rgb(189, 188, 245);
-}
-</style>
+

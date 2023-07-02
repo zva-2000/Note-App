@@ -5,19 +5,43 @@ import baseInput from "./components/BaseInput.vue";
 
 import baseTextarea from "./components/BaseTextarea.vue";
 
-import baseList from "./components/BaseList.vue";
+// import baseList from "./components/BaseList.vue";
+
+import BaseButton from "./components/BaseButton.vue";
+
+import MovedButtons from "./components/MovedButtons.vue";
+
+import searchInput from "./components/SearchInput.vue";
+
+import dropdownComp from "./components/InputForDropdow.vue";
+
+// import newNote from "./components/TakeNewNote.vue";
+
+import InputForDropdow from "./components/InputForDropdow.vue";
 
 const typeText = "text";
 
 const typeDate = "date";
 
-const placeholder = "Введите текст";
+const placeholderText = "Введите текст";
 
 const placeholderTeg = "Введите группу";
 
 const placeholderDate = "Введите дату окончания действия:";
 
+const options = ref(["Very important", "Important", "Less"]);
+
 const listOpen = ref(false);
+
+let showModal = ref(false);
+
+let isOpen = ref(true);
+
+const NewMessege = ref("");
+
+const NewImr = ref("");
+
+let grid = ref(true);
 
 let note = ref({
   title: "",
@@ -50,39 +74,131 @@ let notes = ref([
     teg: "Номе",
   },
 ]);
+
+function handleClick() {
+      console.log('Button clicked!');
+    }
+
+function ChangeGrid () {
+      grid.value = !grid.value
+   }
+
+function showModalFunc () {
+  showModal.value = !showModal.value
+}
+
+function OpenDrop () {
+  isOpen.value = !isOpen.value
+  console.log('Button clicked!')
+} 
+
+const notesFilter = computed (() => {
+
+  let array = notes
+      
+  if (!search.value) return array 
+      
+  search.value = search.value.trim().toLowerCase() 
+  array = array.filter (function (item) {if (item.title.toLowerCase().indexOf(search) !== -1) return item})
+  
+  return array
+})
+
+function AddNote () {
+      let {title, descr, impr, teg} = note
+      if (title === '') {
+        NewMessege = 'Wrong note'
+        return false
+      } 
+      if (impr === '') {
+        NewImr = 'Choose the importance of note'
+      return false
+      }
+      notes.push({
+        title,
+        descr,
+        impr,
+        date: new Date(Date.now()).toLocaleString(),
+        teg
+      })
+      NewMessege = null
+      NewImr = null
+      note.title = ''
+      note.descr = ''
+      note.impr = ''
+      note.teg = ''
+}
+
 </script>
 
 <template>
+
+  <dropdownComp v-model:note="note" v-model:options="options" :isOpen="isOpen" @OpenDrop="OpenDrop"></dropdownComp>
+
+  <searchInput :value="search" @search="search = $event"></searchInput>
+
   <baseInput
-    :placeholder="placeholder"
+    :placeholder="placeholderText"
     @update:modelValue="note.title = $event"
-    :type="typeText"
+    type="typeText"
   ></baseInput>
 
   <baseTextarea
-    :placeholder="placeholder"
+    :placeholder="placeholderText"
     @update:modelValue="note.descr = $event"
   ></baseTextarea>
 
   <p>{{ placeholderDate }}</p>
   <baseInput
     @update:modelValue="note.date = $event"
-    :type="typeDate"
+    type="typeDate"
   ></baseInput>
 
   <baseInput
     :placeholder="placeholderTeg"
     @update:modelValue="note.teg = $event"
-    :type="typeText"
+    type="typeText"
   ></baseInput>
 
   <baseInput
-    :type="typeText"
+    type="typeText"
     @update:modelValue="note.impr"
-    :placeholder="placeholder"
+    :placeholder="placeholderText"
     @click="listOpen"
   ></baseInput>
-  <baseList @update:important="note.impr" :listOpen="listOpen"></baseList>
+
+  <!-- <baseList @update:important="note.impr" :listOpen="listOpen"></baseList> -->
+
+  <BaseButton @click="handleClick" class="btn btnPrimary">
+    <span>Кнопка</span>
+  </BaseButton>
+
+  <MovedButtons @click="ChangeGrid" :grid="grid"></MovedButtons>
+
+  <BaseButton @click="showModalFunc" class="btn btnPrimary">
+    <span>Добавить</span>
+  </BaseButton>
+
+  <BaseButton @click="AddNote" class="btn btnPrimary">
+    <span>Сохранить</span>
+  </BaseButton>
+
+    <!-- <newNote @addNote="AddNote" 
+  :swowValue="showModal" 
+  :placeholderTeg="placeholderTeg"
+  :placeholderText="placeholderText"
+  :typeText="typeText"
+  ></newNote> -->
+
+  <div class="dropdown">
+    <InputForDropdow :modelValue="selectedOption" @click="isOpen = !isOpen"/>
+    <ul v-if="isOpen">
+      <li v-for="(option, index) in options" :key="index" @click="selectOption(option)">
+        {{ option }}
+      </li>
+    </ul>
+  </div>
+
 </template>
 
 <style scoped>
