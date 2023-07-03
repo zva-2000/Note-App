@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref, computed } from "vue";
 
 import baseInput from "./components/BaseInput.vue";
@@ -73,7 +73,7 @@ let notes = ref([
   <baseInput
     :placeholder="placeholderTeg"
     @update:modelValue="note.teg = $event"
-    :type="typeText"
+    type="typeText"
   ></baseInput>
 
   <baseInput
