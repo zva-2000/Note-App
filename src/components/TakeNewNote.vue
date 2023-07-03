@@ -1,46 +1,40 @@
 <template>
-
-<div class="modal">
+  <div class="modal">
     <div class="modal-content">
-      <slot>  
-        
-  <baseInput
-    :placeholder="placeholderText"
-    @update:modelValue="note.title = $event"
-    type="typeText"
-  ></baseInput>
+      <slot>
+        <baseInput
+          :placeholder="placeholderText"
+          @update:modelValue="note.title = $event"
+          type="typeText"
+        ></baseInput>
 
-  <baseTextarea
-    class="baseTextarea"
-    :placeholder="placeholderText"
-    @update:modelValue="note.descr = $event"
-  ></baseTextarea>
+        <baseTextarea
+          class="baseTextarea"
+          :placeholder="placeholderText"
+          @update:modelValue="note.descr = $event"
+        ></baseTextarea>
 
-  <baseInput
-    @update:modelValue="note.date = $event"
-    type="date"
-  ></baseInput>
+        <baseInput
+          @update:modelValue="note.date = $event"
+          type="date"
+        ></baseInput>
 
-  <baseInput
-    :placeholder="placeholderTeg"
-    @update:modelValue="note.teg = $event"
-    type="typeText"
-  ></baseInput>
+        <baseInput
+          :placeholder="placeholderTeg"
+          @update:modelValue="note.teg = $event"
+          type="typeText"
+        ></baseInput>
+      </slot>
 
-</slot> 
-
-      <BaseButton  @click="addNote" class="btn btnPrimary">
+      <BaseButton @click="addNote" class="btn btnPrimary">
         <span>Сохранить</span>
       </BaseButton>
-
     </div>
   </div>
-
 </template>
 
-<script setup>
-
-import { ref } from 'vue';
+<script setup lang="ts">
+import { ref } from "vue";
 
 import baseInput from "./BaseInput.vue";
 
@@ -50,7 +44,7 @@ import baseTextarea from "./BaseTextarea.vue";
 
 const props = defineProps({
   swowValue: Boolean,
-  note: String,
+  note: Object,
   placeholderText: String,
   placeholderTeg: String,
   typeText: String,
@@ -59,23 +53,21 @@ const props = defineProps({
 
 const show = ref(props.swowValue);
 
-const emit = defineEmits(['addNote'])
+const emit = defineEmits(["addNote"]);
 
 const addNote = () => {
   show.value = false;
-  emit('addNote', props.note)
-}
-
+  emit("addNote", props.note);
+};
 </script>
 
 <style>
-
 .baseTextarea {
   margin-bottom: 16px;
 }
 
 button {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .modal-content {
@@ -84,7 +76,7 @@ button {
   padding: 20px;
   border-radius: 10px solid #888;
   width: 80%;
-  max-width: 500px; 
+  max-width: 500px;
 }
 
 .modal {
@@ -92,13 +84,12 @@ button {
   justify-content: center;
   align-items: center;
   position: fixed;
-  z-index: 1; 
+  z-index: 1;
   left: 0;
   top: 0;
-  width: 100%; 
-  height: 100%; 
-  overflow: auto; 
-  background-color: rgba(0,0,0,0.4); 
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
 }
-
 </style>

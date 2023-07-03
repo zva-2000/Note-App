@@ -4,19 +4,12 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, watch } from "vue";
 
 const props = defineProps({
-  modelValue: {
-    type: String,
-    required: false,
-    default: "",
-  },
-  placeholder: {
-    type: String,
-    required: false,
-  },
+  modelValue: String,
+  placeholder: String,
 });
 
 const inputValue = ref(props.modelValue);

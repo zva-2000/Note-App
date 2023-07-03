@@ -6,19 +6,17 @@
   </ul>
 </template>
 
-<script setup>
-import { ref } from 'vue';
+<script setup lang="ts">
+import { ref } from "vue";
 
 const props = defineProps({
   items: Array,
   show: Boolean,
 });
 
-const emit = defineEmits(['update:selectedItem']);
+const emit = defineEmits(["update:selectedItem"]);
 
-const selectItem = (item) => {
-  emit('update:selectedItem', item);
+const selectItem = (item: any) => {
+  emit("update:selectedItem", item);
 };
 </script>
-
-

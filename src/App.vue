@@ -37,9 +37,9 @@ let showModal = ref(false);
 
 let isOpen = ref(true);
 
-const NewMessege = ref("");
+let NewMessege = ref("");
 
-const NewImr = ref("");
+let NewImr = ref("");
 
 let grid = ref(true);
 
@@ -76,64 +76,67 @@ let notes = ref([
 ]);
 
 function handleClick() {
-      console.log('Button clicked!');
-    }
-
-function ChangeGrid () {
-      grid.value = !grid.value
-   }
-
-function showModalFunc () {
-  showModal.value = !showModal.value
+  console.log("Button clicked!");
 }
 
-function OpenDrop () {
-  isOpen.value = !isOpen.value
-  console.log('Button clicked!')
-} 
-
-const notesFilter = computed (() => {
-
-  let array = notes
-      
-  if (!search.value) return array 
-      
-  search.value = search.value.trim().toLowerCase() 
-  array = array.filter (function (item) {if (item.title.toLowerCase().indexOf(search) !== -1) return item})
-  
-  return array
-})
-
-function AddNote () {
-      let {title, descr, impr, teg} = note
-      if (title === '') {
-        NewMessege = 'Wrong note'
-        return false
-      } 
-      if (impr === '') {
-        NewImr = 'Choose the importance of note'
-      return false
-      }
-      notes.push({
-        title,
-        descr,
-        impr,
-        date: new Date(Date.now()).toLocaleString(),
-        teg
-      })
-      NewMessege = null
-      NewImr = null
-      note.title = ''
-      note.descr = ''
-      note.impr = ''
-      note.teg = ''
+function ChangeGrid() {
+  grid.value = !grid.value;
 }
 
+function showModalFunc() {
+  showModal.value = !showModal.value;
+}
+
+function OpenDrop() {
+  isOpen.value = !isOpen.value;
+  console.log("Button clicked!");
+}
+
+const notesFilter = computed(() => {
+  let array = notes;
+
+  if (!search.value) return array;
+
+  search.value = search.value.trim().toLowerCase();
+  array = array.filter(function (item) {
+    if (item.title.toLowerCase().indexOf(search) !== -1) return item;
+  });
+
+  return array;
+});
+
+function AddNote() {
+  let { title, descr, impr, teg } = note;
+  if (title === "") {
+    NewMessege = "Wrong note";
+    return false;
+  }
+  if (impr === "") {
+    NewImr = "Choose the importance of note";
+    return false;
+  }
+  notes.push({
+    title,
+    descr,
+    impr,
+    date: new Date(Date.now()).toLocaleString(),
+    teg,
+  });
+  NewMessege = null;
+  NewImr = null;
+  note.title = "";
+  note.descr = "";
+  note.impr = "";
+  note.teg = "";
+}
 </script>
 
 <template>
-
-  <dropdownComp v-model:note="note" v-model:options="options" :isOpen="isOpen" @OpenDrop="OpenDrop"></dropdownComp>
+  <dropdownComp
+    v-model:note="note"
+    v-model:options="options"
+    :isOpen="isOpen"
+  ></dropdownComp>
 
   <searchInput :value="search" @search="search = $event"></searchInput>
 
@@ -183,22 +186,12 @@ function AddNote () {
     <span>Сохранить</span>
   </BaseButton>
 
-    <!-- <newNote @addNote="AddNote" 
+  <!-- <newNote @addNote="AddNote" 
   :swowValue="showModal" 
   :placeholderTeg="placeholderTeg"
   :placeholderText="placeholderText"
   :typeText="typeText"
   ></newNote> -->
-
-  <div class="dropdown">
-    <InputForDropdow :modelValue="selectedOption" @click="isOpen = !isOpen"/>
-    <ul v-if="isOpen">
-      <li v-for="(option, index) in options" :key="index" @click="selectOption(option)">
-        {{ option }}
-      </li>
-    </ul>
-  </div>
-
 </template>
 
 <style scoped>
