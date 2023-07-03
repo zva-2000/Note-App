@@ -1,35 +1,33 @@
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { ref, computed } from 'vue';
 
-import baseInput from "./components/BaseInput.vue";
+import baseInput from './components/BaseInput.vue';
 
-import baseTextarea from "./components/BaseTextarea.vue";
+import baseTextarea from './components/BaseTextarea.vue';
 
 // import baseList from "./components/BaseList.vue";
 
-import BaseButton from "./components/BaseButton.vue";
+import BaseButton from './components/BaseButton.vue';
 
-import MovedButtons from "./components/MovedButtons.vue";
+import MovedButtons from './components/MovedButtons.vue';
 
-import searchInput from "./components/SearchInput.vue";
+import searchInput from './components/SearchInput.vue';
 
-import dropdownComp from "./components/InputForDropdow.vue";
+import dropdownComp from './components/DropdownComp.vue';
 
 // import newNote from "./components/TakeNewNote.vue";
 
-import InputForDropdow from "./components/InputForDropdow.vue";
+const typeText = 'text';
 
-const typeText = "text";
+const typeDate = 'date';
 
-const typeDate = "date";
+const placeholderText = 'Введите текст';
 
-const placeholderText = "Введите текст";
+const placeholderTeg = 'Введите группу';
 
-const placeholderTeg = "Введите группу";
+const placeholderDate = 'Введите дату окончания действия:';
 
-const placeholderDate = "Введите дату окончания действия:";
-
-const options = ref(["Very important", "Important", "Less"]);
+const options = ref(['Very important', 'Important', 'Less']);
 
 const listOpen = ref(false);
 
@@ -37,46 +35,46 @@ let showModal = ref(false);
 
 let isOpen = ref(true);
 
-let NewMessege = ref("");
+let NewMessege = ref('');
 
-let NewImr = ref("");
+let NewImr = ref('');
 
 let grid = ref(true);
 
 let note = ref({
-  title: "",
-  descr: "",
-  impr: "",
-  date: "",
-  teg: "",
+  title: '',
+  descr: '',
+  impr: 'qwqewe',
+  date: '',
+  teg: '',
 });
 
 let notes = ref([
   {
-    title: "First note",
-    descr: "Description for first note",
-    impr: "Important",
+    title: 'First note',
+    descr: 'Description for first note',
+    impr: 'Important',
     date: new Date(Date.now()).toLocaleString(),
-    teg: "Work",
+    teg: 'Work',
   },
   {
-    title: "Second note",
-    descr: "Description for second note",
-    impr: "Normal",
+    title: 'Second note',
+    descr: 'Description for second note',
+    impr: 'Normal',
     date: new Date(Date.now()).toLocaleString(),
-    teg: "Study",
+    teg: 'Study',
   },
   {
-    title: "Third note",
-    descr: "Description for third note",
-    impr: "No matter",
+    title: 'Third note',
+    descr: 'Description for third note',
+    impr: 'No matter',
     date: new Date(Date.now()).toLocaleString(),
-    teg: "Номе",
+    teg: 'Номе',
   },
 ]);
 
 function handleClick() {
-  console.log("Button clicked!");
+  console.log('Button clicked!');
 }
 
 function ChangeGrid() {
@@ -89,7 +87,7 @@ function showModalFunc() {
 
 function OpenDrop() {
   isOpen.value = !isOpen.value;
-  console.log("Button clicked!");
+  console.log('Button clicked!');
 }
 
 const notesFilter = computed(() => {
@@ -107,12 +105,12 @@ const notesFilter = computed(() => {
 
 function AddNote() {
   let { title, descr, impr, teg } = note;
-  if (title === "") {
-    NewMessege = "Wrong note";
+  if (title === '') {
+    NewMessege = 'Wrong note';
     return false;
   }
-  if (impr === "") {
-    NewImr = "Choose the importance of note";
+  if (impr === '') {
+    NewImr = 'Choose the importance of note';
     return false;
   }
   notes.push({
@@ -124,10 +122,10 @@ function AddNote() {
   });
   NewMessege = null;
   NewImr = null;
-  note.title = "";
-  note.descr = "";
-  note.impr = "";
-  note.teg = "";
+  note.title = '';
+  note.descr = '';
+  note.impr = '';
+  note.teg = '';
 }
 </script>
 
@@ -136,18 +134,19 @@ function AddNote() {
     v-model:note="note"
     v-model:options="options"
     :isOpen="isOpen"
+    @open-drop="OpenDrop"
   ></dropdownComp>
 
   <searchInput :value="search" @search="search = $event"></searchInput>
 
   <baseInput
-    :placeholder="placeholderText"
+    placeholder="Введите текст"
     @update:modelValue="note.title = $event"
     type="typeText"
   ></baseInput>
 
   <baseTextarea
-    :placeholder="placeholderText"
+    placeholder="Введите текст"
     @update:modelValue="note.descr = $event"
   ></baseTextarea>
 

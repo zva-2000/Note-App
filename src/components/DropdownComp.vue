@@ -1,6 +1,6 @@
 <template>
   <div class="dropdown">
-    <InputForDropdow v-model="note.impr" @click="OpenDrop" />
+    <InputForDropdow v-model:value="note.impr" @onClick="OpenDrop" />
     <ul>
       <li
         v-for="(option, index) in options"
@@ -14,19 +14,28 @@
 </template>
 
 <script setup lang="ts">
-const props = defineProps({
-  note: Object,
-  options: Array,
-  isOpen: {
-    type: Boolean,
-    default: true,
-  },
-});
+import InputForDropdow from './InputForDropdow.vue';
 
-const emit = defineEmits(["OpenDrop"]);
+const props = defineProps<{
+  note: { title: string };
+  isOpen?: boolean;
+  options: string[];
+}>();
+// {
+//   note: Object,
+//   options: Array,
+//   isOpen: {
+//     type: Boolean,
+//     default: false,
+//   },
+// }
+const emit = defineEmits<{
+  (e: 'OpenDrop', event: number): void;
+}>();
 
-const OpenDrop = () => {
-  emit("OpenDrop", event);
+const OpenDrop = (event: Event) => {
+  emit('OpenDrop', 45);
+  console.log('B345454545!', event.target);
 };
 </script>
 

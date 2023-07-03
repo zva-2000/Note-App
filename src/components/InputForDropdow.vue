@@ -1,6 +1,6 @@
 <template>
   <div class="dropdown-input" @click="onClick">
-    <input type="text" />
+    <input type="text" v-model="model" />
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="20"
@@ -17,12 +17,26 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, computed } from 'vue';
 
-const emit = defineEmits(["onClick"]);
+const props = defineProps<{
+  value: string;
+}>();
 
-const onClick = () => {
-  emit("onClick", event);
+const model = computed({
+  get() {
+    return props.value ?? '';
+  },
+  set(value) {
+    emit('update:value', value);
+  },
+});
+
+const emit = defineEmits(['onClick', 'update:value']);
+
+const onClick = (event) => {
+  console.log('Button clicked!', event.target);
+  emit('onClick', event);
 };
 </script>
 
