@@ -1,6 +1,7 @@
 <template>
   <div class="input-wrapper">
     <input :type="type" v-model="inputValue" :placeholder="placeholder" />
+    <slot></slot>
   </div>
 </template>
 
@@ -8,23 +9,14 @@
 import { ref, watch } from "vue";
 
 const props = defineProps({
-  modelValue: {
-    type: String,
-    required: false,
-    default: "",
-  },
-  type: {
-    type: String,
-    required: false,
-    default: "text",
-  },
-  placeholder: {
-    type: String,
-    required: false,
-  },
+  modelValue: String,
+  type: String,
+  placeholder: String,
 });
 
 const inputValue = ref(props.modelValue);
+
+const emit = defineEmits(["update:modelValue"]);
 
 watch(inputValue, (newValue) => {
   emit("update:modelValue", newValue);
