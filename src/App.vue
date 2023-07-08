@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import { ref, computed } from 'vue';
 
 import baseInput from './components/BaseInput.vue';
@@ -11,23 +11,21 @@ import BaseButton from './components/BaseButton.vue';
 
 import MovedButtons from './components/MovedButtons.vue';
 
+import BaseDeleteButton from './components/BaseDeleteButton.vue';
+
 import searchInput from './components/SearchInput.vue';
 
 import dropdownComp from './components/DropdownComp.vue';
 
+import addTegComponent from './components/addTegComponent.vue';
+
 // import newNote from "./components/TakeNewNote.vue";
-
-const typeText = 'text';
-
-const typeDate = 'date';
-
-const placeholderText = 'Введите текст';
-
-const placeholderTeg = 'Введите группу';
 
 const placeholderDate = 'Введите дату окончания действия:';
 
-const options = ref(['Very important', 'Important', 'Less']);
+const options = ref(['Очень важно', 'Важно', 'Не важно']);
+
+const tegs = ref(['Учёба', 'Работа', 'Семья']);
 
 const listOpen = ref(false);
 
@@ -44,7 +42,7 @@ let grid = ref(true);
 let note = ref({
   title: '',
   descr: '',
-  impr: 'qwqewe',
+  impr: '',
   date: '',
   teg: '',
 });
@@ -127,63 +125,82 @@ function AddNote() {
   note.impr = '';
   note.teg = '';
 }
+
+const removeNote = (index) => {
+  notes.splice(index, 1);
+  console.log('Button clicked!')
+}
+
+const chooseImportance = (option) => {
+  note.imr = option
+  console.log('Button clicked!')
+}
+
+const Test = ref('')
+
 </script>
 
 <template>
-  <dropdownComp
-    v-model:note="note"
-    v-model:options="options"
-    :isOpen="isOpen"
-    @open-drop="OpenDrop"
-  ></dropdownComp>
 
   <searchInput :value="search" @search="search = $event"></searchInput>
 
-  <baseInput
+  <add-teg-component
+  v-model:note="note"
+  v-model:tegs="tegs"
+  ></add-teg-component>
+
+  <base-input
     placeholder="Введите текст"
     @update:modelValue="note.title = $event"
-    type="typeText"
-  ></baseInput>
+    :modelValue = "''"
+    type="text"
+  ></base-input>
 
-  <baseTextarea
+  {{ Test }}
+
+  <base-textarea
     placeholder="Введите текст"
     @update:modelValue="note.descr = $event"
-  ></baseTextarea>
+    :modelValue = "''"
+  ></base-textarea>
+
+  {{ Test }}
 
   <p>{{ placeholderDate }}</p>
-  <baseInput
+  <base-input
     @update:modelValue="note.date = $event"
-    type="typeDate"
-  ></baseInput>
+    :modelValue = "''"
+    type='date'
+    placeholder="Введите дату"
+  ></base-input>
 
-  <baseInput
-    :placeholder="placeholderTeg"
+  <!-- <baseInput
+    placeholder="Введите группу"
+    type="text"
     @update:modelValue="note.teg = $event"
-    type="typeText"
-  ></baseInput>
+    :modelValue = "''"
+  ></baseInput> -->
 
-  <baseInput
-    type="typeText"
-    @update:modelValue="note.impr"
-    :placeholder="placeholderText"
-    @click="listOpen"
-  ></baseInput>
+  <dropdown-comp
+    v-model:note="note"
+    v-model:options="options"
+  ></dropdown-comp>
 
-  <!-- <baseList @update:important="note.impr" :listOpen="listOpen"></baseList> -->
-
-  <BaseButton @click="handleClick" class="btn btnPrimary">
+  <base-button @click="handleClick" class="btn btnPrimary">
     <span>Кнопка</span>
-  </BaseButton>
+  </base-button>
 
-  <MovedButtons @click="ChangeGrid" :grid="grid"></MovedButtons>
+  <MovedButtons @click="ChangeGrid" :grid="grid"/>
 
-  <BaseButton @click="showModalFunc" class="btn btnPrimary">
+  <base-button @click="showModalFunc" class="btn btnPrimary">
     <span>Добавить</span>
-  </BaseButton>
+  </base-button>
 
-  <BaseButton @click="AddNote" class="btn btnPrimary">
+  <base-button @click="AddNote" class="btn btnPrimary">
     <span>Сохранить</span>
-  </BaseButton>
+  </base-button>
+
+  <BaseDeleteButton @onDeleteNote="removeNote"/>
 
   <!-- <newNote @addNote="AddNote" 
   :swowValue="showModal" 

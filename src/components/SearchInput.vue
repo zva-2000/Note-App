@@ -25,7 +25,8 @@
     <baseInput
       class="search-input"
       v-model="search"
-      :placeholder="placeholderSearch"
+      placeholder="Найдите заметку"
+      type="text"
     ></baseInput>
   </div>
 </template>
@@ -35,15 +36,18 @@ import { watch, ref } from "vue";
 
 import baseInput from "./BaseInput.vue";
 
-const placeholderSearch = "Найдите заметку";
+const props = defineProps<{
+  value: string
+}>();
 
-const props = defineProps({
-  value: String,
-  placeholder: {
-    type: String,
-    default: "Search",
-  },
-});
+
+// export interface Props{
+//   value: String,
+// }
+
+// const props = withDefaults(defineProps<Props>(), {
+//   placeholder: 'Search',
+// })
 
 let search = ref(props.value);
 
@@ -51,7 +55,13 @@ const emit = defineEmits(["search"]);
 
 watch(search, (value) => {
   emit("search", value);
+  return { 
+  search
+}
 });
+
+
+
 </script>
 
 <style scoped>

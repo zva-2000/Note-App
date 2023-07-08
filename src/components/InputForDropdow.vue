@@ -1,6 +1,6 @@
 <template>
-  <div class="dropdown-input" @click="onClick">
-    <input type="text" v-model="model" />
+  <div class="dropdown-input" @click="inputClick">
+    <input type="text" v-model="model" :placeholder="placeholder"/>
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="20"
@@ -17,10 +17,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed, useModel } from 'vue';
 
 const props = defineProps<{
   value: string;
+  placeholder: string,
 }>();
 
 const model = computed({
@@ -32,16 +33,34 @@ const model = computed({
   },
 });
 
-const emit = defineEmits(['onClick', 'update:value']);
+// const emitBase = defineEmits(['onClick', 'update:value']);
 
-const onClick = (event) => {
-  console.log('Button clicked!', event.target);
-  emit('onClick', event);
+const emit = defineEmits<{
+  (e: 'inputClick', payload: MouseEvent): void
+  (e: 'update:value', event: string): void
+}>();
+
+const inputClick = (event: MouseEvent) => {
+  emit('inputClick', event);
 };
+
 </script>
 
 <style scoped>
+
 .dropdown-input {
-  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
 }
+
+/* .dropdown-input input {
+  margin-right: 10px;
+  padding: 10px;
+} */
+
 </style>
+
+
+

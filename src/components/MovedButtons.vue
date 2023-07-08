@@ -1,9 +1,9 @@
 <template>
   <div class="icons">
-    <BaseButton @click="ChangeGrid">
+    <BaseButton @click="onChangeGrid">
       <svg
         :class="{ active: grid }"
-        @click="ChangeGrid"
+        @click="onChangeGrid"
         style="cursor: pointer"
         xmlns="http://www.w3.org/2000/svg"
         width="24"
@@ -21,10 +21,10 @@
         <rect x="3" y="14" width="7" height="7"></rect>
       </svg>
     </BaseButton>
-    <BaseButton @click="ChangeGrid">
+    <BaseButton @click="onChangeGrid">
       <svg
         :class="{ active: !grid }"
-        @click="ChangeGrid"
+        @click="onChangeGrid"
         style="cursor: pointer"
         xmlns="http://www.w3.org/2000/svg"
         width="24"
@@ -54,9 +54,18 @@ const props = defineProps({
   grid: Boolean,
 });
 
-const emit = defineEmits(["ChangeGrid"]);
+// const emit = defineEmits(["ChangeGrid"]);
 
-const ChangeGrid = () => {
-  emit("ChangeGrid", props.grid);
+// const ChangeGrid = () => {
+//   emit("ChangeGrid", props.grid);
+// };
+
+const emit = defineEmits<{
+  (e: 'ChangeGrid', payload: boolean): void
+}>();
+
+const onChangeGrid = () => {
+  emit('ChangeGrid', props.grid);
 };
+
 </script>
