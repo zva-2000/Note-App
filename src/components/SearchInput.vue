@@ -22,12 +22,12 @@
       </div>
     </div>
 
-    <baseInput
+    <base-input
       class="search-input"
       v-model="search"
       placeholder="Найдите заметку"
       type="text"
-    ></baseInput>
+    ></base-input>
   </div>
 </template>
 
