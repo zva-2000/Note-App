@@ -1,27 +1,28 @@
 <template>
-<div class="dropdown">
+  <div class="dropdown">
     <p class="Error">{{ Error }}</p>
-    <InputForDropdow  name="inputTeg" v-model:value="note.teg" @inputClick="Visibility" placeholder="Выберите группу"/>
-    <ul v-if="!isVisible" style="cursor: pointer;">
-        <li
-            v-for="(tegOne, index) in tegs"
-            :key="index"
-            @click="chooseTeg(tegOne)"
-        >
+    <InputForDropdow
+      name="inputTeg"
+      v-model:value="note.teg"
+      @inputClick="Visibility"
+      placeholder="Выберите группу"
+    />
+    <ul v-if="!isVisible" style="cursor: pointer">
+      <li
+        v-for="(tegOne, index) in tegs"
+        :key="index"
+        @click="chooseTeg(tegOne)"
+      >
         {{ tegOne }}
-        </li>
-        <base-button 
-          @onClick="addTegFunction"
-          >
-            <span>+</span>
-        </base-button>
+      </li>
+      <base-button @onClick="addTegFunction">
+        <span>+</span>
+      </base-button>
     </ul>
-</div>
-
+  </div>
 </template>
 
 <script setup lang="ts">
-
 import { ref } from 'vue';
 
 import InputForDropdow from './InputForDropdow.vue';
@@ -33,14 +34,14 @@ const props = defineProps<{
   tegs: string[];
 }>();
 
-let isVisible = ref(true)
+let isVisible = ref(true);
 
-let Error = ref('')
+let Error = ref('');
 
-const Visibility: any = () =>  {
+const Visibility: any = () => {
   isVisible.value = !isVisible.value;
-  console.log('Button clicked!')
-}
+  console.log('Button clicked!');
+};
 
 const chooseTeg = (tegOne: string) => {
   props.note.teg = tegOne;
@@ -48,25 +49,20 @@ const chooseTeg = (tegOne: string) => {
 };
 
 const addTegFunction = () => {
-    props.note.teg.toLowerCase()
-    if (props.tegs.includes(props.note.teg)) {
-      Error.value = 'Такой тег уже есть';
-      return false;
-    }
-    else {
-        props.tegs.push(props.note.teg)
-        Error.value = '';
-    }
-}
-
-
+  const tegLowerCase = props.note.teg.toLowerCase();
+  if (tegLowerCase.includes(props.note.teg)) {
+    Error.value = 'Такой тег уже есть';
+    return false;
+  } else {
+    props.tegs.push(props.note.teg);
+    Error.value = '';
+  }
+};
 </script>
 
 <style>
-
 .Error {
   align-items: center;
   color: red;
 }
-
 </style>
