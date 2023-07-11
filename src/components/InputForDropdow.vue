@@ -1,5 +1,5 @@
 <template>
-  <div class="dropdown-input" @click="inputClick">
+  <div class="dropdown-input">
     <input type="text" v-model="model" :placeholder="placeholder" />
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -36,13 +36,8 @@ const model = computed({
 // const emitBase = defineEmits(['onClick', 'update:value']);
 
 const emit = defineEmits<{
-  (e: 'inputClick', payload: MouseEvent): void;
   (e: 'update:value', event: string): void;
 }>();
-
-const inputClick = (event: MouseEvent) => {
-  emit('inputClick', event);
-};
 </script>
 
 <style scoped>

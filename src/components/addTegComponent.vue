@@ -1,10 +1,10 @@
 <template>
   <div class="dropdown">
-    <p class="Error">{{ Error }}</p>
+    <p class="Error">{{ error }}</p>
     <InputForDropdow
       name="inputTeg"
       v-model:value="note.teg"
-      @inputClick="Visibility"
+      @click="Visibility"
       placeholder="Выберите группу"
     />
     <ul v-if="!isVisible" style="cursor: pointer">
@@ -36,7 +36,7 @@ const props = defineProps<{
 
 let isVisible = ref(true);
 
-let Error = ref('');
+let error = ref('');
 
 const Visibility: any = () => {
   isVisible.value = !isVisible.value;
@@ -49,13 +49,13 @@ const chooseTeg = (tegOne: string) => {
 };
 
 const addTegFunction = () => {
-  const tegLowerCase = props.note.teg.toLowerCase();
-  if (tegLowerCase.includes(props.note.teg)) {
-    Error.value = 'Такой тег уже есть';
+  // const tegLowerCase = props.note.teg.toLowerCase();
+  if (props.tegs.includes(props.note.teg)) {
+    error.value = 'Такой тег уже есть';
     return false;
   } else {
     props.tegs.push(props.note.teg);
-    Error.value = '';
+    error.value = '';
   }
 };
 </script>

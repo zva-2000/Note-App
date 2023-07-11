@@ -2,8 +2,8 @@
   <div class="dropdown">
     <InputForDropdow
       name="imprInput"
-      v-model:value="note.impr"
-      @inputClick="Visibility"
+      v-model:value="model"
+      @click="Visibility"
       placeholder="Выберите важность заметки"
     />
     <ul v-if="!isVisible" style="cursor: pointer">
@@ -21,25 +21,34 @@
 <script setup lang="ts">
 import InputForDropdow from './InputForDropdow.vue';
 
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 
 const props = defineProps<{
-  note: { impr: string };
+  value: string;
   options: string[];
 }>();
+
+const model = computed({
+  get() {
+    return props.value ?? '';
+  },
+  set(value: string) {
+    emit('update:value', value);
+  },
+});
 
 let isVisible = ref(true);
 
 const emit = defineEmits<{
-  (e: 'chooseImportance', payload: MouseEvent): void;
+  (e: 'update:value', option: string): void;
 }>();
 
 const chooseImportance = (option: string) => {
-  props.note.impr = option;
+  emit('update:value', option);
   isVisible.value = true;
 };
 
-const Visibility: any = () => {
+const Visibility = () => {
   isVisible.value = !isVisible.value;
 };
 </script>

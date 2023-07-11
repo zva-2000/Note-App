@@ -1,29 +1,35 @@
 <template>
   <div class="input-wrapper">
-    <input :type="type" v-model="inputValue" :placeholder="placeholder" />
+    <input :type="type" v-model="model" :placeholder="placeholder" />
     <slot></slot>
   </div>
 </template>
 
 <script setup lang="ts">
-
-import { ref, watch } from "vue";
-
+import { ref, watch, computed } from 'vue';
 
 const props = defineProps<{
-  modelValue: string,
-  type: string,
-  placeholder: string,
+  value: string;
+  type: string;
+  placeholder: string;
 }>();
 
-
-const inputValue = ref(props.modelValue);
-
-const emit = defineEmits(["update:modelValue"]);
-
-watch(inputValue, (newValue) => {
-  emit("update:modelValue", newValue);
+const model = computed({
+  get() {
+    return props.value ?? '';
+  },
+  set(value) {
+    emit('update:value', value);
+  },
 });
+
+// const inputValue = ref(props.modelValue);
+
+const emit = defineEmits(['update:value']);
+
+// watch(inputValue, (newValue) => {
+//   emit('update:modelValue', newValue);
+// });
 
 // const data = useVModel(props, 'modelValue', emit)
 </script>

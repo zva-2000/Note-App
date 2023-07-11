@@ -128,49 +128,38 @@ function AddNote() {
 
 const removeNote = (index) => {
   notes.splice(index, 1);
-  console.log('Button clicked!')
-}
+  console.log('Button clicked!');
+};
 
-const chooseImportance = (option) => {
-  note.imr = option
-  console.log('Button clicked!')
-}
-
-const Test = ref('')
-
+const Test = ref('');
 </script>
 
 <template>
-
+  tiutle: {{ note.title }}
+  {{ search }}
+  {{ note.date }}
   <searchInput :value="search" @search="search = $event"></searchInput>
 
-  <add-teg-component
-  v-model:note="note"
-  v-model:tegs="tegs"
-  ></add-teg-component>
-
+  <add-teg-component v-model:note="note" v-model:tegs="tegs" />
   <base-input
     placeholder="Введите текст"
-    @update:modelValue="note.title = $event"
-    :modelValue = "''"
+    v-model:value="note.title"
     type="text"
-  ></base-input>
-
-  {{ Test }}
+  />
 
   <base-textarea
     placeholder="Введите текст"
     @update:modelValue="note.descr = $event"
-    :modelValue = "''"
+    :modelValue="''"
   ></base-textarea>
 
-  {{ Test }}
+  {{ note.descr }}
 
   <p>{{ placeholderDate }}</p>
   <base-input
     @update:modelValue="note.date = $event"
-    :modelValue = "''"
-    type='date'
+    :modelValue="''"
+    type="date"
     placeholder="Введите дату"
   ></base-input>
 
@@ -182,15 +171,17 @@ const Test = ref('')
   ></baseInput> -->
 
   <dropdown-comp
-    v-model:note="note"
+    v-model:value="note.impr"
     v-model:options="options"
   ></dropdown-comp>
+
+  {{ note.impr }}
 
   <base-button @click="handleClick" class="btn btnPrimary">
     <span>Кнопка</span>
   </base-button>
 
-  <MovedButtons @click="ChangeGrid" :grid="grid"/>
+  <MovedButtons @click="ChangeGrid" :grid="grid" />
 
   <base-button @click="showModalFunc" class="btn btnPrimary">
     <span>Добавить</span>
@@ -200,7 +191,7 @@ const Test = ref('')
     <span>Сохранить</span>
   </base-button>
 
-  <BaseDeleteButton @onDeleteNote="removeNote"/>
+  <BaseDeleteButton @onDeleteNote="removeNote" />
 
   <!-- <newNote @addNote="AddNote" 
   :swowValue="showModal" 
