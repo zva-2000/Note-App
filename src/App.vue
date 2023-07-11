@@ -1,9 +1,10 @@
 <script setup>
+
 import { ref, computed } from 'vue';
 
-import baseInput from './components/BaseInput.vue';
+import BaseInput from './components/BaseInput.vue';
 
-import baseTextarea from './components/BaseTextarea.vue';
+import BaseTextarea from './components/BaseTextarea.vue';
 
 // import baseList from "./components/BaseList.vue";
 
@@ -13,15 +14,13 @@ import MovedButtons from './components/MovedButtons.vue';
 
 import BaseDeleteButton from './components/BaseDeleteButton.vue';
 
-import searchInput from './components/SearchInput.vue';
+import SearchInput from './components/SearchInput.vue';
 
-import dropdownComp from './components/DropdownComp.vue';
+import ComponentWithDropdown from './components/ComponentWithDropdown.vue';
 
-import addTegComponent from './components/addTegComponent.vue';
+import AddTegComponent from './components/addTegComponent.vue';
 
 // import newNote from "./components/TakeNewNote.vue";
-
-const placeholderDate = 'Введите дату окончания действия:';
 
 const options = ref(['Очень важно', 'Важно', 'Не важно']);
 
@@ -131,57 +130,59 @@ const removeNote = (index) => {
   console.log('Button clicked!');
 };
 
-const Test = ref('');
+const chooseTeg = (tegs) => {
+  note.teg = tegs;
+  isVisible = true;
+  console.log('Button clicked!');
+};
+
 </script>
 
 <template>
-  tiutle: {{ note.title }}
-  {{ search }}
-  {{ note.date }}
-  <searchInput :value="search" @search="search = $event"></searchInput>
+  title: {{ note.title }}
+  search: {{ search }}
+  date: {{ note.date }}
+  descr: {{ note.descr }}
+  impr: {{ note.impr }}
+  teg: {{ note.teg }}
 
-  <add-teg-component v-model:note="note" v-model:tegs="tegs" />
-  <base-input
+  <SearchInput :value="search" @search="search = $event"/>
+
+  <AddTegComponent 
+  v-model:note="note" 
+  v-model:tegs="tegs" 
+  @chooseTeg="teg = note.teg"/>
+
+  <BaseInput
     placeholder="Введите текст"
     v-model:value="note.title"
     type="text"
   />
 
-  <base-textarea
+  <BaseTextarea
     placeholder="Введите текст"
     @update:modelValue="note.descr = $event"
     :modelValue="''"
-  ></base-textarea>
+  />
 
-  {{ note.descr }}
-
-  <p>{{ placeholderDate }}</p>
-  <base-input
-    @update:modelValue="note.date = $event"
-    :modelValue="''"
+  <BaseInput
+    v-model:value="note.date"
     type="date"
     placeholder="Введите дату"
-  ></base-input>
+  />
 
-  <!-- <baseInput
-    placeholder="Введите группу"
-    type="text"
-    @update:modelValue="note.teg = $event"
-    :modelValue = "''"
-  ></baseInput> -->
-
-  <dropdown-comp
+  <ComponentWithDropdown
     v-model:value="note.impr"
     v-model:options="options"
-  ></dropdown-comp>
+  />
 
-  {{ note.impr }}
+  <MovedButtons @click="ChangeGrid" :grid="grid" />
+
+  <BaseDeleteButton @onDeleteNote="removeNote" />
 
   <base-button @click="handleClick" class="btn btnPrimary">
     <span>Кнопка</span>
   </base-button>
-
-  <MovedButtons @click="ChangeGrid" :grid="grid" />
 
   <base-button @click="showModalFunc" class="btn btnPrimary">
     <span>Добавить</span>
@@ -191,14 +192,13 @@ const Test = ref('');
     <span>Сохранить</span>
   </base-button>
 
-  <BaseDeleteButton @onDeleteNote="removeNote" />
-
   <!-- <newNote @addNote="AddNote" 
   :swowValue="showModal" 
   :placeholderTeg="placeholderTeg"
   :placeholderText="placeholderText"
   :typeText="typeText"
   ></newNote> -->
+
 </template>
 
 <style scoped>

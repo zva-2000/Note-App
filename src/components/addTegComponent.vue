@@ -1,13 +1,13 @@
 <template>
   <div class="dropdown">
     <p class="Error">{{ error }}</p>
-    <InputForDropdow
+    <InputForDropdown
       name="inputTeg"
       v-model:value="note.teg"
-      @click="Visibility"
+      @click="toggleVisibility"
       placeholder="Выберите группу"
     />
-    <ul v-if="!isVisible" style="cursor: pointer">
+    <ul v-if="!isVisible">
       <li
         v-for="(tegOne, index) in tegs"
         :key="index"
@@ -15,7 +15,7 @@
       >
         {{ tegOne }}
       </li>
-      <base-button @onClick="addTegFunction">
+      <base-button @сlick="addTegFunction">
         <span>+</span>
       </base-button>
     </ul>
@@ -25,9 +25,9 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-import InputForDropdow from './InputForDropdow.vue';
+import InputForDropdown from './InputForDropdown.vue';
 
-import baseButton from './BaseButton.vue';
+import BaseButton from './BaseButton.vue';
 
 const props = defineProps<{
   note: { teg: string };
@@ -38,18 +38,24 @@ let isVisible = ref(true);
 
 let error = ref('');
 
-const Visibility: any = () => {
+const toggleVisibility: any = () => {
   isVisible.value = !isVisible.value;
-  console.log('Button clicked!');
+  console.log('Button clicked! Visible');
 };
 
+const emit = defineEmits<{
+[x: string]: any;
+  (e: 'chooseTeg', tegOne: string): void;
+  (e: 'addTegFunction', tegNote: string): void;
+}>();
+
 const chooseTeg = (tegOne: string) => {
-  props.note.teg = tegOne;
+  emit.note.teg = tegOne;
   isVisible.value = true;
 };
 
-const addTegFunction = () => {
-  // const tegLowerCase = props.note.teg.toLowerCase();
+const addTegFunction: any = () => {
+  // const tegLowerCase = props.tegs.toLowerCase();
   if (props.tegs.includes(props.note.teg)) {
     error.value = 'Такой тег уже есть';
     return false;
@@ -58,6 +64,8 @@ const addTegFunction = () => {
     error.value = '';
   }
 };
+
+
 </script>
 
 <style>
@@ -65,4 +73,9 @@ const addTegFunction = () => {
   align-items: center;
   color: red;
 }
+
+.dropdown {
+  cursor: pointer
+}
+
 </style>

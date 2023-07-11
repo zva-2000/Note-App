@@ -33,11 +33,10 @@ const model = computed({
   },
 });
 
-// const emitBase = defineEmits(['onClick', 'update:value']);
-
 const emit = defineEmits<{
   (e: 'update:value', event: string): void;
 }>();
+
 </script>
 
 <style scoped>

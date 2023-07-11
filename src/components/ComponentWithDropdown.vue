@@ -1,9 +1,9 @@
 <template>
   <div class="dropdown">
-    <InputForDropdow
+    <InputForDropdown
       name="imprInput"
       v-model:value="model"
-      @click="Visibility"
+      @click="toggleVisibility"
       placeholder="Выберите важность заметки"
     />
     <ul v-if="!isVisible" style="cursor: pointer">
@@ -19,7 +19,7 @@
 </template>
 
 <script setup lang="ts">
-import InputForDropdow from './InputForDropdow.vue';
+import InputForDropdown from './InputForDropdown.vue';
 
 import { ref, computed } from 'vue';
 
@@ -48,7 +48,7 @@ const chooseImportance = (option: string) => {
   isVisible.value = true;
 };
 
-const Visibility = () => {
+const toggleVisibility = () => {
   isVisible.value = !isVisible.value;
 };
 </script>
