@@ -1,24 +1,27 @@
 <template>
   <div class="input-wrapper">
-    <textarea v-model="inputValue" :placeholder="placeholder"></textarea>
+    <textarea v-model="model" :placeholder="placeholder"></textarea>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { computed } from 'vue';
 
-const props = defineProps({
-  modelValue: String,
-  placeholder: String,
+const props = defineProps<{
+  value: string;
+  placeholder: string;
+}>();
+
+const model = computed({
+  get() {
+    return props.value ?? '';
+  },
+  set(value) {
+    emit('update:value', value);
+  },
 });
 
-const inputValue = ref(props.modelValue);
-
-const emit = defineEmits(["update:modelValue"]);
-
-watch(inputValue, (newValue) => {
-  emit("update:modelValue", newValue);
-});
+const emit = defineEmits(['update:value']);
 </script>
 
 <style scoped>

@@ -1,5 +1,4 @@
 <script setup>
-
 import { ref, computed } from 'vue';
 
 import BaseInput from './components/BaseInput.vue';
@@ -18,7 +17,7 @@ import SearchInput from './components/SearchInput.vue';
 
 import ComponentWithDropdown from './components/ComponentWithDropdown.vue';
 
-import AddTegComponent from './components/addTegComponent.vue';
+import AddTegComponent from './components/AddTegComponent.vue';
 
 // import newNote from "./components/TakeNewNote.vue";
 
@@ -130,28 +129,29 @@ const removeNote = (index) => {
   console.log('Button clicked!');
 };
 
-const chooseTeg = (tegs) => {
-  note.teg = tegs;
-  isVisible = true;
-  console.log('Button clicked!');
-};
+// const chooseTeg = (tegOne) => {
+//   note.value.teg = tegOne;
+//   console.log('Button clicked!1');
+// };
 
+const addTegFunction = () => {
+  let error = ref('');
+  if (tegs.value.includes(note.value.teg)) {
+    error.value = 'Такой тег уже есть';
+    return false;
+  } else {
+    tegs.value.push(note.value.teg);
+    error.value = '';
+  }
+  console.log('Button clicked!111');
+};
 </script>
 
 <template>
-  title: {{ note.title }}
-  search: {{ search }}
-  date: {{ note.date }}
-  descr: {{ note.descr }}
-  impr: {{ note.impr }}
-  teg: {{ note.teg }}
+  title: {{ note.title }} search: {{ search }} date: {{ note.date }} descr:
+  {{ note.descr }} impr: {{ note.impr }} teg: {{ note.teg }}
 
-  <SearchInput :value="search" @search="search = $event"/>
-
-  <AddTegComponent 
-  v-model:note="note" 
-  v-model:tegs="tegs" 
-  @chooseTeg="teg = note.teg"/>
+  <SearchInput :value="search" @search="search = $event" />
 
   <BaseInput
     placeholder="Введите текст"
@@ -159,22 +159,27 @@ const chooseTeg = (tegs) => {
     type="text"
   />
 
-  <BaseTextarea
-    placeholder="Введите текст"
-    @update:modelValue="note.descr = $event"
-    :modelValue="''"
-  />
+  <BaseTextarea placeholder="Введите текст" v-model:value="note.descr" />
 
-  <BaseInput
-    v-model:value="note.date"
-    type="date"
-    placeholder="Введите дату"
-  />
+  <div class="container">
+    <BaseInput
+      v-model:value="note.date"
+      type="date"
+      placeholder="Введите дату"
+    />
 
-  <ComponentWithDropdown
-    v-model:value="note.impr"
-    v-model:options="options"
-  />
+    <AddTegComponent
+      v-model:note="note"
+      v-model:tegs="tegs"
+      @chooseTeg="(tegOne) => (note.teg = tegOne)"
+      @addTegFunction="addTegFunction"
+    />
+
+    <ComponentWithDropdown
+      v-model:value="note.impr"
+      v-model:options="options"
+    />
+  </div>
 
   <MovedButtons @click="ChangeGrid" :grid="grid" />
 
@@ -198,7 +203,6 @@ const chooseTeg = (tegs) => {
   :placeholderText="placeholderText"
   :typeText="typeText"
   ></newNote> -->
-
 </template>
 
 <style scoped>
@@ -214,4 +218,8 @@ const chooseTeg = (tegs) => {
 .logo.vue:hover {
   filter: drop-shadow(0 0 2em #42b883aa);
 }
+
+/* .container {
+  display: flex;
+} */
 </style>

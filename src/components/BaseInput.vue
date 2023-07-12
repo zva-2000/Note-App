@@ -23,15 +23,7 @@ const model = computed({
   },
 });
 
-// const inputValue = ref(props.modelValue);
-
 const emit = defineEmits(['update:value']);
-
-// watch(inputValue, (newValue) => {
-//   emit('update:modelValue', newValue);
-// });
-
-// const data = useVModel(props, 'modelValue', emit)
 </script>
 
 <style scoped>

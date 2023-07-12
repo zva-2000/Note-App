@@ -7,23 +7,19 @@
       @click="toggleVisibility"
       placeholder="Выберите группу"
     />
-    <ul v-if="!isVisible">
-      <li
-        v-for="(tegOne, index) in tegs"
-        :key="index"
-        @click="chooseTeg(tegOne)"
-      >
-        {{ tegOne }}
-      </li>
-      <base-button @сlick="addTegFunction">
-        <span>+</span>
-      </base-button>
-    </ul>
   </div>
+  <ul v-if="!isVisible">
+    <li v-for="(tegOne, index) in tegs" :key="index" @click="chooseTeg(tegOne)">
+      {{ tegOne }}
+    </li>
+  </ul>
+  <base-button @click="addTegFunction">
+    <span>+</span>
+  </base-button>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 
 import InputForDropdown from './InputForDropdown.vue';
 
@@ -32,6 +28,7 @@ import BaseButton from './BaseButton.vue';
 const props = defineProps<{
   note: { teg: string };
   tegs: string[];
+  value: string;
 }>();
 
 let isVisible = ref(true);
@@ -44,28 +41,29 @@ const toggleVisibility: any = () => {
 };
 
 const emit = defineEmits<{
-[x: string]: any;
+  [x: string]: any;
   (e: 'chooseTeg', tegOne: string): void;
-  (e: 'addTegFunction', tegNote: string): void;
+  (e: 'addTegFunction', tegs: string[]): void;
 }>();
 
+// const model = computed({
+//   get() {
+//     return props.value ?? '';
+//   },
+//   set(value) {
+//     emit('chooseTeg', value);
+//   },
+// });
+
 const chooseTeg = (tegOne: string) => {
-  emit.note.teg = tegOne;
+  emit('chooseTeg', tegOne);
   isVisible.value = true;
 };
 
-const addTegFunction: any = () => {
-  // const tegLowerCase = props.tegs.toLowerCase();
-  if (props.tegs.includes(props.note.teg)) {
-    error.value = 'Такой тег уже есть';
-    return false;
-  } else {
-    props.tegs.push(props.note.teg);
-    error.value = '';
-  }
+const addTegFunction = () => {
+  console.log('jjjj');
+  emit('addTegFunction', props.tegs);
 };
-
-
 </script>
 
 <style>
@@ -74,8 +72,8 @@ const addTegFunction: any = () => {
   color: red;
 }
 
-.dropdown {
-  cursor: pointer
-}
-
+/* .dropdown {
+  cursor: pointer;
+  display: flex;
+} */
 </style>
