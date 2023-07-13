@@ -38,7 +38,7 @@ import baseInput from './BaseInput.vue';
 
 const props = defineProps<{
   value: string;
-  search: string;
+  // search: string;
 }>();
 
 const model = computed({

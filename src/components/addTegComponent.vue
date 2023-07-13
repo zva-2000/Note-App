@@ -12,7 +12,7 @@
     </base-button>
   </div>
   <ul v-if="!isVisible">
-    <li v-for="(tegOne, index) in tegs" :key="index" @click="chooseTeg(tegOne)">
+    <li v-for="(tegOne, index) in filteredTegs" :key="index" @click="chooseTeg(tegOne)">
       {{ tegOne }}
     </li>
   </ul>
@@ -32,7 +32,7 @@ const props = defineProps<{
 
 let isVisible = ref(true);
 
-let inputFiltr = ref('');
+// let inputFiltr = ref('');
 
 const toggleVisibility: any = () => {
   isVisible.value = !isVisible.value;
@@ -45,16 +45,6 @@ const emit = defineEmits<{
   (e: 'addTegFunction', tegs: string[]): void;
 }>();
 
-// const toFilterTegs = computed({
-
-//   // get() {
-//   //   return props.value ?? '';
-//   // },
-//   // set(value) {
-//   //   emit('chooseTeg', value);
-//   // },
-// });
-
 const chooseTeg = (tegOne: string) => {
   emit('chooseTeg', tegOne);
   isVisible.value = true;
@@ -64,6 +54,12 @@ const addTegFunction = () => {
   console.log('jjjj');
   emit('addTegFunction', props.tegs);
 };
+
+const filteredTegs = computed(() => {
+  const lowerCaseQuery = props.note.teg.toLowerCase();
+  return props.tegs.filter(teg => teg.toLowerCase().includes(lowerCaseQuery));
+});
+
 </script>
 
 <style>

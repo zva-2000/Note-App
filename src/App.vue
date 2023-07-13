@@ -89,19 +89,19 @@ function OpenDrop() {
 let search = ref('');
 
 const notesFilter = computed(() => {
-  let array = notes;
+  console.log('Button input!111');
+  let array = notes.value; 
 
   if (!search.value) return array;
 
-  search.value = search.value.trim().toLowerCase();
+  let searchValue = search.value.trim().toLowerCase();
   array = array.filter(function (note) {
-    if (note.title.toLowerCase().indexOf(search) !== -1) return item;
+    return note.title.toLowerCase().includes(searchValue); 
   });
 
   return array;
-
-  console.log('Button input!111');
 });
+
 
 function AddNote() {
   let { title, descr, impr, teg } = note;
@@ -153,23 +153,15 @@ const addTegFunction = () => {
   console.log('Button clicked!111');
 };
 
-// let error = ref('');
-//   if (tegs.value.includes(note.value.teg)) {
-//     error.value = 'Такой тег уже есть';
-//     return false;
-//   } else {
-//     tegs.value.push(note.value.teg);
-//     error.value = '';
-//   }
 </script>
 
 <template>
   title: {{ note.title }} search: {{ search }} date: {{ note.date }} descr:
   {{ note.descr }} impr: {{ note.impr }} teg: {{ note.teg }}
 
-  <SearchInput v-model:value="search" @input="notesFilter" />
+  <SearchInput v-model:value="search"/>
 
-  <p v-for="note in notes" :key="note.title">{{ note }}</p>
+  <p v-for="note in notes" :key="note.title" @input="notesFilter">{{ note }}</p>
 
   <BaseInput
     placeholder="Введите текст"
@@ -205,15 +197,15 @@ const addTegFunction = () => {
 
   <BaseDeleteButton @onDeleteNote="removeNote" />
 
-  <base-button @click="handleClick" class="btn btnPrimary">
+  <base-button @click="handleClick">
     <span>Кнопка</span>
   </base-button>
 
-  <base-button @click="showModalFunc" class="btn btnPrimary">
+  <base-button @click="showModalFunc">
     <span>Добавить</span>
   </base-button>
 
-  <base-button @click="AddNote" class="btn btnPrimary">
+  <base-button @click="AddNote">
     <span>Сохранить</span>
   </base-button>
 
