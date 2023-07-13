@@ -23,7 +23,7 @@ import AddTegComponent from './components/AddTegComponent.vue';
 
 const options = ref(['Очень важно', 'Важно', 'Не важно']);
 
-const tegs = ref(['Учёба', 'Работа', 'Семья']);
+const tegs = ref(['Учеба', 'Работа', 'Семья']);
 
 const listOpen = ref(false);
 
@@ -86,17 +86,21 @@ function OpenDrop() {
   console.log('Button clicked!');
 }
 
+let search = ref('');
+
 const notesFilter = computed(() => {
   let array = notes;
 
   if (!search.value) return array;
 
   search.value = search.value.trim().toLowerCase();
-  array = array.filter(function (item) {
-    if (item.title.toLowerCase().indexOf(search) !== -1) return item;
+  array = array.filter(function (note) {
+    if (note.title.toLowerCase().indexOf(search) !== -1) return item;
   });
 
   return array;
+
+  console.log('Button input!111');
 });
 
 function AddNote() {
@@ -134,9 +138,12 @@ const removeNote = (index) => {
 //   console.log('Button clicked!1');
 // };
 
+let error = ref('');
+
 const addTegFunction = () => {
-  let error = ref('');
-  if (tegs.value.includes(note.value.teg)) {
+  const tegsLowerCase = tegs.value.map((teg) => teg.toLowerCase());
+  const inputLowerCase = note.value.teg.toLowerCase();
+  if (tegsLowerCase.includes(inputLowerCase)) {
     error.value = 'Такой тег уже есть';
     return false;
   } else {
@@ -145,13 +152,24 @@ const addTegFunction = () => {
   }
   console.log('Button clicked!111');
 };
+
+// let error = ref('');
+//   if (tegs.value.includes(note.value.teg)) {
+//     error.value = 'Такой тег уже есть';
+//     return false;
+//   } else {
+//     tegs.value.push(note.value.teg);
+//     error.value = '';
+//   }
 </script>
 
 <template>
   title: {{ note.title }} search: {{ search }} date: {{ note.date }} descr:
   {{ note.descr }} impr: {{ note.impr }} teg: {{ note.teg }}
 
-  <SearchInput :value="search" @search="search = $event" />
+  <SearchInput v-model:value="search" @input="notesFilter" />
+
+  <p v-for="note in notes" :key="note.title">{{ note }}</p>
 
   <BaseInput
     placeholder="Введите текст"
@@ -167,6 +185,8 @@ const addTegFunction = () => {
       type="date"
       placeholder="Введите дату"
     />
+
+    <p>{{ error }}</p>
 
     <AddTegComponent
       v-model:note="note"

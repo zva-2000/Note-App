@@ -1,39 +1,38 @@
 <template>
   <div class="dropdown">
-    <p class="Error">{{ error }}</p>
-    <InputForDropdown
+    <BaseInput
       name="inputTeg"
       v-model:value="note.teg"
       @click="toggleVisibility"
       placeholder="Выберите группу"
+      type="text"
     />
+    <base-button @click="addTegFunction">
+      <span>+</span>
+    </base-button>
   </div>
   <ul v-if="!isVisible">
     <li v-for="(tegOne, index) in tegs" :key="index" @click="chooseTeg(tegOne)">
       {{ tegOne }}
     </li>
   </ul>
-  <base-button @click="addTegFunction">
-    <span>+</span>
-  </base-button>
 </template>
 
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 
-import InputForDropdown from './InputForDropdown.vue';
-
 import BaseButton from './BaseButton.vue';
+
+import BaseInput from './BaseInput.vue';
 
 const props = defineProps<{
   note: { teg: string };
   tegs: string[];
-  value: string;
 }>();
 
 let isVisible = ref(true);
 
-let error = ref('');
+let inputFiltr = ref('');
 
 const toggleVisibility: any = () => {
   isVisible.value = !isVisible.value;
@@ -46,13 +45,14 @@ const emit = defineEmits<{
   (e: 'addTegFunction', tegs: string[]): void;
 }>();
 
-// const model = computed({
-//   get() {
-//     return props.value ?? '';
-//   },
-//   set(value) {
-//     emit('chooseTeg', value);
-//   },
+// const toFilterTegs = computed({
+
+//   // get() {
+//   //   return props.value ?? '';
+//   // },
+//   // set(value) {
+//   //   emit('chooseTeg', value);
+//   // },
 // });
 
 const chooseTeg = (tegOne: string) => {
@@ -72,8 +72,8 @@ const addTegFunction = () => {
   color: red;
 }
 
-/* .dropdown {
+.dropdown {
   cursor: pointer;
   display: flex;
-} */
+}
 </style>

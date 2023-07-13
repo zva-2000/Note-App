@@ -24,7 +24,7 @@
 
     <base-input
       class="search-input"
-      v-model="search"
+      v-model:value="model"
       placeholder="Найдите заметку"
       type="text"
     ></base-input>
@@ -32,14 +32,25 @@
 </template>
 
 <script setup lang="ts">
-import { watch, ref } from "vue";
+import { watch, ref, computed } from 'vue';
 
-import baseInput from "./BaseInput.vue";
+import baseInput from './BaseInput.vue';
 
 const props = defineProps<{
-  value: string
+  value: string;
+  search: string;
 }>();
 
+const model = computed({
+  get() {
+    return props.value ?? '';
+  },
+  set(value) {
+    emit('update:value', value);
+  },
+});
+
+const emit = defineEmits(['update:value', 'toSearchFunc']);
 
 // export interface Props{
 //   value: String,
@@ -49,19 +60,19 @@ const props = defineProps<{
 //   placeholder: 'Search',
 // })
 
-let search = ref(props.value);
+// const search = ref(props.search);
 
-const emit = defineEmits(["search"]);
+// const toSearchFunc = () => {
+//   console.log('jjjj');
+//   emit('toSearchFunc', props.search);
+// };
 
-watch(search, (value) => {
-  emit("search", value);
-  return { 
-  search
-}
-});
-
-
-
+// watch(props.search, (value) => {
+//   emit('search', value);
+//   return {
+//     search,
+//   };
+// });
 </script>
 
 <style scoped>
