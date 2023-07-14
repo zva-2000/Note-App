@@ -1,54 +1,26 @@
 <template>
   <div class="icons">
-    <BaseButton @click="onChangeGrid">
-      <svg
-        :class="{ active: grid }"
-        @click="onChangeGrid"
-        style="cursor: pointer"
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      >
-        <rect x="3" y="3" width="7" height="7"></rect>
-        <rect x="14" y="3" width="7" height="7"></rect>
-        <rect x="14" y="14" width="7" height="7"></rect>
-        <rect x="3" y="14" width="7" height="7"></rect>
-      </svg>
-    </BaseButton>
-    <BaseButton @click="onChangeGrid">
-      <svg
-        :class="{ active: !grid }"
-        @click="onChangeGrid"
-        style="cursor: pointer"
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      >
-        <line x1="8" y1="6" x2="21" y2="6"></line>
-        <line x1="8" y1="12" x2="21" y2="12"></line>
-        <line x1="8" y1="18" x2="21" y2="18"></line>
-        <line x1="3" y1="6" x2="3" y2="6"></line>
-        <line x1="3" y1="12" x2="3" y2="12"></line>
-        <line x1="3" y1="18" x2="3" y2="18"></line>
-      </svg>
-    </BaseButton>
+    <BaseButtonForSVG
+      :class="{ active: grid }"
+      @click="onChangeGrid"
+      style="cursor: pointer"
+    >
+      <SvgForButtons :name="'svg-mesh'" />
+    </BaseButtonForSVG>
+
+    <BaseButtonForSVG
+      :class="{ active: !grid }"
+      @click="onChangeGrid"
+      style="cursor: pointer"
+    >
+      <SvgForButtons :name="'svg-list'" />
+    </BaseButtonForSVG>
   </div>
 </template>
 
 <script setup lang="ts">
-import BaseButton from "./BaseButton.vue";
+import BaseButtonForSVG from './BaseButtonForSVG.vue';
+import SvgForButtons from './SvgForButtons.vue';
 
 const props = defineProps({
   grid: Boolean,
@@ -60,12 +32,26 @@ const props = defineProps({
 //   emit("ChangeGrid", props.grid);
 // };
 
+function handleClick() {
+  console.log('Button clicked!');
+}
+
 const emit = defineEmits<{
-  (e: 'ChangeGrid', payload: boolean): void
+  (e: 'onChangeGrid', payload: boolean): void;
 }>();
 
 const onChangeGrid = () => {
-  emit('ChangeGrid', props.grid);
+  emit('onChangeGrid', props.grid);
 };
-
 </script>
+
+<style>
+.active {
+  color: rgb(115, 96, 241);
+}
+
+.BaseButtonForSVG {
+  background: transparent;
+  border: none;
+}
+</style>

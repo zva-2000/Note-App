@@ -28,8 +28,9 @@ const emit = defineEmits(['update:value']);
 
 <style scoped>
 input {
+  margin-top: 10px;
   padding: 16px 26px;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
   border-radius: 20px;
 }
 </style>

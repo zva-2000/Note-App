@@ -5,8 +5,6 @@ import BaseInput from './components/BaseInput.vue';
 
 import BaseTextarea from './components/BaseTextarea.vue';
 
-// import baseList from "./components/BaseList.vue";
-
 import BaseButton from './components/BaseButton.vue';
 
 import MovedButtons from './components/MovedButtons.vue';
@@ -90,29 +88,28 @@ let search = ref('');
 
 const notesFilter = computed(() => {
   console.log('Button input!111');
-  let array = notes.value; 
+  let array = notes.value;
 
   if (!search.value) return array;
 
   let searchValue = search.value.trim().toLowerCase();
   array = array.filter(function (note) {
-    return note.title.toLowerCase().includes(searchValue); 
+    return note.title.toLowerCase().includes(searchValue);
   });
 
   return array;
 });
 
-
 function AddNote() {
   let { title, descr, impr, teg } = note;
-  if (title === '') {
-    NewMessege = 'Wrong note';
-    return false;
-  }
-  if (impr === '') {
-    NewImr = 'Choose the importance of note';
-    return false;
-  }
+  // if (title === '') {
+  //   NewMessege = 'Wrong note';
+  //   return false;
+  // }
+  // if (impr === '') {
+  //   NewImr = 'Choose the importance of note';
+  //   return false;
+  // }
   notes.push({
     title,
     descr,
@@ -152,35 +149,49 @@ const addTegFunction = () => {
   }
   console.log('Button clicked!111');
 };
-
 </script>
 
 <template>
-  title: {{ note.title }} search: {{ search }} date: {{ note.date }} descr:
-  {{ note.descr }} impr: {{ note.impr }} teg: {{ note.teg }}
+  <p>title: {{ note.title }}</p>
 
-  <SearchInput v-model:value="search"/>
+  <p>search: {{ search }}</p>
 
-  <p v-for="note in notes" :key="note.title" @input="notesFilter">{{ note }}</p>
+  <p>date: {{ note.date }}</p>
+  <p>descr: {{ note.descr }}</p>
+  <p>impr: {{ note.impr }}</p>
+  <p>teg: {{ note.teg }}</p>
 
-  <BaseInput
-    placeholder="Введите текст"
-    v-model:value="note.title"
-    type="text"
-  />
+  <SearchInput v-model:value="search" />
 
-  <BaseTextarea placeholder="Введите текст" v-model:value="note.descr" />
+  <!-- <p v-for="note in notes" :key="note.title" @input="notesFilter">{{ note }}</p> -->
+
+  <div class="input-container">
+    <p class="error">{{ error }}</p>
+
+    <BaseInput
+      placeholder="Введите текст"
+      v-model:value="note.title"
+      type="text"
+      class="base-input"
+    />
+
+    <BaseTextarea
+      placeholder="Введите текст"
+      v-model:value="note.descr"
+      class="base-textarea"
+    />
+  </div>
 
   <div class="container">
     <BaseInput
+      class="date-input"
       v-model:value="note.date"
       type="date"
       placeholder="Введите дату"
     />
 
-    <p>{{ error }}</p>
-
     <AddTegComponent
+      class="teg-input"
       v-model:note="note"
       v-model:tegs="tegs"
       @chooseTeg="(tegOne) => (note.teg = tegOne)"
@@ -188,12 +199,13 @@ const addTegFunction = () => {
     />
 
     <ComponentWithDropdown
+      class="content"
       v-model:value="note.impr"
       v-model:options="options"
     />
   </div>
 
-  <MovedButtons @click="ChangeGrid" :grid="grid" />
+  <MovedButtons @onChangeGrid="ChangeGrid" :grid="grid" />
 
   <BaseDeleteButton @onDeleteNote="removeNote" />
 
@@ -209,11 +221,12 @@ const addTegFunction = () => {
     <span>Сохранить</span>
   </base-button>
 
-  <!-- <newNote @addNote="AddNote" 
-  :swowValue="showModal" 
-  :placeholderTeg="placeholderTeg"
-  :placeholderText="placeholderText"
-  :typeText="typeText"
+  <!-- <newNote
+    @addNote="AddNote"
+    :swowValue="showModal"
+    :placeholderTeg="placeholderTeg"
+    :placeholderText="placeholderText"
+    :typeText="typeText"
   ></newNote> -->
 </template>
 
@@ -231,7 +244,44 @@ const addTegFunction = () => {
   filter: drop-shadow(0 0 2em #42b883aa);
 }
 
-/* .container {
+.container {
+  flex-grow: 1;
   display: flex;
-} */
+  width: 1000px;
+  gap: 30px;
+}
+
+.input-container {
+  width: 1000px;
+  margin: auto;
+  gap: 100px;
+}
+
+/* .base-textarea {
+  margin-top: 1px;
+}
+
+.base-input {
+  margin-bottom: 1px; */
+/* } */
+
+.date-input {
+  margin-right: 5px;
+  width: 308px;
+  position: relative;
+}
+
+.title-input {
+  margin-top: 105px;
+}
+
+.teg-input {
+  margin-right: 20px;
+  width: 300px;
+}
+
+.error {
+  justify-content: center;
+  color: red;
+}
 </style>
