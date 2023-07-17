@@ -138,16 +138,16 @@ const removeNote = (index) => {
 let error = ref('');
 
 const addTegFunction = () => {
-  const tegsLowerCase = tegs.value.map((teg) => teg.toLowerCase());
-  const inputLowerCase = note.value.teg.toLowerCase();
-  if (tegsLowerCase.includes(inputLowerCase)) {
-    error.value = 'Такой тег уже есть';
-    return false;
-  } else {
+  // const tegsLowerCase = tegs.value.map((teg) => teg.toLowerCase());
+  // const inputLowerCase = note.value.teg.toLowerCase();
+  // if (tegsLowerCase.includes(inputLowerCase)) {
+  //   error.value = 'Такой тег уже есть';
+  //   return false;
+  // } else {
     tegs.value.push(note.value.teg);
     error.value = '';
-  }
-  console.log('Button clicked!111');
+  // }
+  // console.log('Button clicked!111');
 };
 </script>
 
@@ -202,6 +202,7 @@ const addTegFunction = () => {
       v-model:tegs="tegs"
       @chooseTeg="(tegOne) => (note.teg = tegOne)"
       @addTegFunction="addTegFunction"
+      @update:error="error"
     />
   </div>
 

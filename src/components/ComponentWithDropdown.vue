@@ -6,20 +6,14 @@
       @click="toggleVisibility"
       placeholder="Выберите важность заметки"
     />
-    <ul v-if="!isVisible" class="dropdown-content">
-      <li
-        v-for="(option, index) in options"
-        :key="index"
-        @click="chooseImportance(option)"
-      >
-        {{ option }}
-      </li>
-    </ul>
+    <BaseList :items="options" :is-visible="isVisible" @choose-item="chooseImportance"/>
   </div>
 </template>
 
 <script setup lang="ts">
 import InputForDropdown from './InputForDropdown.vue';
+
+import BaseList from './BaseList.vue';
 
 import { ref, computed } from 'vue';
 
@@ -59,19 +53,4 @@ const toggleVisibility = () => {
   display: inline-block;
 }
 
-.dropdown-content {
-  background-color: #f1f1f1;
-  min-width: 160px;
-  margin-bottom: 100px;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-  /* z-index: 1; */
-  top: 100%;
-}
-
-/* .dropdown-content li {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-} */
 </style>

@@ -11,7 +11,9 @@
       <SvgForButtons :name="'svg-plus'"></SvgForButtons>
     </BaseButtonForSVG>
 
-    <ul v-if="!isVisible" class="dropdown-content">
+    <BaseList :items="filteredTegs" :is-visible="isVisible" @choose-item="chooseTeg"/>
+
+    <!-- <ul v-if="!isVisible" class="dropdown-content">
       <li
         v-for="(tegOne, index) in filteredTegs"
         :key="index"
@@ -19,7 +21,7 @@
       >
         {{ tegOne }}
       </li>
-    </ul>
+    </ul> -->
   </div>
 </template>
 
@@ -32,9 +34,12 @@ import SvgForButtons from './SvgForButtons.vue';
 
 import BaseInput from './BaseInput.vue';
 
+import BaseList from './BaseList.vue';
+
 const props = defineProps<{
   note: { teg: string };
   tegs: string[];
+  error: string;
 }>();
 
 let isVisible = ref(true);
@@ -50,6 +55,7 @@ const emit = defineEmits<{
   [x: string]: any;
   (e: 'chooseTeg', tegOne: string): void;
   (e: 'addTegFunction', tegs: string[]): void;
+  (e: 'update:error', errorMessage: string): void;
 }>();
 
 const chooseTeg = (tegOne: string) => {
@@ -58,13 +64,19 @@ const chooseTeg = (tegOne: string) => {
 };
 
 const addTegFunction = () => {
-  console.log('jjjj');
+  const tegsLowerCase = props.tegs.map((tegOne) => tegOne.toLowerCase());
+  const inputLowerCase = props.note.teg.toLowerCase();
+ if (tegsLowerCase.includes(inputLowerCase)) {
+    emit('update:error', 'Такой тег уже есть')
+    return false;
+  } else {
   emit('addTegFunction', props.tegs);
+  }
 };
 
 const filteredTegs = computed(() => {
-  const lowerCaseQuery = props.note.teg.toLowerCase();
-  return props.tegs.filter((teg) => teg.toLowerCase().includes(lowerCaseQuery));
+  const NoteLowerCase = props.note.teg.toString().toLowerCase();
+  return props.tegs.filter((teg) => teg.toLowerCase().includes(NoteLowerCase));
 });
 </script>
 
@@ -86,19 +98,5 @@ const filteredTegs = computed(() => {
   margin-top: 19px;
 }
 
-.dropdown-content {
-  margin-bottom: 1;
-  position: absolute;
-  background-color: #f1f1f1;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-  top: 100%;
-}
 
-.dropdown-content li {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-}
 </style>
