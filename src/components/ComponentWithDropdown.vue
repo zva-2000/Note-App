@@ -65,6 +65,7 @@ const toggleVisibility = () => {
   margin-bottom: 100px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   /* z-index: 1; */
+  top: 100%;
 }
 
 /* .dropdown-content li {

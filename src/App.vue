@@ -40,7 +40,7 @@ let note = ref({
   descr: '',
   impr: '',
   date: '',
-  teg: '',
+  teg: [],
 });
 
 let notes = ref([
@@ -49,21 +49,21 @@ let notes = ref([
     descr: 'Description for first note',
     impr: 'Important',
     date: new Date(Date.now()).toLocaleString(),
-    teg: 'Work',
+    teg: ['Work'],
   },
   {
     title: 'Second note',
     descr: 'Description for second note',
     impr: 'Normal',
     date: new Date(Date.now()).toLocaleString(),
-    teg: 'Study',
+    teg: ['Study'],
   },
   {
     title: 'Third note',
     descr: 'Description for third note',
     impr: 'No matter',
     date: new Date(Date.now()).toLocaleString(),
-    teg: 'Номе',
+    teg: ['Номе'],
   },
 ]);
 
@@ -190,18 +190,18 @@ const addTegFunction = () => {
       placeholder="Введите дату"
     />
 
+    <ComponentWithDropdown
+      class="content"
+      v-model:value="note.impr"
+      v-model:options="options"
+    />
+
     <AddTegComponent
       class="teg-input"
       v-model:note="note"
       v-model:tegs="tegs"
       @chooseTeg="(tegOne) => (note.teg = tegOne)"
       @addTegFunction="addTegFunction"
-    />
-
-    <ComponentWithDropdown
-      class="content"
-      v-model:value="note.impr"
-      v-model:options="options"
     />
   </div>
 
@@ -248,7 +248,8 @@ const addTegFunction = () => {
   flex-grow: 1;
   display: flex;
   width: 1000px;
-  gap: 30px;
+  gap: 35px;
+  max-width: 1000px;
 }
 
 .input-container {
@@ -266,8 +267,7 @@ const addTegFunction = () => {
 /* } */
 
 .date-input {
-  margin-right: 5px;
-  width: 308px;
+  width: 310px;
   position: relative;
 }
 
@@ -276,12 +276,11 @@ const addTegFunction = () => {
 }
 
 .teg-input {
-  margin-right: 20px;
-  width: 300px;
+  width: 310px;
 }
 
 .error {
-  justify-content: center;
+  text-align: center;
   color: red;
 }
 </style>

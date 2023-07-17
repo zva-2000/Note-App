@@ -92,6 +92,7 @@ const filteredTegs = computed(() => {
   background-color: #f1f1f1;
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  top: 100%;
 }
 
 .dropdown-content li {

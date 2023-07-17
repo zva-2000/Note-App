@@ -1,8 +1,6 @@
 <template>
   <div class="wrapper__search">
     <div class="search">
-      <!-- <input type="text" :placeholder="placeholder" v-model="search"/> -->
-
       <div class="search-icon">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -88,10 +86,11 @@ svg {
   bottom: 0px;
   left: 0px;
   position: absolute;
+  justify-content: center;
 }
 .search-icon {
   height: 100%;
-  padding-bottom: 30px;
+  padding-bottom: 4px;
   padding-left: 16px;
   padding-right: 16px;
   align-items: center;
@@ -103,7 +102,7 @@ svg {
   border-radius: 30px;
   color: #909399;
   font-size: 16px;
-  min-width: 400px;
+  max-width: 400px;
   height: auto;
 }
 </style>
