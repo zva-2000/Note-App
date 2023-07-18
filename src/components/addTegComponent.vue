@@ -1,12 +1,12 @@
 <template>
   <div class="dropdown">
-    <BaseInput
+    <InputForDropdown
       class="input-teg"
       v-model:value="note.teg"
       @click="toggleVisibility"
       placeholder="Выберите группу"
       type="text"
-    />
+    /> 
     <BaseButtonForSVG @click="addTegFunction" class="plusButton">
       <SvgForButtons :name="'svg-plus'"></SvgForButtons>
     </BaseButtonForSVG>
@@ -16,16 +16,6 @@
       :is-visible="isVisible"
       @choose-item="chooseTeg"
     />
-
-    <!-- <ul v-if="!isVisible" class="dropdown-content">
-      <li
-        v-for="(tegOne, index) in filteredTegs"
-        :key="index"
-        @click="chooseTeg(tegOne)"
-      >
-        {{ tegOne }}
-      </li>
-    </ul> -->
   </div>
 </template>
 
@@ -36,14 +26,13 @@ import BaseButtonForSVG from './BaseButtonForSVG.vue';
 
 import SvgForButtons from './SvgForButtons.vue';
 
-import BaseInput from './BaseInput.vue';
+import InputForDropdown from './InputForDropdown.vue';
 
 import BaseList from './BaseList.vue';
 
 const props = defineProps<{
   note: { teg: string };
   tegs: string[];
-  error: string;
 }>();
 
 let isVisible = ref(true);
@@ -79,7 +68,7 @@ const addTegFunction = () => {
 };
 
 const filteredTegs = computed(() => {
-  const NoteLowerCase = props.note.teg.toString().toLowerCase();
+  const NoteLowerCase = props.note.teg.toLowerCase();
   return props.tegs.filter((teg) => teg.toLowerCase().includes(NoteLowerCase));
 });
 </script>
@@ -89,7 +78,6 @@ const filteredTegs = computed(() => {
   cursor: pointer;
   display: flex;
 }
-
 .input-teg {
   width: 350px;
 }

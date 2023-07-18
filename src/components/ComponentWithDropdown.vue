@@ -1,19 +1,21 @@
 <template>
   <div class="dropdown">
-    <InputForDropdown
+    <BaseInput
       name="imprInput"
       v-model:value="model"
       @click="toggleVisibility"
       placeholder="Выберите важность заметки"
+      type="text"
     />
     <BaseList :items="options" :is-visible="isVisible" @choose-item="chooseImportance"/>
   </div>
 </template>
 
 <script setup lang="ts">
-import InputForDropdown from './InputForDropdown.vue';
 
 import BaseList from './BaseList.vue';
+
+import BaseInput from './BaseInput.vue';
 
 import { ref, computed } from 'vue';
 

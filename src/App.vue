@@ -131,15 +131,21 @@ const removeNote = (index) => {
 };
 
 // const chooseTeg = (tegOne) => {
-//   note.value.teg = tegOne;
+//   note.value.teg = tegOne
 //   console.log('Button clicked!1');
 // };
+let newTags = ref([])
+
+const chooseTeg = (tegOne) => {
+    newTags.value = note.value.teg
+    
+    note.value.teg.push(tegOne);
+};
 
 let error = ref('');
 
 const addTegFunction = () => {
   tegs.value.push(note.value.teg);
-  error.value = '';
 };
 </script>
 
@@ -190,13 +196,15 @@ const addTegFunction = () => {
 
     <AddTegComponent
       class="teg-input"
-      v-model:note="note"
+      v-model:note="newTags"
       v-model:tegs="tegs"
-      @chooseTeg="(tegOne) => (note.teg = tegOne)"
+      @chooseTeg="chooseTeg"
       @addTegFunction="addTegFunction"
       @update:error="error = $event"
     />
   </div>
+
+  <p class="tegs">{{ note.teg }}</p>
 
   <MovedButtons @onChangeGrid="ChangeGrid" :grid="grid" />
 
@@ -224,6 +232,11 @@ const addTegFunction = () => {
 </template>
 
 <style scoped>
+
+.tegs {
+  width: 1000px;
+  margin: auto;
+}
 .logo {
   height: 6em;
   padding: 1.5em;
@@ -250,14 +263,6 @@ const addTegFunction = () => {
   margin: auto;
   gap: 100px;
 }
-
-/* .base-textarea {
-  margin-top: 1px;
-}
-
-.base-input {
-  margin-bottom: 1px; */
-/* } */
 
 .date-input {
   width: 310px;
