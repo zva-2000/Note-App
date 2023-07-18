@@ -11,7 +11,11 @@
       <SvgForButtons :name="'svg-plus'"></SvgForButtons>
     </BaseButtonForSVG>
 
-    <BaseList :items="filteredTegs" :is-visible="isVisible" @choose-item="chooseTeg"/>
+    <BaseList
+      :items="filteredTegs"
+      :is-visible="isVisible"
+      @choose-item="chooseTeg"
+    />
 
     <!-- <ul v-if="!isVisible" class="dropdown-content">
       <li
@@ -66,11 +70,11 @@ const chooseTeg = (tegOne: string) => {
 const addTegFunction = () => {
   const tegsLowerCase = props.tegs.map((tegOne) => tegOne.toLowerCase());
   const inputLowerCase = props.note.teg.toLowerCase();
- if (tegsLowerCase.includes(inputLowerCase)) {
-    emit('update:error', 'Такой тег уже есть')
+  if (tegsLowerCase.includes(inputLowerCase)) {
+    emit('update:error', 'Такой тег уже есть');
     return false;
   } else {
-  emit('addTegFunction', props.tegs);
+    emit('addTegFunction', props.tegs);
   }
 };
 
@@ -97,6 +101,4 @@ const filteredTegs = computed(() => {
   border: none;
   margin-top: 19px;
 }
-
-
 </style>
