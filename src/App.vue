@@ -130,22 +130,18 @@ const removeNote = (index) => {
   console.log('Button clicked!');
 };
 
-// const chooseTeg = (tegOne) => {
-//   note.value.teg = tegOne
-//   console.log('Button clicked!1');
-// };
-let newTags = ref([])
+let newTag = ref('');
 
-const chooseTeg = (tegOne) => {
-    newTags.value = note.value.teg
-    
-    note.value.teg.push(tegOne);
+const chooseTeg = (newTag) => {
+  if (!note.value.teg.includes(newTag)) {
+    note.value.teg.push(newTag);
+  }
 };
 
 let error = ref('');
 
 const addTegFunction = () => {
-  tegs.value.push(note.value.teg);
+  tegs.value.push(newTag);
 };
 </script>
 
@@ -157,7 +153,7 @@ const addTegFunction = () => {
   <p>date: {{ note.date }}</p>
   <p>descr: {{ note.descr }}</p>
   <p>impr: {{ note.impr }}</p>
-  <p>teg: {{ note.teg }}</p>
+  <p>teg: {{ note.teg }}, {{ newTag }}</p>
 
   <SearchInput v-model:value="search" />
 
@@ -196,7 +192,7 @@ const addTegFunction = () => {
 
     <AddTegComponent
       class="teg-input"
-      v-model:note="newTags"
+      v-model:inputTeg="newTag"
       v-model:tegs="tegs"
       @chooseTeg="chooseTeg"
       @addTegFunction="addTegFunction"
@@ -204,7 +200,9 @@ const addTegFunction = () => {
     />
   </div>
 
-  <p class="tegs">{{ note.teg }}</p>
+  <ul class="combox">
+    <li class="tegs">{{ note.teg }}</li>
+  </ul>
 
   <MovedButtons @onChangeGrid="ChangeGrid" :grid="grid" />
 
@@ -232,10 +230,16 @@ const addTegFunction = () => {
 </template>
 
 <style scoped>
-
 .tegs {
   width: 1000px;
   margin: auto;
+  background-color: var(#165ae3c5);
+  line-height: var(#eaf1ff);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  cursor: default;
+  gap: 4px;
 }
 .logo {
   height: 6em;
