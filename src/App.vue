@@ -132,8 +132,11 @@ const removeNote = (index) => {
 
 let newTag = ref('');
 
+let selectedTegs = ref([])
+
 const chooseTeg = (newTag) => {
   if (!note.value.teg.includes(newTag)) {
+    selectedTegs.value.push(newTag)
     note.value.teg.push(newTag);
   }
 };
@@ -141,7 +144,7 @@ const chooseTeg = (newTag) => {
 let error = ref('');
 
 const addTegFunction = () => {
-  tegs.value.push(newTag);
+  tegs.value.push(newTag.value);
 };
 </script>
 
@@ -191,18 +194,15 @@ const addTegFunction = () => {
     />
 
     <AddTegComponent
-      class="teg-input"
+      :class-name="'teg-input'"
       v-model:inputTeg="newTag"
       v-model:tegs="tegs"
       @chooseTeg="chooseTeg"
       @addTegFunction="addTegFunction"
       @update:error="error = $event"
+      :selectedTegs="note.teg"
     />
   </div>
-
-  <ul class="combox">
-    <li class="tegs">{{ note.teg }}</li>
-  </ul>
 
   <MovedButtons @onChangeGrid="ChangeGrid" :grid="grid" />
 
@@ -219,6 +219,7 @@ const addTegFunction = () => {
   <base-button @click="AddNote">
     <span>Сохранить</span>
   </base-button>
+
 
   <!-- <newNote
     @addNote="AddNote"

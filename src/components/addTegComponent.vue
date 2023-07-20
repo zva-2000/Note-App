@@ -1,5 +1,7 @@
 <template>
   <div class="dropdown">
+
+
     <InputForDropdown
       class="input-teg"
       v-model:value="model"
@@ -7,6 +9,7 @@
       placeholder="Выберите группу"
       type="text"
     />
+  
     <BaseButtonForSVG @click="addTegFunction" class="plusButton">
       <SvgForButtons :name="'svg-plus'"></SvgForButtons>
     </BaseButtonForSVG>
@@ -16,7 +19,17 @@
       :is-visible="isVisible"
       @choose-item="chooseTeg"
     />
-  </div>
+
+</div>
+ 
+    <div>
+      <ul class="selected-tags">
+        <li class="tags-li" v-for="(selectedTeg, index) in selectedTegs" :key="index">
+          {{ selectedTeg }}
+        </li>
+      </ul>
+    </div>
+
 </template>
 
 <script setup lang="ts">
@@ -31,9 +44,11 @@ import InputForDropdown from './InputForDropdown.vue';
 import BaseList from './BaseList.vue';
 
 const props = defineProps<{
-  // note: { teg: string[] };
+  // note: { teg: string };
   tegs: string[];
+  selectedTegs: string[];
   inputTeg: string;
+  className: string;
 }>();
 
 let isVisible = ref(true);
@@ -58,9 +73,7 @@ const chooseTeg = (tegOne: string) => {
 };
 
 const addTegFunction = () => {
-  const tegsLowerCase = props.tegs.map((tegOne) =>
-    tegOne.toString().toLowerCase()
-  );
+  const tegsLowerCase = props.tegs.map((tegOne) => tegOne.toLowerCase());
   const inputLowerCase = props.inputTeg.toLowerCase();
   if (tegsLowerCase.includes(inputLowerCase)) {
     emit('update:error', 'Такой тег уже есть');
@@ -71,10 +84,14 @@ const addTegFunction = () => {
 };
 
 const filteredTegs = computed(() => {
-  const NoteLowerCase = props.inputTeg.toLowerCase();
-  return props.tegs.filter((tegOne) =>
-    tegOne.toString().toLowerCase().includes(NoteLowerCase)
-  );
+  if (props.inputTeg === '') {
+    return props.tegs
+  } else {
+    const inputLowerCase = props.inputTeg.toLowerCase();
+    return props.tegs.filter((teg) =>
+      teg.toLowerCase().includes(inputLowerCase)
+    );
+  }
 });
 
 const model = computed({
@@ -102,5 +119,23 @@ const model = computed({
   background: transparent;
   border: none;
   margin-top: 19px;
+}
+
+.selected-tags {
+  position: absolute;
+  margin-top: 80px;
+  margin-left: -999px;
+  align-items: center;
+  display: flex;
+  cursor: default;
+  gap: 5px;
+  background-color: var(#165ae3c5);
+  line-height: var(#eaf1ff);
+}
+
+.tags-li {
+  background-color: var(#165ae3c5);
+  line-height: var(#eaf1ff);
+  border-radius: 6px;
 }
 </style>
