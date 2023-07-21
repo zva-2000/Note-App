@@ -6,17 +6,18 @@ label {
 }
 input {
   padding: 16px 26px;
-  margin-bottom: 30px;
   border-radius: 20px;
 }
 textarea {
   padding: 30px 27px;
   border-radius: 14px;
 }
-input, textarea {
+input,
+textarea {
   width: 100%;
 }
-select, option {
+select,
+option {
   padding: 16px 26px;
   margin-bottom: 30px;
   border-radius: 20px;

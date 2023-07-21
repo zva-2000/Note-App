@@ -7,12 +7,15 @@
       placeholder="Выберите важность заметки"
       type="text"
     />
-    <BaseList :items="options" :is-visible="isVisible" @choose-item="chooseImportance"/>
+    <BaseList
+      :items="options"
+      :is-visible="isVisible"
+      @choose-item="chooseImportance"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
-
 import BaseList from './BaseList.vue';
 
 import BaseInput from './BaseInput.vue';
@@ -52,7 +55,5 @@ const toggleVisibility = () => {
 <style>
 .dropdown {
   position: relative;
-  display: inline-block;
 }
-
 </style>

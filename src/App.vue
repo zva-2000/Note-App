@@ -132,11 +132,11 @@ const removeNote = (index) => {
 
 let newTag = ref('');
 
-let selectedTegs = ref([])
+let selectedTegs = ref([]);
 
 const chooseTeg = (newTag) => {
   if (!note.value.teg.includes(newTag)) {
-    selectedTegs.value.push(newTag)
+    selectedTegs.value.push(newTag);
     note.value.teg.push(newTag);
   }
 };
@@ -188,7 +188,7 @@ const addTegFunction = () => {
     />
 
     <ComponentWithDropdown
-      class="content"
+      class="impr-input"
       v-model:value="note.impr"
       v-model:options="options"
     />
@@ -219,7 +219,6 @@ const addTegFunction = () => {
   <base-button @click="AddNote">
     <span>Сохранить</span>
   </base-button>
-
 
   <!-- <newNote
     @addNote="AddNote"
@@ -259,14 +258,16 @@ const addTegFunction = () => {
   flex-grow: 1;
   display: flex;
   width: 1000px;
-  gap: 35px;
+  gap: 11px;
   max-width: 1000px;
+  margin-bottom: 50px;
 }
 
 .input-container {
   width: 1000px;
   margin: auto;
   gap: 100px;
+  margin-bottom: 10px;
 }
 
 .date-input {
@@ -280,6 +281,15 @@ const addTegFunction = () => {
 
 .teg-input {
   width: 310px;
+  gap: 0px;
+}
+
+.impr-input {
+  width: 310px;
+}
+
+.base-input {
+  margin-bottom: 10px;
 }
 
 .error {

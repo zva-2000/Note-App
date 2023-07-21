@@ -1,7 +1,5 @@
 <template>
   <div class="dropdown">
-
-
     <InputForDropdown
       class="input-teg"
       v-model:value="model"
@@ -9,7 +7,7 @@
       placeholder="Выберите группу"
       type="text"
     />
-  
+
     <BaseButtonForSVG @click="addTegFunction" class="plusButton">
       <SvgForButtons :name="'svg-plus'"></SvgForButtons>
     </BaseButtonForSVG>
@@ -19,17 +17,19 @@
       :is-visible="isVisible"
       @choose-item="chooseTeg"
     />
+  </div>
 
-</div>
- 
-    <div>
-      <ul class="selected-tags">
-        <li class="tags-li" v-for="(selectedTeg, index) in selectedTegs" :key="index">
-          {{ selectedTeg }}
-        </li>
-      </ul>
-    </div>
-
+  <div>
+    <ul class="selected-tags">
+      <li
+        class="tags-li"
+        v-for="(selectedTeg, index) in selectedTegs"
+        :key="index"
+      >
+        {{ selectedTeg }}
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -85,7 +85,7 @@ const addTegFunction = () => {
 
 const filteredTegs = computed(() => {
   if (props.inputTeg === '') {
-    return props.tegs
+    return props.tegs;
   } else {
     const inputLowerCase = props.inputTeg.toLowerCase();
     return props.tegs.filter((teg) =>
@@ -105,10 +105,6 @@ const model = computed({
 </script>
 
 <style>
-.dropdown {
-  cursor: pointer;
-  display: flex;
-}
 .input-teg {
   width: 350px;
 }
@@ -118,10 +114,11 @@ const model = computed({
   height: 35px;
   background: transparent;
   border: none;
-  margin-top: 19px;
+  margin-top: 9px;
 }
 
 .selected-tags {
+  max-width: 310px;
   position: absolute;
   margin-top: 80px;
   margin-left: -999px;
@@ -129,13 +126,14 @@ const model = computed({
   display: flex;
   cursor: default;
   gap: 5px;
-  background-color: var(#165ae3c5);
+  /* background-color: var(#165ae3c5); */
   line-height: var(#eaf1ff);
 }
 
 .tags-li {
-  background-color: var(#165ae3c5);
-  line-height: var(#eaf1ff);
+  padding: 2px 6px 2px 8px;
+  background-color: #a2c9ff;
+  line-height: #eaf1ff;
   border-radius: 6px;
 }
 </style>

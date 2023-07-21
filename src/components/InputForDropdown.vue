@@ -36,7 +36,6 @@ const emit = defineEmits<{
   display: flex;
   position: relative;
   display: inline-block;
-  margin-top: 10px;
   width: 310px;
 }
 
