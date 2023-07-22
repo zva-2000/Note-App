@@ -17,11 +17,19 @@ import ComponentWithDropdown from './components/ComponentWithDropdown.vue';
 
 import AddTegComponent from './components/AddTegComponent.vue';
 
+import AllNotes from './components/AllNotes.vue'
+
+import { useTags } from './composables/useTags.js'
+
+import { store } from './composables/useTagsValue.js'
+
 // import newNote from "./components/TakeNewNote.vue";
 
 const options = ref(['Очень важно', 'Важно', 'Не важно']);
 
-const tegs = ref(['Учеба', 'Работа', 'Семья']);
+const { addTegFunctionForCompose, newTag } = useTags();
+
+// const tegs = ref(['Учеба', 'Работа', 'Семья']);
 
 const listOpen = ref(false);
 
@@ -43,29 +51,29 @@ let note = ref({
   teg: [],
 });
 
-let notes = ref([
-  {
-    title: 'First note',
-    descr: 'Description for first note',
-    impr: 'Important',
-    date: new Date(Date.now()).toLocaleString(),
-    teg: ['Work'],
-  },
-  {
-    title: 'Second note',
-    descr: 'Description for second note',
-    impr: 'Normal',
-    date: new Date(Date.now()).toLocaleString(),
-    teg: ['Study'],
-  },
-  {
-    title: 'Third note',
-    descr: 'Description for third note',
-    impr: 'No matter',
-    date: new Date(Date.now()).toLocaleString(),
-    teg: ['Номе'],
-  },
-]);
+// let notes = ref([
+//   {
+//     title: 'First note',
+//     descr: 'Description for first note',
+//     impr: 'Important',
+//     date: new Date(Date.now()).toLocaleString(),
+//     teg: ['Work'],
+//   },
+//   {
+//     title: 'Second note',
+//     descr: 'Description for second note',
+//     impr: 'Normal',
+//     date: new Date(Date.now()).toLocaleString(),
+//     teg: ['Study'],
+//   },
+//   {
+//     title: 'Third note',
+//     descr: 'Description for third note',
+//     impr: 'No matter',
+//     date: new Date(Date.now()).toLocaleString(),
+//     teg: ['Номе'],
+//   },
+// ]);
 
 function handleClick() {
   console.log('Button clicked!');
@@ -130,8 +138,6 @@ const removeNote = (index) => {
   console.log('Button clicked!');
 };
 
-let newTag = ref('');
-
 let selectedTegs = ref([]);
 
 const chooseTeg = (newTag) => {
@@ -143,9 +149,6 @@ const chooseTeg = (newTag) => {
 
 let error = ref('');
 
-const addTegFunction = () => {
-  tegs.value.push(newTag.value);
-};
 </script>
 
 <template>
@@ -195,14 +198,18 @@ const addTegFunction = () => {
 
     <AddTegComponent
       :class-name="'teg-input'"
-      v-model:inputTeg="newTag"
-      v-model:tegs="tegs"
       @chooseTeg="chooseTeg"
-      @addTegFunction="addTegFunction"
       @update:error="error = $event"
       :selectedTegs="note.teg"
     />
+
   </div>
+
+  <AllNotes/>
+
+  <!-- @addTegFunction="addTegFunction" -->
+  <!-- v-model:inputTeg="newTag" -->
+  <!-- v-model:tegs="tegs" -->
 
   <MovedButtons @onChangeGrid="ChangeGrid" :grid="grid" />
 

@@ -2,7 +2,7 @@
   <div class="dropdown">
     <InputForDropdown
       class="input-teg"
-      v-model:value="model"
+      v-model:value="newTag"
       @click="toggleVisibility"
       placeholder="Выберите группу"
       type="text"
@@ -30,10 +30,15 @@
       </li>
     </ul>
   </div>
+
 </template>
 
 <script setup lang="ts">
 import { computed, ref } from 'vue';
+
+import { useTags } from '../composables/useTags.js'
+
+import { store } from '../composables/useTagsValue.js'
 
 import BaseButtonForSVG from './BaseButtonForSVG.vue';
 
@@ -43,11 +48,13 @@ import InputForDropdown from './InputForDropdown.vue';
 
 import BaseList from './BaseList.vue';
 
+const { addTegFunctionForCompose, newTag } = useTags();
+
 const props = defineProps<{
   // note: { teg: string };
-  tegs: string[];
+  // tegs: string[];
   selectedTegs: string[];
-  inputTeg: string;
+  // inputTeg: string;
   className: string;
 }>();
 
@@ -61,7 +68,6 @@ const toggleVisibility: any = () => {
 const emit = defineEmits<{
   [x: string]: any;
   (e: 'chooseTeg', tegOne: string): void;
-  (e: 'addTegFunction', tegs: string[]): void;
   (e: 'update:error', errorMessage: string): void;
   (e: 'update:inputTeg', inputTeg: string): void;
 }>();
@@ -73,35 +79,35 @@ const chooseTeg = (tegOne: string) => {
 };
 
 const addTegFunction = () => {
-  const tegsLowerCase = props.tegs.map((tegOne) => tegOne.toLowerCase());
-  const inputLowerCase = props.inputTeg.toLowerCase();
+  const tegsLowerCase = store.tags.map((tag: string) => tag.toLowerCase());
+  const inputLowerCase = newTag.value.toLowerCase();
   if (tegsLowerCase.includes(inputLowerCase)) {
     emit('update:error', 'Такой тег уже есть');
     return false;
   } else {
-    emit('addTegFunction', props.tegs);
+    addTegFunctionForCompose();
   }
 };
 
 const filteredTegs = computed(() => {
-  if (props.inputTeg === '') {
-    return props.tegs;
+  if (newTag.value === '') {
+    return store.tags;
   } else {
-    const inputLowerCase = props.inputTeg.toLowerCase();
-    return props.tegs.filter((teg) =>
-      teg.toLowerCase().includes(inputLowerCase)
+    const inputLowerCase = newTag.value.toLowerCase();
+    return store.tags.filter((tag: string) =>
+      tag.toLowerCase().includes(inputLowerCase)
     );
   }
 });
 
-const model = computed({
-  get() {
-    return props.inputTeg ?? '';
-  },
-  set(inputTeg: string) {
-    emit('update:inputTeg', inputTeg);
-  },
-});
+// const model = computed({
+//   get() {
+//     return props.inputTeg ?? '';
+//   },
+//   set(inputTeg: string) {
+//     emit('update:inputTeg', inputTeg);
+//   },
+// });
 </script>
 
 <style>
