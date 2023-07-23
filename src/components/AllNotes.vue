@@ -1,12 +1,12 @@
 <template>
 
-<ul class="notes" :class="{ full: !grid }">
+<ul class="notes" :class="{ full: mode.GRID }">
     <li
     class="note"
-    v-for="(note, index) in  notesFilter"
+    v-for="(note, index) in notesFilter"
     :key="index"
     >
-  <div class="note-header" :class="{ full: !grid }">
+  <div class="note-header" :class="{ full: mode.LIST }">
     <h1>{{ note.title }}</h1>
   </div>
   <div class="note-body">
@@ -28,7 +28,7 @@ import { notesFilter, useFilter } from '../composables/useFilter.js'
 
 import SelectedTegs from './SelectedTegs.vue';
 
-const { notesFilter } = useFilter()
+const { notesFilter,  changeGrid, mode } = useFilter()
 
 </script>
 

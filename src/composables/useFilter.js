@@ -24,11 +24,24 @@ export function useFilter() {
         return array;
     });
 
-    const ViewMode = {
-        Grid: 'Grid',
-        List: 'List',
+    const mode = Object.freeze({
+        GRID: true,
+        LIST: false,
+    })
+    
+    let viewMode = ref(mode.GRID); 
+
+    function changeGrid() {
+      if(mode.GRID) {
+       mode.LIST
+      }
+      console.log('dfjvndkljfv')
+    //   } else if (mode.LIST) {
+    //     return mode.GRID
+    //   }
     }
+    
       
-return { notesFilter };
+return { notesFilter, changeGrid, mode };
     
 }

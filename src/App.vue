@@ -23,11 +23,11 @@ import { useTags } from './composables/useTags.js'
 
 import { store } from './composables/useTagsValue.js'
 
-import {  notesArray } from './composables/useNotes.js'
-
-// import { useFilter } from './composables/useFilter';
+import { notesArray } from './composables/useNotes.js'
 
 import { searchValue } from './composables/SearcheValue.js'
+
+import NotesWindow from './components/NotesWindow.vue'
 
 // const { search } = useFilter()
 
@@ -59,7 +59,6 @@ let note = ref({
   teg: [],
 });
 
-
 function handleClick() {
   console.log('Button clicked!');
 }
@@ -76,7 +75,6 @@ function OpenDrop() {
   isOpen.value = !isOpen.value;
   console.log('Button clicked!');
 }
-
 
 const notesFilter = computed(() => {
   console.log('Button input!111');
@@ -102,19 +100,19 @@ function AddNote() {
   //   NewImr = 'Choose the importance of note';
   //   return false;
   // }
-  notes.push({
+  notesArray.notes.push({
     title,
     descr,
     impr,
     date: new Date(Date.now()).toLocaleString(),
     teg,
   });
-  NewMessege = null;
-  NewImr = null;
+  // NewMessege = null;
+  // NewImr = null;
   note.title = '';
   note.descr = '';
   note.impr = '';
-  note.teg = '';
+  note.teg = [];
 }
 
 const removeNote = (index) => {
@@ -191,7 +189,7 @@ let error = ref('');
 
   <!-- {{ notesFilter }} -->
 
-  <AllNotes/>
+  <NotesWindow/>
 
   <!-- @addTegFunction="addTegFunction" -->
   <!-- v-model:inputTeg="newTag" -->

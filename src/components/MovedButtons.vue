@@ -1,16 +1,16 @@
 <template>
   <div class="icons">
     <BaseButtonForSVG
-      :class="{ active: grid }"
-      @click="onChangeGrid"
+      :class="{ active: mode.GRID }"
+      @click="changeGrid"
       style="cursor: pointer"
     >
       <SvgForButtons :name="'svg-mesh'" />
     </BaseButtonForSVG>
 
     <BaseButtonForSVG
-      :class="{ active: !grid }"
-      @click="onChangeGrid"
+      :class="{ active: mode.LIST }"
+      @click="changeGrid"
       style="cursor: pointer"
     >
       <SvgForButtons :name="'svg-list'" />
@@ -21,18 +21,21 @@
 <script setup lang="ts">
 import BaseButtonForSVG from './BaseButtonForSVG.vue';
 import SvgForButtons from './SvgForButtons.vue';
+import { useFilter } from '../composables/useFilter.js'
+
+const { changeGrid, mode } = useFilter()
 
 const props = defineProps({
-  grid: Boolean,
+  // grid: Boolean,
 });
 
-const emit = defineEmits<{
-  (e: 'onChangeGrid', payload: boolean): void;
-}>();
+// const emit = defineEmits<{
+//   (e: 'onChangeGrid', payload: boolean): void;
+// }>();
 
-const onChangeGrid = () => {
-  emit('onChangeGrid', props.grid);
-};
+// const onChangeGrid = () => {
+//   emit('onChangeGrid', props.grid);
+// };
 </script>
 
 <style>

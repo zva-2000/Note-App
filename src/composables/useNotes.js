@@ -3,25 +3,25 @@ import { reactive } from 'vue'
 export const notesArray = reactive({
   notes: [
     {
-      title: 'First note',
-      descr: 'Description for first note',
-      impr: 'Important',
+      title: 'Сделать все задачи',
+      descr: 'На отлично!',
+      impr: 'Очень важно',
       date: new Date(Date.now()).toTimeString(),
-      teg: ['Work'],
+      teg: ['Работа'],
     },
     {
-      title: 'Second note',
-      descr: 'Description for second note',
-      impr: 'Normal',
+      title: 'Выучить Composbles',
+      descr: 'Описан в документации Vue',
+      impr: 'Нормально',
       date: new Date(Date.now()).toLocaleString(),
-      teg: ['Study'],
+      teg: ['Учеба'],
     },
     {
-      title: 'Third note',
-      descr: 'Description for third note',
-      impr: 'No matter',
+      title: 'Вычесать кота',
+      descr: 'А то опять разбросает шерсть',
+      impr: 'Не важно',
       date: new Date(Date.now()).toLocaleString(),
-      teg: ['Номе'],
+      teg: ['Семья'],
     },
   ]
 })
