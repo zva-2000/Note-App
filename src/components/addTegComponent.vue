@@ -12,6 +12,10 @@
       <SvgForButtons :name="'svg-plus'"></SvgForButtons>
     </BaseButtonForSVG>
 
+    <SelectedTegs 
+    class="tags"
+    :items="props.selectedTegs"/>
+
     <BaseList
       :items="filteredTegs"
       :is-visible="isVisible"
@@ -19,17 +23,7 @@
     />
   </div>
 
-  <div>
-    <ul class="selected-tags">
-      <li
-        class="tags-li"
-        v-for="(selectedTeg, index) in selectedTegs"
-        :key="index"
-      >
-        {{ selectedTeg }}
-      </li>
-    </ul>
-  </div>
+
 
 </template>
 
@@ -47,6 +41,8 @@ import SvgForButtons from './SvgForButtons.vue';
 import InputForDropdown from './InputForDropdown.vue';
 
 import BaseList from './BaseList.vue';
+
+import SelectedTegs from './SelectedTegs.vue';
 
 const { addTegFunctionForCompose, newTag } = useTags();
 
@@ -100,14 +96,6 @@ const filteredTegs = computed(() => {
   }
 });
 
-// const model = computed({
-//   get() {
-//     return props.inputTeg ?? '';
-//   },
-//   set(inputTeg: string) {
-//     emit('update:inputTeg', inputTeg);
-//   },
-// });
 </script>
 
 <style>
@@ -123,23 +111,7 @@ const filteredTegs = computed(() => {
   margin-top: 9px;
 }
 
-.selected-tags {
-  max-width: 310px;
-  position: absolute;
-  margin-top: 80px;
-  margin-left: -999px;
-  align-items: center;
-  display: flex;
-  cursor: default;
-  gap: 5px;
-  /* background-color: var(#165ae3c5); */
-  line-height: var(#eaf1ff);
-}
-
-.tags-li {
-  padding: 2px 6px 2px 8px;
-  background-color: #a2c9ff;
-  line-height: #eaf1ff;
-  border-radius: 6px;
+.tags {
+  margin-top: 10px;
 }
 </style>

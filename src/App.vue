@@ -23,6 +23,14 @@ import { useTags } from './composables/useTags.js'
 
 import { store } from './composables/useTagsValue.js'
 
+import {  notesArray } from './composables/useNotes.js'
+
+// import { useFilter } from './composables/useFilter';
+
+import { searchValue } from './composables/SearcheValue.js'
+
+// const { search } = useFilter()
+
 // import newNote from "./components/TakeNewNote.vue";
 
 const options = ref(['Очень важно', 'Важно', 'Не важно']);
@@ -51,29 +59,6 @@ let note = ref({
   teg: [],
 });
 
-// let notes = ref([
-//   {
-//     title: 'First note',
-//     descr: 'Description for first note',
-//     impr: 'Important',
-//     date: new Date(Date.now()).toLocaleString(),
-//     teg: ['Work'],
-//   },
-//   {
-//     title: 'Second note',
-//     descr: 'Description for second note',
-//     impr: 'Normal',
-//     date: new Date(Date.now()).toLocaleString(),
-//     teg: ['Study'],
-//   },
-//   {
-//     title: 'Third note',
-//     descr: 'Description for third note',
-//     impr: 'No matter',
-//     date: new Date(Date.now()).toLocaleString(),
-//     teg: ['Номе'],
-//   },
-// ]);
 
 function handleClick() {
   console.log('Button clicked!');
@@ -92,11 +77,10 @@ function OpenDrop() {
   console.log('Button clicked!');
 }
 
-let search = ref('');
 
 const notesFilter = computed(() => {
   console.log('Button input!111');
-  let array = notes.value;
+  let array =  notesArray.notes;
 
   if (!search.value) return array;
 
@@ -154,14 +138,14 @@ let error = ref('');
 <template>
   <p>title: {{ note.title }}</p>
 
-  <p>search: {{ search }}</p>
+  <p>search: {{ searchValue.search }}</p>
 
   <p>date: {{ note.date }}</p>
   <p>descr: {{ note.descr }}</p>
   <p>impr: {{ note.impr }}</p>
   <p>teg: {{ note.teg }}, {{ newTag }}</p>
 
-  <SearchInput v-model:value="search" />
+  <SearchInput v-model:value="searchValue.search" />
 
   <!-- <p v-for="note in notes" :key="note.title" @input="notesFilter">{{ note }}</p> -->
 
@@ -204,6 +188,8 @@ let error = ref('');
     />
 
   </div>
+
+  <!-- {{ notesFilter }} -->
 
   <AllNotes/>
 

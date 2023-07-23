@@ -26,16 +26,6 @@ const props = defineProps({
   grid: Boolean,
 });
 
-// const emit = defineEmits(["ChangeGrid"]);
-
-// const ChangeGrid = () => {
-//   emit("ChangeGrid", props.grid);
-// };
-
-function handleClick() {
-  console.log('Button clicked!');
-}
-
 const emit = defineEmits<{
   (e: 'onChangeGrid', payload: boolean): void;
 }>();

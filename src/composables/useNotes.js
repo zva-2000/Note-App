@@ -1,12 +1,12 @@
 import { reactive } from 'vue'
 
-export const store = reactive({
+export const notesArray = reactive({
   notes: [
     {
       title: 'First note',
       descr: 'Description for first note',
       impr: 'Important',
-      date: new Date(Date.now()).toLocaleString(),
+      date: new Date(Date.now()).toTimeString(),
       teg: ['Work'],
     },
     {
