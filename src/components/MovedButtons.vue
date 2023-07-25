@@ -1,16 +1,16 @@
 <template>
   <div class="icons">
     <BaseButtonForSVG
-      :class="{ active: mode.GRID }"
-      @click="changeGrid"
+      :class="{ active: viewMode === GridMode.Grid }"
+      @click="changeGrid(GridMode.Grid)"
       style="cursor: pointer"
     >
       <SvgForButtons :name="'svg-mesh'" />
     </BaseButtonForSVG>
 
     <BaseButtonForSVG
-      :class="{ active: mode.LIST }"
-      @click="changeGrid"
+      :class="{ active: viewMode === GridMode.List }"
+      @click="changeGrid(GridMode.List)"
       style="cursor: pointer"
     >
       <SvgForButtons :name="'svg-list'" />
@@ -21,9 +21,10 @@
 <script setup lang="ts">
 import BaseButtonForSVG from './BaseButtonForSVG.vue';
 import SvgForButtons from './SvgForButtons.vue';
-import { useFilter } from '../composables/useFilter.js'
+import { useFilter } from '../composables/useFilter.js';
+import { GridMode } from '@/types.ts';
 
-const { changeGrid, mode } = useFilter()
+const { changeGrid, viewMode } = useFilter();
 
 const props = defineProps({
   // grid: Boolean,

@@ -17,17 +17,17 @@ import ComponentWithDropdown from './components/ComponentWithDropdown.vue';
 
 import AddTegComponent from './components/AddTegComponent.vue';
 
-import AllNotes from './components/AllNotes.vue'
+import AllNotes from './components/AllNotes.vue';
 
-import { useTags } from './composables/useTags.js'
+import { useTags } from './composables/useTags.js';
 
-import { store } from './composables/useTagsValue.js'
+import { store } from './composables/useTagsValue.js';
 
-import { notesArray } from './composables/useNotes.js'
+import { notesArray } from './composables/useNotes.js';
 
-import { searchValue } from './composables/SearcheValue.js'
+import { searchValue } from './composables/SearcheValue.js';
 
-import NotesWindow from './components/NotesWindow.vue'
+import NotesWindow from './components/NotesWindow.vue';
 
 // const { search } = useFilter()
 
@@ -78,7 +78,7 @@ function OpenDrop() {
 
 const notesFilter = computed(() => {
   console.log('Button input!111');
-  let array =  notesArray.notes;
+  let array = notesArray.notes;
 
   if (!search.value) return array;
 
@@ -130,7 +130,6 @@ const chooseTeg = (newTag) => {
 };
 
 let error = ref('');
-
 </script>
 
 <template>
@@ -184,18 +183,17 @@ let error = ref('');
       @update:error="error = $event"
       :selectedTegs="note.teg"
     />
-
   </div>
 
   <!-- {{ notesFilter }} -->
 
-  <NotesWindow/>
+  <NotesWindow />
 
   <!-- @addTegFunction="addTegFunction" -->
   <!-- v-model:inputTeg="newTag" -->
   <!-- v-model:tegs="tegs" -->
 
-  <MovedButtons @onChangeGrid="ChangeGrid" :grid="grid" />
+  <!-- <MovedButtons @onChangeGrid="ChangeGrid" :grid="grid" /> -->
 
   <BaseDeleteButton @onDeleteNote="removeNote" />
 

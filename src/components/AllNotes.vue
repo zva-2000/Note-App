@@ -1,39 +1,30 @@
 <template>
-
-<ul class="notes" :class="{ full: mode.GRID }">
-    <li
-    class="note"
-    v-for="(note, index) in notesFilter"
-    :key="index"
-    >
-  <div class="note-header" :class="{ full: mode.LIST }">
-    <h1>{{ note.title }}</h1>
-  </div>
-  <div class="note-body">
-    <p>{{ note.descr }}</p>
-    <p>{{ note.impr }}</p>
-    <p class="note-date">{{ note.date }}</p>
-    <SelectedTegs class="note-teg" :items="note.teg"/>
-  </div>
-</li>
-</ul>
-  
+  <ul class="notes" :class="viewMode">
+    <li class="note" v-for="(note, index) in notesFilter" :key="index">
+      <div class="note-header" :class="viewMode">
+        <h1>{{ note.title }}</h1>
+      </div>
+      <div class="note-body">
+        <p>{{ note.descr }}</p>
+        <p>{{ note.impr }}</p>
+        <p class="note-date">{{ note.date }}</p>
+        <SelectedTegs class="note-teg" :items="note.teg" />
+      </div>
+    </li>
+  </ul>
 </template>
 
 <script setup lang="ts">
+// import { notesArray } from '../composables/useNotes.js'
 
-import { notesArray } from '../composables/useNotes.js'
-
-import { notesFilter, useFilter } from '../composables/useFilter.js'
+import { notesFilter, useFilter } from '../composables/useFilter.js';
 
 import SelectedTegs from './SelectedTegs.vue';
 
-const { notesFilter,  changeGrid, mode } = useFilter()
-
+const { notesFilter, viewMode } = useFilter();
 </script>
 
 <style lang="scss">
-
 .note-unit {
   &.full {
     justify-content: center;
@@ -44,14 +35,14 @@ const { notesFilter,  changeGrid, mode } = useFilter()
       }
     }
   }
-} 
+}
 
 .notes {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    padding: 40px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 40px 0;
 }
 
 .note-header {
@@ -86,7 +77,7 @@ const { notesFilter,  changeGrid, mode } = useFilter()
   }
 }
 
-.note-body{
+.note-body {
   p {
     margin: 20px 0;
   }
@@ -101,11 +92,11 @@ const { notesFilter,  changeGrid, mode } = useFilter()
   padding: 18px 20px;
   margin-bottom: 20px;
   background-color: #ffffff;
-  transition: all .25s cubic-bezier(.02,.01,.47,1);
-  box-shadow: 0 30px 30px rgba(0,0,0,.02);
+  transition: all 0.25s cubic-bezier(0.02, 0.01, 0.47, 1);
+  box-shadow: 0 30px 30px rgba(0, 0, 0, 0.02);
   &:hover {
-    box-shadow: 0 30px 30px rgba(0,0,0,.04);
-    transform: translate(0,-6px);
+    box-shadow: 0 30px 30px rgba(0, 0, 0, 0.04);
+    transform: translate(0, -6px);
     transition-delay: 0s !important;
   }
   &.full {

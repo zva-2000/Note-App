@@ -1,18 +1,16 @@
-import { ref } from 'vue'
+import { ref } from 'vue';
 
-import { store } from './useTagsValue'
+import { store } from './useTagsValue';
 
 export function useTags() {
+  // const tags = ref(['Учеба', 'Работа', 'Семья']);
 
-// const tags = ref(['Учеба', 'Работа', 'Семья']);
+  const newTag = ref('');
 
-const newTag = ref('')
-
-const addTegFunctionForCompose = () => {
+  const addTegFunctionForCompose = () => {
     store.tags.push(newTag.value);
-    console.log('vdfbgf')
-};
+    newTag.value = '';
+  };
 
-return { addTegFunctionForCompose, newTag }
-    
+  return { addTegFunctionForCompose, newTag };
 }
