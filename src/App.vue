@@ -21,21 +21,17 @@ import AllNotes from './components/AllNotes.vue';
 
 import { useTags } from './composables/useTags.js';
 
-import { store } from './composables/useTagsValue.js';
+import { useNotes } from './composables/useNotes.js';
 
-import { notesArray } from './composables/useNotes.js';
-
-import { searchValue } from './composables/SearcheValue.js';
+import { useFilter } from './composables/useFilter.ts';
 
 import NotesWindow from './components/NotesWindow.vue';
-
-// const { search } = useFilter()
-
-// import newNote from "./components/TakeNewNote.vue";
 
 const options = ref(['Очень важно', 'Важно', 'Не важно']);
 
 const { addTegFunctionForCompose, newTag } = useTags();
+
+const { search } = useFilter();
 
 // const tegs = ref(['Учеба', 'Работа', 'Семья']);
 
@@ -75,20 +71,6 @@ function OpenDrop() {
   isOpen.value = !isOpen.value;
   console.log('Button clicked!');
 }
-
-const notesFilter = computed(() => {
-  console.log('Button input!111');
-  let array = notesArray.notes;
-
-  if (!search.value) return array;
-
-  let searchValue = search.value.trim().toLowerCase();
-  array = array.filter(function (note) {
-    return note.title.toLowerCase().includes(searchValue);
-  });
-
-  return array;
-});
 
 function AddNote() {
   let { title, descr, impr, teg } = note;
@@ -135,14 +117,14 @@ let error = ref('');
 <template>
   <p>title: {{ note.title }}</p>
 
-  <p>search: {{ searchValue.search }}</p>
+  <p>search: {{ search }}</p>
 
   <p>date: {{ note.date }}</p>
   <p>descr: {{ note.descr }}</p>
   <p>impr: {{ note.impr }}</p>
   <p>teg: {{ note.teg }}, {{ newTag }}</p>
 
-  <SearchInput v-model:value="searchValue.search" />
+  <SearchInput v-model:value="search" />
 
   <!-- <p v-for="note in notes" :key="note.title" @input="notesFilter">{{ note }}</p> -->
 

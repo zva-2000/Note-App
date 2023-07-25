@@ -2,7 +2,7 @@
     <ul class="selected-tags">
       <li 
       class="tags-li"
-      v-for="(item, index) in items" :key="index">
+      v-for="(item, index) in items" :key="index" @click="ChooseTag(item)">
         {{ item }}
       </li>
     </ul>
@@ -13,6 +13,14 @@
 const props = defineProps<{
   items: string[];
 }>();
+
+const emit = defineEmits<{
+  (e: 'chooseTag', item: string): void;
+}>();
+
+const ChooseTag = (item: string) => {
+  emit('chooseTag', item);
+};
 
 </script>
 

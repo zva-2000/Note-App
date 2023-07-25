@@ -12,16 +12,36 @@
       </div>
     </li>
   </ul>
+
+  
+
 </template>
 
 <script setup lang="ts">
-// import { notesArray } from '../composables/useNotes.js'
 
-import { notesFilter, useFilter } from '../composables/useFilter.js';
+import { computed, ref } from 'vue';
+
+import { useTags } from '../composables/useTags.js'
+
+import { useNotes } from '../composables/useNotes.js'
+
+import { useFilter } from '../composables/useFilter.ts';
 
 import SelectedTegs from './SelectedTegs.vue';
 
 const { notesFilter, viewMode } = useFilter();
+
+const { notes } = useNotes();
+
+const { tags } = useTags();
+
+let selectedTag = ref('Учёба');
+
+let filteredNotes = computed(() => {
+  if (selectedTag.value === 'Учёба')
+  return notesFilter.value.filter((note) => note.value.teg.includes(selectedTag.value));
+});
+
 </script>
 
 <style lang="scss">

@@ -1,7 +1,6 @@
-import { reactive } from 'vue'
+import { ref } from 'vue'
 
-export const notesArray = reactive({
-  notes: [
+const notes = ref([
     {
       title: 'Сделать все задачи',
       descr: 'На отлично!',
@@ -24,4 +23,8 @@ export const notesArray = reactive({
       teg: ['Семья'],
     },
   ]
-})
+)
+
+export function useNotes() {
+  return { notes };
+}

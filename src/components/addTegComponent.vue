@@ -23,16 +23,12 @@
     />
   </div>
 
-
-
 </template>
 
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 
 import { useTags } from '../composables/useTags.js'
-
-import { store } from '../composables/useTagsValue.js'
 
 import BaseButtonForSVG from './BaseButtonForSVG.vue';
 
@@ -44,7 +40,7 @@ import BaseList from './BaseList.vue';
 
 import SelectedTegs from './SelectedTegs.vue';
 
-const { addTegFunctionForCompose, newTag } = useTags();
+const { addTegFunctionForCompose, newTag, tags } = useTags();
 
 const props = defineProps<{
   // note: { teg: string };
@@ -75,7 +71,7 @@ const chooseTeg = (tegOne: string) => {
 };
 
 const addTegFunction = () => {
-  const tegsLowerCase = store.tags.map((tag: string) => tag.toLowerCase());
+  const tegsLowerCase = tags.value.map((tag: string) => tag.toLowerCase());
   const inputLowerCase = newTag.value.toLowerCase();
   if (tegsLowerCase.includes(inputLowerCase)) {
     emit('update:error', 'Такой тег уже есть');
@@ -87,10 +83,10 @@ const addTegFunction = () => {
 
 const filteredTegs = computed(() => {
   if (newTag.value === '') {
-    return store.tags;
+    return tags.value;
   } else {
     const inputLowerCase = newTag.value.toLowerCase();
-    return store.tags.filter((tag: string) =>
+    return tags.value.filter((tag: string) =>
       tag.toLowerCase().includes(inputLowerCase)
     );
   }
