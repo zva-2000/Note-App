@@ -1,6 +1,6 @@
 <template>
-  <ul class="notes" :class="viewMode">
-    <li class="note" v-for="(note, index) in notesFilter" :key="index">
+  <ul class="notes">
+    <li class="note" v-for="(note, index) in notesFilter" :key="index" :class="viewMode">
       <div class="note-header" :class="viewMode">
         <h1>{{ note.title }}</h1>
       </div>
@@ -19,7 +19,7 @@
 
 <script setup lang="ts">
 
-import { computed, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 
 import { useTags } from '../composables/useTags.js'
 
@@ -37,10 +37,11 @@ const { tags } = useTags();
 
 let selectedTag = ref('Учёба');
 
-let filteredNotes = computed(() => {
-  if (selectedTag.value === 'Учёба')
-  return notesFilter.value.filter((note) => note.value.teg.includes(selectedTag.value));
-});
+// let filteredNotes = computed(() => {
+//   return notesFilter.value.filter((note) => note.value.teg.includes(selectedTag.value));
+// });
+
+
 
 </script>
 
@@ -86,9 +87,16 @@ let filteredNotes = computed(() => {
       margin-right: 0;
     }
   }
-  &.full {
-    justify-content: center;
-    p {
+
+.note-header .List {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  h1 {
+    font-size: 32px;
+  }
+  p {
+      justify-content: center;
       margin-right: 16px;
       &:last-child {
         margin-right: 0;
@@ -108,7 +116,6 @@ let filteredNotes = computed(() => {
 }
 
 .note {
-  width: 48%;
   padding: 18px 20px;
   margin-bottom: 20px;
   background-color: #ffffff;
@@ -119,11 +126,35 @@ let filteredNotes = computed(() => {
     transform: translate(0, -6px);
     transition-delay: 0s !important;
   }
-  &.full {
-    width: 100%;
-    text-align: center;
-  }
 }
+
+.Grid {
+  width: 48%;
+}
+
+.List {
+  width: 100%;
+  justify-content: center;
+  text-align: center;
+}
+
+// .note {
+
+//   padding: 18px 20px;
+//   margin-bottom: 20px;
+//   background-color: #ffffff;
+//   transition: all 0.25s cubic-bezier(0.02, 0.01, 0.47, 1);
+//   box-shadow: 0 30px 30px rgba(0, 0, 0, 0.02);
+//     p {
+//       margin-right: 16px;
+//       justify-content: center;
+//       text-align: center;
+//       &:last-child {
+//         margin-right: 0;
+//       }
+//     }
+//   }
+
 
 .note-teg {
   margin-top: 0px;

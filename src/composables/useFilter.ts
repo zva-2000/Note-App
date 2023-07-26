@@ -39,5 +39,5 @@ export function useFilter() {
     viewMode.value = newMode;
   }
 
-  return { notesFilter, changeGrid, search };
+  return { notesFilter, changeGrid, search, viewMode };
 }

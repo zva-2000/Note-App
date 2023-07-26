@@ -33,8 +33,6 @@ const { addTegFunctionForCompose, newTag } = useTags();
 
 const { search } = useFilter();
 
-// const tegs = ref(['Учеба', 'Работа', 'Семья']);
-
 const listOpen = ref(false);
 
 let showModal = ref(false);

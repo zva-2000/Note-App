@@ -25,6 +25,14 @@ const notes = ref([
   ]
 )
 
+let note = ref({
+  title: '',
+  descr: '',
+  impr: '',
+  date: '',
+  teg: [],
+});
+
 export function useNotes() {
-  return { notes };
+  return { notes, note };
 }
