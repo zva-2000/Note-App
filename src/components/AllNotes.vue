@@ -1,6 +1,11 @@
 <template>
   <ul class="notes">
-    <li class="note" v-for="(note, index) in notesFilter" :key="index" :class="viewMode">
+    <li
+      class="note"
+      v-for="(note, index) in notesFilterByTag"
+      :key="index"
+      :class="viewMode"
+    >
       <div class="note-header" :class="viewMode">
         <h1>{{ note.title }}</h1>
       </div>
@@ -12,18 +17,14 @@
       </div>
     </li>
   </ul>
-
-  
-
 </template>
 
 <script setup lang="ts">
-
 import { computed, onMounted, ref } from 'vue';
 
-import { useTags } from '../composables/useTags.js'
+import { useTags } from '../composables/useTags.js';
 
-import { useNotes } from '../composables/useNotes.js'
+import { useNotes } from '../composables/useNotes.js';
 
 import { useFilter } from '../composables/useFilter.ts';
 
@@ -35,14 +36,17 @@ const { notes } = useNotes();
 
 const { tags } = useTags();
 
-let selectedTag = ref('Учёба');
-
 // let filteredNotes = computed(() => {
 //   return notesFilter.value.filter((note) => note.value.teg.includes(selectedTag.value));
 // });
 
+let selectedTag = ref('Учеба');
 
-
+const notesFilterByTag = computed(() => {
+  return notesFilter.value.filter((note: any) =>
+    note.teg.find((item: string) => item === selectedTag.value)
+  );
+});
 </script>
 
 <style lang="scss">
@@ -88,14 +92,14 @@ let selectedTag = ref('Учёба');
     }
   }
 
-.note-header .List {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  h1 {
-    font-size: 32px;
-  }
-  p {
+  .note-header .List {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    h1 {
+      font-size: 32px;
+    }
+    p {
       justify-content: center;
       margin-right: 16px;
       &:last-child {
@@ -154,7 +158,6 @@ let selectedTag = ref('Учёба');
 //       }
 //     }
 //   }
-
 
 .note-teg {
   margin-top: 0px;

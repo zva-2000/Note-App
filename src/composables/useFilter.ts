@@ -4,7 +4,7 @@ import { useNotes } from './useNotes.js';
 
 import { GridMode } from '@/types.ts';
 
-import { useTags } from './useTags.js'
+import { useTags } from './useTags.js';
 
 const { notes } = useNotes();
 
@@ -12,22 +12,25 @@ const { tags } = useTags();
 
 let viewMode = ref<keyof typeof GridMode>(GridMode.Grid);
 
-const search = ref('')
+const search = ref('');
+
+const SelectedTeg = ref('');
 
 export function useFilter() {
-
   const notesFilter = computed(() => {
     let array = notes.value;
 
     if (!search.value) return array;
 
     let valueOfSearch = search.value.trim().toLowerCase();
-    array = array.filter(function(note) {
+    array = array.filter(function (note) {
       return (
         note.title.toLowerCase().includes(valueOfSearch) ||
         note.descr.toLowerCase().includes(valueOfSearch) ||
         note.date.toLowerCase().includes(valueOfSearch) ||
-        note.teg.some((teg: string) => teg.toLowerCase().includes(valueOfSearch))
+        note.teg.some((teg: string) =>
+          teg.toLowerCase().includes(valueOfSearch)
+        )
       );
     });
 
@@ -39,5 +42,10 @@ export function useFilter() {
     viewMode.value = newMode;
   }
 
-  return { notesFilter, changeGrid, search, viewMode };
+  function setTag(tag: string) {
+    // console.log(newMode);
+    SelectedTeg.value = tag;
+  }
+
+  return { notesFilter, changeGrid, search, viewMode, setTag, SelectedTeg };
 }
