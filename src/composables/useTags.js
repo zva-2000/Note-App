@@ -1,10 +1,12 @@
 import { ref } from 'vue';
 
-// import { store } from './useTagsValue';
+import { useNotes } from '../composables/useNotes.js';
 
-// const tags = ref([{id:1, tag:'Учеба'}, {id:2, tag:'Работа'}, {id:2, tag:'Семья'}]);
+const { note } = useNotes();
 
-const tags = ref(['Учеба', 'Работа', 'Семья'])
+const tags = ref(['Все теги','Учеба', 'Работа', 'Семья'])
+
+let choosenTegs = ref([]);
 
 export function useTags() {
   const newTag = ref('');
@@ -14,5 +16,12 @@ export function useTags() {
     newTag.value = '';
   };
 
-  return { addTegFunctionForCompose, newTag, tags };
+  const chooseTeg = (newTag) => {
+  if (!note.value.teg.includes(newTag)) {
+    choosenTegs.value.push(newTag);
+    note.value.teg.push(newTag);
+  }
+  };
+
+  return { addTegFunctionForCompose, newTag, tags, chooseTeg, choosenTegs };
 }

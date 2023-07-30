@@ -31,19 +31,6 @@ const { tags } = useTags();
 
 const { notes } = useNotes();
 
-console.log(tags[1]);
-
-// console.log(TestTags.value)
-
-// let selectedTag = ref('');
-
-// const notesFilterByTag = computed(() => {
-//   return notes.value.filter((note: any) =>
-//     note.teg.find((item: string) => item === selectedTag.value)
-//   );
-// });
-
-// console.log(notesFilterByTag);
 </script>
 
 <style></style>

@@ -8,6 +8,7 @@
     >
       <div class="note-header" :class="viewMode">
         <h1>{{ note.title }}</h1>
+        <BaseDeleteButton class="delete-button"/>
       </div>
       <div class="note-body">
         <p>{{ note.descr }}</p>
@@ -17,10 +18,17 @@
       </div>
     </li>
   </ul>
+
+  <ChangeNoteComponent/>
+
 </template>
 
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
+
+import BaseDeleteButton from './BaseDeleteButton.vue';
+
+import ChangeNoteComponent from './ChangeNoteComponent.vue';
 
 import { useTags } from '../composables/useTags.js';
 
@@ -30,23 +38,12 @@ import { useFilter } from '../composables/useFilter.ts';
 
 import SelectedTegs from './SelectedTegs.vue';
 
-const { notesFilter, viewMode } = useFilter();
+const { notesFilter, viewMode, notesFilterByTag } = useFilter();
 
 const { notes } = useNotes();
 
 const { tags } = useTags();
 
-// let filteredNotes = computed(() => {
-//   return notesFilter.value.filter((note) => note.value.teg.includes(selectedTag.value));
-// });
-
-let selectedTag = ref('Учеба');
-
-const notesFilterByTag = computed(() => {
-  return notesFilter.value.filter((note: any) =>
-    note.teg.find((item: string) => item === selectedTag.value)
-  );
-});
 </script>
 
 <style lang="scss">
@@ -81,18 +78,8 @@ const notesFilterByTag = computed(() => {
     font-size: 22px;
     color: #402caf;
   }
-  svg {
-    margin-right: 12px;
-    color: #999999;
-    &.active {
-      color: #402caf;
-    }
-    &:last-child {
-      margin-right: 0;
-    }
-  }
-
-  .note-header .List {
+}
+.note-header .List {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
@@ -106,7 +93,6 @@ const notesFilterByTag = computed(() => {
         margin-right: 0;
       }
     }
-  }
 }
 
 .note-body {
@@ -142,22 +128,13 @@ const notesFilterByTag = computed(() => {
   text-align: center;
 }
 
-// .note {
-
-//   padding: 18px 20px;
-//   margin-bottom: 20px;
-//   background-color: #ffffff;
-//   transition: all 0.25s cubic-bezier(0.02, 0.01, 0.47, 1);
-//   box-shadow: 0 30px 30px rgba(0, 0, 0, 0.02);
-//     p {
-//       margin-right: 16px;
-//       justify-content: center;
-//       text-align: center;
-//       &:last-child {
-//         margin-right: 0;
-//       }
-//     }
-//   }
+.delete-button {
+  margin-right: 12px;
+  color: #999999;
+    &:last-child {
+      margin-right: 0;
+    }
+}
 
 .note-teg {
   margin-top: 0px;

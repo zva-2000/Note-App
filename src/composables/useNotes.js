@@ -34,5 +34,10 @@ let note = ref({
 });
 
 export function useNotes() {
-  return { notes, note };
+
+  const removeNote = (index) => {
+    notes.value.splice(index, 1);
+  };
+
+  return { notes, note, removeNote };
 }

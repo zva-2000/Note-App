@@ -17,6 +17,11 @@ const search = ref('');
 const SelectedTeg = ref('');
 
 export function useFilter() {
+  
+  function setTag(tag: string) {
+    SelectedTeg.value = tag;
+  }
+
   const notesFilter = computed(() => {
     let array = notes.value;
 
@@ -37,15 +42,18 @@ export function useFilter() {
     return array;
   });
 
+  const notesFilterByTag = computed(() => {
+    if (!SelectedTeg.value) return notesFilter.value;
+    if (SelectedTeg.value === 'Все теги') return notesFilter.value;
+    return notesFilter.value.filter((note: any) =>
+      note.teg.find((item: string) => item === SelectedTeg.value)
+    );
+  });
+
   function changeGrid(newMode: keyof typeof GridMode) {
     console.log(newMode);
     viewMode.value = newMode;
   }
 
-  function setTag(tag: string) {
-    // console.log(newMode);
-    SelectedTeg.value = tag;
-  }
-
-  return { notesFilter, changeGrid, search, viewMode, setTag, SelectedTeg };
+  return { notesFilter, changeGrid, search, viewMode, setTag, SelectedTeg, notesFilterByTag };
 }

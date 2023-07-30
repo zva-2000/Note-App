@@ -9,7 +9,7 @@ import BaseButton from './components/BaseButton.vue';
 
 import MovedButtons from './components/MovedButtons.vue';
 
-import BaseDeleteButton from './components/BaseDeleteButton.vue';
+// import BaseDeleteButton from './components/BaseDeleteButton.vue';
 
 import SearchInput from './components/SearchInput.vue';
 
@@ -19,6 +19,8 @@ import AddTegComponent from './components/AddTegComponent.vue';
 
 import AllNotes from './components/AllNotes.vue';
 
+import ModalWindow from './components/ModalWindow.vue'
+
 import { useTags } from './composables/useTags.js';
 
 import { useNotes } from './composables/useNotes.js';
@@ -27,9 +29,11 @@ import { useFilter } from './composables/useFilter.ts';
 
 import NotesWindow from './components/NotesWindow.vue';
 
-const options = ref(['Очень важно', 'Важно', 'Не важно']);
+// const options = ref(['Очень важно', 'Важно', 'Не важно']);
 
-const { addTegFunctionForCompose, newTag } = useTags();
+const { addTegFunctionForCompose, newTag, choosenTegs } = useTags();
+
+const { notes, note } = useNotes();
 
 const { search } = useFilter();
 
@@ -45,20 +49,8 @@ let NewImr = ref('');
 
 let grid = ref(true);
 
-let note = ref({
-  title: '',
-  descr: '',
-  impr: '',
-  date: '',
-  teg: [],
-});
-
 function handleClick() {
   console.log('Button clicked!');
-}
-
-function ChangeGrid() {
-  grid.value = !grid.value;
 }
 
 function showModalFunc() {
@@ -94,22 +86,6 @@ function AddNote() {
   note.impr = '';
   note.teg = [];
 }
-
-const removeNote = (index) => {
-  notes.splice(index, 1);
-  console.log('Button clicked!');
-};
-
-let selectedTegs = ref([]);
-
-const chooseTeg = (newTag) => {
-  if (!note.value.teg.includes(newTag)) {
-    selectedTegs.value.push(newTag);
-    note.value.teg.push(newTag);
-  }
-};
-
-let error = ref('');
 </script>
 
 <template>
@@ -126,7 +102,7 @@ let error = ref('');
 
   <!-- <p v-for="note in notes" :key="note.title" @input="notesFilter">{{ note }}</p> -->
 
-  <div class="input-container">
+  <!-- <div class="input-container">
     <p class="error">{{ error }}</p>
 
     <BaseInput
@@ -163,19 +139,11 @@ let error = ref('');
       @update:error="error = $event"
       :selectedTegs="note.teg"
     />
-  </div>
+  </div> -->
 
-  <!-- {{ notesFilter }} -->
+  <ModalWindow/>
 
-  <NotesWindow />
-
-  <!-- @addTegFunction="addTegFunction" -->
-  <!-- v-model:inputTeg="newTag" -->
-  <!-- v-model:tegs="tegs" -->
-
-  <!-- <MovedButtons @onChangeGrid="ChangeGrid" :grid="grid" /> -->
-
-  <BaseDeleteButton @onDeleteNote="removeNote" />
+  <NotesWindow/>
 
   <base-button @click="handleClick">
     <span>Кнопка</span>
@@ -185,17 +153,10 @@ let error = ref('');
     <span>Добавить</span>
   </base-button>
 
-  <base-button @click="AddNote">
+  <!-- <base-button @click="AddNote">
     <span>Сохранить</span>
-  </base-button>
+  </base-button> -->
 
-  <!-- <newNote
-    @addNote="AddNote"
-    :swowValue="showModal"
-    :placeholderTeg="placeholderTeg"
-    :placeholderText="placeholderText"
-    :typeText="typeText"
-  ></newNote> -->
 </template>
 
 <style scoped>
@@ -221,44 +182,6 @@ let error = ref('');
 }
 .logo.vue:hover {
   filter: drop-shadow(0 0 2em #42b883aa);
-}
-
-.container {
-  flex-grow: 1;
-  display: flex;
-  width: 1000px;
-  gap: 11px;
-  max-width: 1000px;
-  margin-bottom: 50px;
-}
-
-.input-container {
-  width: 1000px;
-  margin: auto;
-  gap: 100px;
-  margin-bottom: 10px;
-}
-
-.date-input {
-  width: 310px;
-  position: relative;
-}
-
-.title-input {
-  margin-top: 105px;
-}
-
-.teg-input {
-  width: 310px;
-  gap: 0px;
-}
-
-.impr-input {
-  width: 310px;
-}
-
-.base-input {
-  margin-bottom: 10px;
 }
 
 .error {

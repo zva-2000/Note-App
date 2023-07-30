@@ -14,7 +14,7 @@
 
     <SelectedTegs 
     class="tags"
-    :items="props.selectedTegs"/>
+    :items="choosenTegs"/>
 
     <BaseList
       :items="filteredTegs"
@@ -40,13 +40,12 @@ import BaseList from './BaseList.vue';
 
 import SelectedTegs from './SelectedTegs.vue';
 
-const { addTegFunctionForCompose, newTag, tags } = useTags();
+import BaseButton from './BaseButton.vue';
+
+const { addTegFunctionForCompose, newTag, tags, choosenTegs } = useTags();
 
 const props = defineProps<{
-  // note: { teg: string };
-  // tegs: string[];
   selectedTegs: string[];
-  // inputTeg: string;
   className: string;
 }>();
 
@@ -110,4 +109,5 @@ const filteredTegs = computed(() => {
 .tags {
   margin-top: 10px;
 }
+
 </style>
