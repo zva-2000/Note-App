@@ -4,7 +4,7 @@ import { useNotes } from '../composables/useNotes.js';
 
 const { note } = useNotes();
 
-const tags = ref(['Все теги','Учеба', 'Работа', 'Семья'])
+const tags = ref(['Учеба', 'Работа', 'Семья'])
 
 let choosenTegs = ref([]);
 

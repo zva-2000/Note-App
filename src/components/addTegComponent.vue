@@ -14,7 +14,7 @@
 
     <SelectedTegs 
     class="tags"
-    :items="choosenTegs"/>
+    :items="note.teg"/>
 
     <BaseList
       :items="filteredTegs"
@@ -30,6 +30,8 @@ import { computed, ref } from 'vue';
 
 import { useTags } from '../composables/useTags.js'
 
+import { useNotes } from '../composables/useNotes.js'
+
 import BaseButtonForSVG from './BaseButtonForSVG.vue';
 
 import SvgForButtons from './SvgForButtons.vue';
@@ -43,6 +45,8 @@ import SelectedTegs from './SelectedTegs.vue';
 import BaseButton from './BaseButton.vue';
 
 const { addTegFunctionForCompose, newTag, tags, choosenTegs } = useTags();
+
+const { note } = useNotes();
 
 const props = defineProps<{
   selectedTegs: string[];
@@ -95,7 +99,7 @@ const filteredTegs = computed(() => {
 
 <style>
 .input-teg {
-  width: 350px;
+  width: 40%;
 }
 
 .plusButton {

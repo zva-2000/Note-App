@@ -20,17 +20,12 @@
       </div>
 
       <div class="container">
+
         <BaseInput
           class="date-input"
           v-model:value="note.date"
           type="date"
           placeholder="Введите дату"
-        />
-
-        <ComponentWithDropdown
-          class="impr-input"
-          v-model:value="note.impr"
-          v-model:options="options"
         />
 
         <addTegComponent
@@ -39,6 +34,13 @@
           @update:error="error = $event"
           :selectedTegs="note.teg"
         />
+
+        <ComponentWithDropdown
+          class="impr-input"
+          v-model:value="note.impr"
+          v-model:options="options"
+        />
+
       </div>
 
       <base-button @click="AddNote" class="save-button">
@@ -66,7 +68,7 @@ import { useNotes } from '../composables/useNotes.js'
 
 import { useTags } from '../composables/useTags.js'
 
-const { note, notes } = useNotes();
+const { note, notes, AddNote } = useNotes();
 
 const { chooseTeg } = useTags();
 
@@ -95,7 +97,7 @@ let error = ref('');
 }
 
 .date-input {
-  width: 310px;
+  width: 40%;
   position: relative;
 }
 
@@ -109,7 +111,7 @@ let error = ref('');
 }
 
 .impr-input {
-  width: 310px;
+  width: 40%;
 }
 
 .base-input {
@@ -117,7 +119,9 @@ let error = ref('');
 }
 
 .save-button {
-  margin: auto;
+  font-size: 85%;
+  margin-left: 40%;
+  margin-top: 7%;
 }
 
 .modal {
@@ -133,11 +137,13 @@ let error = ref('');
 }
 
 .modal-content {
+    position: relative;
+    justify-content: center;
     background-color: #fefefe;
     margin: 15% auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 80%; 
+    width: 70%; 
     border-radius: 5px;
 }
 

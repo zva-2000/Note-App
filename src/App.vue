@@ -33,7 +33,7 @@ import NotesWindow from './components/NotesWindow.vue';
 
 const { addTegFunctionForCompose, newTag, choosenTegs } = useTags();
 
-const { notes, note } = useNotes();
+const { notes, note, isVisible } = useNotes();
 
 const { search } = useFilter();
 
@@ -62,30 +62,6 @@ function OpenDrop() {
   console.log('Button clicked!');
 }
 
-function AddNote() {
-  let { title, descr, impr, teg } = note;
-  // if (title === '') {
-  //   NewMessege = 'Wrong note';
-  //   return false;
-  // }
-  // if (impr === '') {
-  //   NewImr = 'Choose the importance of note';
-  //   return false;
-  // }
-  notesArray.notes.push({
-    title,
-    descr,
-    impr,
-    date: new Date(Date.now()).toLocaleString(),
-    teg,
-  });
-  // NewMessege = null;
-  // NewImr = null;
-  note.title = '';
-  note.descr = '';
-  note.impr = '';
-  note.teg = [];
-}
 </script>
 
 <template>
@@ -141,7 +117,7 @@ function AddNote() {
     />
   </div> -->
 
-  <ModalWindow/>
+  <ModalWindow v-if="isVisible"/>
 
   <NotesWindow/>
 
