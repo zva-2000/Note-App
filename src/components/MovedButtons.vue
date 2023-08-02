@@ -26,17 +26,6 @@ import { GridMode } from '@/types.ts';
 
 const { changeGrid, viewMode } = useFilter();
 
-const props = defineProps({
-  // grid: Boolean,
-});
-
-// const emit = defineEmits<{
-//   (e: 'onChangeGrid', payload: boolean): void;
-// }>();
-
-// const onChangeGrid = () => {
-//   emit('onChangeGrid', props.grid);
-// };
 </script>
 
 <style>

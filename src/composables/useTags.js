@@ -4,6 +4,8 @@ import { useNotes } from '../composables/useNotes.js';
 
 const { note } = useNotes();
 
+const tagsForMainWindow = ref(['Все теги','Учеба', 'Работа', 'Семья'])
+
 const tags = ref(['Учеба', 'Работа', 'Семья'])
 
 let choosenTegs = ref([]);
@@ -13,6 +15,7 @@ export function useTags() {
 
   const addTegFunctionForCompose = () => {
     tags.value.push(newTag.value);
+    tagsForMainWindow.value.push(newTag.value);
     newTag.value = '';
   };
 
@@ -23,5 +26,5 @@ export function useTags() {
   }
   };
 
-  return { addTegFunctionForCompose, newTag, tags, chooseTeg, choosenTegs };
+  return { addTegFunctionForCompose, newTag, tags, chooseTeg, choosenTegs, tagsForMainWindow };
 }

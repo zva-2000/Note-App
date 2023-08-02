@@ -18,8 +18,8 @@
       </div>
     </li>
   </ul>
-
-  <ChangeNoteComponent/>
+<!-- 
+  <ChangeNoteComponent/> -->
 
 </template>
 

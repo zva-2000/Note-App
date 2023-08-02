@@ -1,6 +1,16 @@
 import { ref } from 'vue'
 
-let isVisible = ref(true);
+let visibleModal = ref(false);
+
+const openModal = () => {
+  visibleModal.value = true;
+};
+
+const closeModal = () => {
+  visibleModal.value = false;
+};
+
+const noneTitleMistake = ref('')
 
 const notes = ref([
     {
@@ -43,10 +53,10 @@ export function useNotes() {
 
   function AddNote() {
     let { title, descr, impr, teg, date } = note.value;
-    // if (title === '') {
-    //   NewMessege = 'Wrong note';
-    //   return false;
-    // }
+    if (title === '' && descr === '') {
+      noneTitleMistake.value = 'Введите заголовок или описание';
+      return false;
+    }
     // if (impr === '') {
     //   NewImr = 'Choose the importance of note';
     //   return false;
@@ -58,16 +68,16 @@ export function useNotes() {
       date,
       teg,
     });
-    // NewMessege = null;
-    // NewImr = null;
+    noneTitleMistake.value = null;
+    // NewImr.value  = null;
     note.value.date = '';
     note.value.title = '';
     note.value.descr = '';
     note.value.impr = '';
     note.value.teg = [];
 
-    isVisible.value = !isVisible.value;
+    closeModal();
   }
 
-  return { notes, note, removeNote, AddNote, isVisible };
+  return { notes, note, removeNote, AddNote, visibleModal, openModal, closeModal, noneTitleMistake };
 }

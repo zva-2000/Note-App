@@ -46,7 +46,7 @@ export function useFilter() {
 
   const notesFilterByTag = computed(() => {
     if (!SelectedTeg.value) return notesFilter.value;
-    if (allTags.value === 'Все теги') return notesFilter.value;
+    if (SelectedTeg.value === 'Все теги') return notesFilter.value;
     return notesFilter.value.filter((note: any) =>
       note.teg.find((item: string) => item === SelectedTeg.value)
     );

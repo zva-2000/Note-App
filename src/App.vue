@@ -7,7 +7,7 @@ import BaseTextarea from './components/BaseTextarea.vue';
 
 import BaseButton from './components/BaseButton.vue';
 
-import MovedButtons from './components/MovedButtons.vue';
+// import MovedButtons from './components/MovedButtons.vue';
 
 // import BaseDeleteButton from './components/BaseDeleteButton.vue';
 
@@ -19,7 +19,7 @@ import AddTegComponent from './components/AddTegComponent.vue';
 
 import AllNotes from './components/AllNotes.vue';
 
-import ModalWindow from './components/ModalWindow.vue'
+// import ModalWindow from './components/ModalWindow.vue'
 
 import { useTags } from './composables/useTags.js';
 
@@ -35,7 +35,7 @@ const { addTegFunctionForCompose, newTag, choosenTegs } = useTags();
 
 const { notes, note, isVisible } = useNotes();
 
-const { search } = useFilter();
+// const { search } = useFilter();
 
 const listOpen = ref(false);
 
@@ -74,63 +74,12 @@ function OpenDrop() {
   <p>impr: {{ note.impr }}</p>
   <p>teg: {{ note.teg }}, {{ newTag }}</p>
 
-  <SearchInput v-model:value="search" />
-
-  <!-- <p v-for="note in notes" :key="note.title" @input="notesFilter">{{ note }}</p> -->
-
-  <!-- <div class="input-container">
-    <p class="error">{{ error }}</p>
-
-    <BaseInput
-      placeholder="Введите текст"
-      v-model:value="note.title"
-      type="text"
-      class="base-input"
-    />
-
-    <BaseTextarea
-      placeholder="Введите текст"
-      v-model:value="note.descr"
-      class="base-textarea"
-    />
-  </div>
-
-  <div class="container">
-    <BaseInput
-      class="date-input"
-      v-model:value="note.date"
-      type="date"
-      placeholder="Введите дату"
-    />
-
-    <ComponentWithDropdown
-      class="impr-input"
-      v-model:value="note.impr"
-      v-model:options="options"
-    />
-
-    <AddTegComponent
-      :class-name="'teg-input'"
-      @chooseTeg="chooseTeg"
-      @update:error="error = $event"
-      :selectedTegs="note.teg"
-    />
-  </div> -->
-
-  <ModalWindow v-if="isVisible"/>
+  <!-- <SearchInput v-model:value="search" /> -->
 
   <NotesWindow/>
 
-  <base-button @click="handleClick">
+  <!-- <base-button @click="handleClick">
     <span>Кнопка</span>
-  </base-button>
-
-  <base-button @click="showModalFunc">
-    <span>Добавить</span>
-  </base-button>
-
-  <!-- <base-button @click="AddNote">
-    <span>Сохранить</span>
   </base-button> -->
 
 </template>
@@ -160,8 +109,5 @@ function OpenDrop() {
   filter: drop-shadow(0 0 2em #42b883aa);
 }
 
-.error {
-  text-align: center;
-  color: red;
-}
+
 </style>

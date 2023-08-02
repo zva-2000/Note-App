@@ -1,9 +1,17 @@
 <template>
 
-<div class="modal">
+<base-button @click="openModal">
+    <span>Добавить</span>
+</base-button>
+
+<div class="modal" v-if="visibleModal">
   <div class="modal-content">
     <div class="input-container">
         <p class="error">{{ error }}</p>
+
+        <p class="error">{{ noneTitleMistake }}</p>        
+
+        <BaseDeleteButton class="delete-button" @click="closeModal"/>
 
         <BaseInput
           placeholder="Введите текст"
@@ -54,6 +62,8 @@
 
 import { ref } from 'vue';
 
+import BaseDeleteButton from './BaseDeleteButton.vue';
+
 import BaseInput from './BaseInput.vue';
 
 import BaseTextarea from './BaseTextarea.vue';
@@ -68,13 +78,15 @@ import { useNotes } from '../composables/useNotes.js'
 
 import { useTags } from '../composables/useTags.js'
 
-const { note, notes, AddNote } = useNotes();
+const { note, AddNote, visibleModal, openModal, closeModal, noneTitleMistake } = useNotes();
 
 const { chooseTeg } = useTags();
 
 const options = ref(['Очень важно', 'Важно', 'Не важно']);
 
 let error = ref('');
+
+const showModalFunc = () => (visibleModal.value = !visibleModal.value);
 
 </script>
 
@@ -115,6 +127,7 @@ let error = ref('');
 }
 
 .base-input {
+  margin-top: 10px;
   margin-bottom: 10px;
 }
 
@@ -125,11 +138,12 @@ let error = ref('');
 }
 
 .modal {
-    /* display: none;  */
     position: fixed; 
     z-index: 1; 
-    left: 0;
     top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
     width: 100%; 
     height: 100%; 
     overflow: auto;
@@ -147,4 +161,8 @@ let error = ref('');
     border-radius: 5px;
 }
 
+.error {
+  text-align: center;
+  color: red;
+}
 </style>
