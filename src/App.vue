@@ -67,7 +67,7 @@ function OpenDrop() {
 <template>
   <p>title: {{ note.title }}</p>
 
-  <p>search: {{ search }}</p>
+  <!-- <p>search: {{ search }}</p> -->
 
   <p>date: {{ note.date }}</p>
   <p>descr: {{ note.descr }}</p>

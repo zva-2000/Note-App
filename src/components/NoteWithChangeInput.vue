@@ -1,15 +1,9 @@
 <template>
-  
-  <!-- <ul class="notes">
-    <li
-      class="note"
-      v-for="(note, index) in notesFilterByTag"
-      :key="index"
-      :class="viewMode"
-    >
-      <div class="note-header" :class="viewMode">
+<div class="note">
+  <div class="note-header" :class="viewMode">
         <h1>{{ note.title }}</h1>
-        <ChangeNoteButton/>
+        <!-- <input type="text" v-model="note.title"> -->
+        <ChangeNoteButton @click="changeNo1"/>
         <BaseDeleteButton class="delete-button" @click="removeNote(index)"/>
       </div>
       <div class="note-body">
@@ -18,59 +12,39 @@
         <p class="note-date">{{ note.date }}</p>
         <SelectedTegs class="note-teg" :items="note.teg" />
       </div>
-    </li>
-  </ul> -->
-
-<div class="notes">
-
-  <!-- <input type="text" v-model="note.title"> -->
-
-
-  <div v-if="index === curIndex">
-    <InputsForChangeNote v-for="(note, index) in notesFilterByTag" :key="index" :note="note"/>
-  </div>
-
-  <div >
-    <NoteWithChangeInput v-for="(note, index) in notesFilterByTag" :key="index" :note="note" :index="index"/>
-  </div>
-<!-- 
-  <button @click="changeNo1">122</button> -->
-
-</div>
-
+  </div>  
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue';
 
-import NoteWithChangeInput from './NoteWithChangeInput.vue'
+const props = defineProps<{
+  note: {title: string,
+  descr: string,
+  impr: string,
+  date: string,
+  teg: string[]};
+  index: number;
+}>();
 
-import InputsForChangeNote from './InputsForChangeNote.vue';
 
 import BaseDeleteButton from './BaseDeleteButton.vue';
 
 import ChangeNoteButton from './ChangeNoteButton.vue';
 
-// import ChangeNoteComponent from './ChangeNoteComponent.vue';
-
-// import SelectedTegs from './SelectedTegs.vue';
-
-import { useTags } from '../composables/useTags.js';
-
 import { useNotes } from '../composables/useNotes.js';
+
+import SelectedTegs from './SelectedTegs.vue';
+
+const { notes, removeNote, visibleModal, openModal, closeModal, changeNo1 } = useNotes();
 
 import { useFilter } from '../composables/useFilter.ts';
 
-
 const { notesFilter, viewMode, notesFilterByTag } = useFilter();
-
-const { notes, removeNote, visibleModal, openModal, closeModal, note, curIndex, changeNo1 } = useNotes();
-
-const { tags } = useTags();
 
 </script>
 
 <style lang="scss">
+
 .note-unit {
   &.full {
     justify-content: center;
@@ -164,7 +138,4 @@ const { tags } = useTags();
   margin-top: 0px;
 }
 
-// .note-date {
-//   margin: 10px 0;
-// }
 </style>

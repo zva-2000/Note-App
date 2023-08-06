@@ -80,13 +80,9 @@ import { useTags } from '../composables/useTags.js'
 
 const { note, AddNote, visibleModal, openModal, closeModal, noneTitleMistake } = useNotes();
 
-const { chooseTeg } = useTags();
-
-const options = ref(['Очень важно', 'Важно', 'Не важно']);
+const { chooseTeg, options } = useTags();
 
 let error = ref('');
-
-const showModalFunc = () => (visibleModal.value = !visibleModal.value);
 
 </script>
 

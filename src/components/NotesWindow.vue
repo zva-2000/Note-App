@@ -5,8 +5,8 @@
   <MovedButtons />
 
   <SearchInput v-model:value="search" />
-
-  <ModalWindow/>
+<!-- 
+  <ModalWindow/> -->
 
 </div>
 
@@ -14,7 +14,7 @@
 
   <SelectedTegs class="tags" :items="tagsForMainWindow" @chooseTag="setTag" />
 
-  <AllNotes />
+  <AllNotes class="all-notes"/>
 
 </div>
 
@@ -63,5 +63,10 @@ const { notes, visibleModal } = useNotes();
 .tags {
   display: flex;
   flex-direction: column;
+  margin-left: 2rem;
+}
+
+.all-notes {
+  margin-left: 8rem;
 }
 </style>

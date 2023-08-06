@@ -1,6 +1,6 @@
 <template>
   <div class="icons">
-    <BaseButtonForSVG @click="removeNote" class="x-button">
+    <BaseButtonForSVG class="x-button">
       <SvgForButtons :name="'svg-delete'"></SvgForButtons>
     </BaseButtonForSVG>
   </div>
@@ -13,7 +13,7 @@ import SvgForButtons from './SvgForButtons.vue';
 
 import { useNotes } from '../composables/useNotes.js';
 
-const { removeNote } = useNotes();
+// const { removeNote } = useNotes();
 
 </script>
 
