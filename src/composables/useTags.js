@@ -2,7 +2,7 @@ import { ref } from 'vue';
 
 import { useNotes } from '../composables/useNotes.js';
 
-const { note } = useNotes();
+const { note, notes } = useNotes();
 
 const options = ref(['Очень важно', 'Важно', 'Не важно']);
 
@@ -28,5 +28,9 @@ export function useTags() {
   }
   };
 
-  return { addTegFunctionForCompose, newTag, tags, chooseTeg, choosenTegs, tagsForMainWindow, options };
+  const addTagToNote = (noteIndex, newTag) => {
+    notes.value[noteIndex].teg.push(newTag);
+  }
+
+  return { addTegFunctionForCompose, newTag, tags, chooseTeg, choosenTegs, tagsForMainWindow, options, addTagToNote };
 }

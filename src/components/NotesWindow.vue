@@ -5,8 +5,8 @@
   <MovedButtons />
 
   <SearchInput v-model:value="search" />
-<!-- 
-  <ModalWindow/> -->
+
+  <ModalWindow/>
 
 </div>
 

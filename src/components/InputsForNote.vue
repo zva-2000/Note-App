@@ -7,9 +7,9 @@
         type="text"
         class="base-input"
     />
-
+<!-- 
     <ChangeNoteButton/>
-    <BaseDeleteButton class="delete-button" @click="removeNote(index)"/>
+    <BaseDeleteButton class="delete-button" @click="removeNote(index)"/> -->
 
     <BaseTextarea
         placeholder="Введите текст"
@@ -29,12 +29,13 @@
         v-model:options="options"
     />
 
-    <!-- <addTegComponent
+    <addTegComponent
         :class-name="'teg-input'"
-        @chooseTeg="chooseTeg"
+        @chooseTeg="addTagToNote"
         :selectedTegs="note.teg"
     />
-    -->
+
+    <!-- <SelectedTegs class="note-teg" :items="note.teg"/> -->
 
 </div>
 </template>
@@ -46,9 +47,7 @@ const props = defineProps<{
   descr: string,
   impr: string,
   date: string,
-  teg: string[]
-    };
-  index: number;
+  teg: string[]};
 }>();
 
 import { useNotes } from '../composables/useNotes.js';
@@ -63,13 +62,11 @@ import ComponentWithDropdown from './ComponentWithDropdown.vue'
 
 import addTegComponent from './addTegComponent.vue';
 
-import BaseDeleteButton from './BaseDeleteButton.vue';
-
-import ChangeNoteButton from './ChangeNoteButton.vue';
+import SelectedTegs from './SelectedTegs.vue';
 
 import { useTags } from '../composables/useTags.js'
 
-const { chooseTeg, options } = useTags();
+const { chooseTeg, options, addTagToNote } = useTags();
 
 </script>
 

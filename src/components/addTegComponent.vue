@@ -14,7 +14,7 @@
 
     <SelectedTegs 
     class="tags"
-    :items="note.teg"/>
+    :items="selectedTegs"/>
 
     <BaseList
       :items="filteredTegs"

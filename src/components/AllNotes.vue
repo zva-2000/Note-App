@@ -23,18 +23,10 @@
 
 <div class="notes">
 
-  <!-- <input type="text" v-model="note.title"> -->
-
-
-  <div v-if="index === curIndex">
-    <InputsForChangeNote v-for="(note, index) in notesFilterByTag" :key="index" :note="note"/>
-  </div>
 
   <div >
-    <NoteWithChangeInput v-for="(note, index) in notesFilterByTag" :key="index" :note="note" :index="index"/>
+    <NoteWithInputs v-for="(note, index) in notesFilterByTag" :key="index" :note="note" :index="index"/>
   </div>
-<!-- 
-  <button @click="changeNo1">122</button> -->
 
 </div>
 
@@ -43,7 +35,7 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
 
-import NoteWithChangeInput from './NoteWithChangeInput.vue'
+import NoteWithInputs from './NoteWithInputs.vue'
 
 import InputsForChangeNote from './InputsForChangeNote.vue';
 

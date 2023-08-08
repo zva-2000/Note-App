@@ -1,21 +1,27 @@
 <template>
 <div class="note">
-  <div class="note-header" :class="viewMode">
-        <h1>{{ note.title }}</h1>
-        <!-- <input type="text" v-model="note.title"> -->
-        <ChangeNoteButton @click="changeNo1"/>
-        <BaseDeleteButton class="delete-button" @click="removeNote(index)"/>
-      </div>
-      <div class="note-body">
-        <p>{{ note.descr }}</p>
-        <p>{{ note.impr }}</p>
-        <p class="note-date">{{ note.date }}</p>
-        <SelectedTegs class="note-teg" :items="note.teg" />
-      </div>
+
+  <div v-if="edit">
+
+       <BaseNote :note="note"/> 
+       
+    </div>
+
+  <div v-if="!edit">
+
+    <InputsForNote :note="note"/>
+
   </div>  
+
+  <ChangeNoteButton @click="editor" class="change-btn"/> 
+
+</div> 
+
 </template>
 
 <script setup lang="ts">
+
+import { ref } from 'vue';
 
 const props = defineProps<{
   note: {title: string,
@@ -23,19 +29,29 @@ const props = defineProps<{
   impr: string,
   date: string,
   teg: string[]};
-  index: number;
 }>();
 
+const edit = ref(true)
+
+const editor = () => (edit.value = !edit.value)
+
+import BaseNote from './BaseNote.vue'
 
 import BaseDeleteButton from './BaseDeleteButton.vue';
 
 import ChangeNoteButton from './ChangeNoteButton.vue';
 
+import InputsForNote from './InputsForNote.vue';
+
+import BaseInput from './BaseInput.vue';
+
+import BaseTextarea from './BaseTextarea.vue';
+
 import { useNotes } from '../composables/useNotes.js';
 
 import SelectedTegs from './SelectedTegs.vue';
 
-const { notes, removeNote, visibleModal, openModal, closeModal, changeNo1 } = useNotes();
+const { notes, removeNote } = useNotes();
 
 import { useFilter } from '../composables/useFilter.ts';
 
@@ -136,6 +152,10 @@ const { notesFilter, viewMode, notesFilterByTag } = useFilter();
 
 .note-teg {
   margin-top: 0px;
+}
+
+.change-btn {
+  margin-left: 300px;
 }
 
 </style>

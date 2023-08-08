@@ -1,15 +1,11 @@
 import { ref } from 'vue'
 
-let curIndex = ref(undefined)
-
+// let curIndex = ref(undefined)
 
 let visibleModal = ref(false);
 
-
-const openModal = (index) => {
-if (selectedItemIndex = index) {
+const openModal = () => {
   visibleModal.value = true;
-}
 };
 
 const closeModal = () => {
@@ -85,13 +81,13 @@ export function useNotes() {
     closeModal();
   }
 
-  function changeNo1 (index) {
-    if (curIndex.value === index) {
-      curIndex.value = undefined
-    }
-    else curIndex.value = index
+  // function changeNo1 (index) {
+  //   if (curIndex.value === index) {
+  //     curIndex.value = undefined
+  //   }
+  //   else curIndex.value = index
 
-  }
+  // }
 
-  return { notes, note, removeNote, AddNote, visibleModal, openModal, closeModal, noneTitleMistake, curIndex, changeNo1 };
+  return { notes, note, removeNote, AddNote, visibleModal, openModal, closeModal, noneTitleMistake};
 }
