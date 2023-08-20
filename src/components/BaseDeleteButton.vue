@@ -11,10 +11,6 @@ import BaseButtonForSVG from './BaseButtonForSVG.vue';
 
 import SvgForButtons from './SvgForButtons.vue';
 
-import { useNotes } from '../composables/useNotes.js';
-
-// const { removeNote } = useNotes();
-
 </script>
 
 <style lang="scss">
@@ -23,9 +19,6 @@ import { useNotes } from '../composables/useNotes.js';
   cursor: pointer;
   background: none;
   border: none;
-  &.hover {
-      color: #402caf;
-    }
 }
 
 </style>

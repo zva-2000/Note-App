@@ -14,7 +14,9 @@
 
     <SelectedTegs 
     class="tags"
-    :items="selectedTegs"/>
+    :items="selectedTegs"
+    :show-button="true"
+    @delete-tag="deleteTag"/>
 
     <BaseList
       :items="filteredTegs"
@@ -65,12 +67,17 @@ const emit = defineEmits<{
   (e: 'chooseTeg', tegOne: string): void;
   (e: 'update:error', errorMessage: string): void;
   (e: 'update:inputTeg', inputTeg: string): void;
+  (e: 'deleteTag', index: number): void;
 }>();
 
 const chooseTeg = (tegOne: string) => {
   emit('chooseTeg', tegOne);
   isVisible.value = true;
   console.log(typeof tegOne);
+};
+
+const deleteTag = (index: number) => {
+  emit('deleteTag', index);
 };
 
 const addTegFunction = () => {

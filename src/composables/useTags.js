@@ -28,9 +28,9 @@ export function useTags() {
   }
   };
 
-  const addTagToNote = (noteIndex, newTag) => {
-    notes.value[noteIndex].teg.push(newTag);
-  }
+  const deleteTag = (index) => {
+    note.value.teg.splice(index, 1);
+  };
 
-  return { addTegFunctionForCompose, newTag, tags, chooseTeg, choosenTegs, tagsForMainWindow, options, addTagToNote };
+  return { addTegFunctionForCompose, newTag, tags, chooseTeg, choosenTegs, tagsForMainWindow, options, deleteTag };
 }

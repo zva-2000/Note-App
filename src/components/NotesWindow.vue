@@ -1,10 +1,12 @@
 <template>
 
+<h1 class="title main-title">Твои заметки</h1>  
+
 <div class="notes-window-header">
 
-  <MovedButtons />
+  <MovedButtons class="position-moved-buttons"/>
 
-  <SearchInput v-model:value="search" />
+  <SearchInput v-model:value="search"/>
 
   <ModalWindow/>
 
@@ -12,7 +14,7 @@
 
 <div class="notes-window-main-content">
 
-  <SelectedTegs class="tags" :items="tagsForMainWindow" @chooseTag="setTag" />
+  <SelectedTegs class="tags" :items="tagsForMainWindow" @chooseTag="setTag" :showButton="false"/>
 
   <AllNotes class="all-notes"/>
 
@@ -21,9 +23,6 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
-
-import BaseButton from './BaseButton.vue';
 
 import ModalWindow from './ModalWindow.vue'
 
@@ -52,21 +51,41 @@ const { notes, visibleModal } = useNotes();
 
 <style>
 
+.main-title {
+  text-align: center;
+  font-weight: 600;
+  font-size: xx-large;
+  margin-bottom: 30px;
+}
+
 .notes-window-header {
   display: flex;
+  justify-content: center;
+  gap: 250px;
+  height: 80px;
 }
 
 .notes-window-main-content {
-  display: flex;
+  /* display: flex; */
 }
 
 .tags {
   display: flex;
   flex-direction: column;
   margin-left: 2rem;
+  zoom: 120%;
 }
 
 .all-notes {
   margin-left: 8rem;
+  width: 1000px;
 }
+
+.position-moved-buttons {
+  margin-top: 25px;
+}
+
+/* .search {
+  margin-top: 15px;
+} */
 </style>

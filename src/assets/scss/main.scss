@@ -33,7 +33,9 @@ body {
 
 h1, h2, h3, h4, h5, h6 { margin: 0; }
 
-input, textarea, select, button, select, option { border: 1px solid $border-base; }
+input, textarea, select, select, option { border: 1px solid $border-base; }
+
+button { background: none;}
 
 a {
 	text-decoration: none;

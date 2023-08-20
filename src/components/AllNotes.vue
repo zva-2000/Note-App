@@ -1,28 +1,6 @@
 <template>
-  
-  <!-- <ul class="notes">
-    <li
-      class="note"
-      v-for="(note, index) in notesFilterByTag"
-      :key="index"
-      :class="viewMode"
-    >
-      <div class="note-header" :class="viewMode">
-        <h1>{{ note.title }}</h1>
-        <ChangeNoteButton/>
-        <BaseDeleteButton class="delete-button" @click="removeNote(index)"/>
-      </div>
-      <div class="note-body">
-        <p>{{ note.descr }}</p>
-        <p>{{ note.impr }}</p>
-        <p class="note-date">{{ note.date }}</p>
-        <SelectedTegs class="note-teg" :items="note.teg" />
-      </div>
-    </li>
-  </ul> -->
 
 <div class="notes">
-
 
   <div >
     <NoteWithInputs v-for="(note, index) in notesFilterByTag" :key="index" :note="note" :index="index"/>
@@ -36,16 +14,6 @@
 import { computed, onMounted, ref } from 'vue';
 
 import NoteWithInputs from './NoteWithInputs.vue'
-
-import InputsForChangeNote from './InputsForChangeNote.vue';
-
-import BaseDeleteButton from './BaseDeleteButton.vue';
-
-import ChangeNoteButton from './ChangeNoteButton.vue';
-
-// import ChangeNoteComponent from './ChangeNoteComponent.vue';
-
-// import SelectedTegs from './SelectedTegs.vue';
 
 import { useTags } from '../composables/useTags.js';
 
@@ -79,8 +47,8 @@ const { tags } = useTags();
   display: flex;
   align-items: center;
   justify-content: space-between;
-  flex-wrap: wrap;
-  padding: 40px 0;
+  // flex-wrap: wrap;
+  // padding: 40px 0;
 }
 
 .note-header {

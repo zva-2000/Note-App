@@ -36,7 +36,6 @@ import baseInput from './BaseInput.vue';
 
 const props = defineProps<{
   value: string;
-  // search: string;
 }>();
 
 const model = computed({
@@ -50,34 +49,12 @@ const model = computed({
 
 const emit = defineEmits(['update:value', 'toSearchFunc']);
 
-// export interface Props{
-//   value: String,
-// }
-
-// const props = withDefaults(defineProps<Props>(), {
-//   placeholder: 'Search',
-// })
-
-// const search = ref(props.search);
-
-// const toSearchFunc = () => {
-//   console.log('jjjj');
-//   emit('toSearchFunc', props.search);
-// };
-
-// watch(props.search, (value) => {
-//   emit('search', value);
-//   return {
-//     search,
-//   };
-// });
 </script>
 
 <style scoped>
 svg {
   color: #e4e4e4;
 }
-
 .wrapper__search {
   position: relative;
 }
@@ -86,11 +63,9 @@ svg {
   bottom: 0px;
   left: 0px;
   position: absolute;
-  justify-content: center;
 }
 .search-icon {
   height: 100%;
-  padding-bottom: 4px;
   padding-left: 16px;
   padding-right: 16px;
   align-items: center;
@@ -102,7 +77,7 @@ svg {
   border-radius: 30px;
   color: #909399;
   font-size: 16px;
-  max-width: 400px;
+  min-width: 400px;
   height: auto;
 }
 </style>

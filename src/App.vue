@@ -1,4 +1,5 @@
 <script setup>
+
 import { ref, computed } from 'vue';
 
 import BaseInput from './components/BaseInput.vue';
@@ -65,22 +66,16 @@ function OpenDrop() {
 </script>
 
 <template>
-  <p>title: {{ note.title }}</p>
+  <!-- <p>title: {{ note.title }}</p> -->
 
   <!-- <p>search: {{ search }}</p> -->
 
-  <p>date: {{ note.date }}</p>
+  <!-- <p>date: {{ note.date }}</p>
   <p>descr: {{ note.descr }}</p>
   <p>impr: {{ note.impr }}</p>
-  <p>teg: {{ note.teg }}, {{ newTag }}</p>
-
-  <!-- <SearchInput v-model:value="search" /> -->
+  <p>teg: {{ note.teg }}, {{ newTag }}</p> -->
 
   <NotesWindow/>
-
-  <!-- <base-button @click="handleClick">
-    <span>Кнопка</span>
-  </base-button> -->
 
 </template>
 

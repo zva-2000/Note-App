@@ -1,6 +1,6 @@
 <template>
 
-<base-button @click="openModal">
+<base-button @click="openModal" class="open-modal-btn">
     <span>Добавить</span>
 </base-button>
 
@@ -29,6 +29,7 @@
 
       <div class="container">
 
+        <p>Сделать до:</p>
         <BaseInput
           class="date-input"
           v-model:value="note.date"
@@ -41,6 +42,7 @@
           @chooseTeg="chooseTeg"
           @update:error="error = $event"
           :selectedTegs="note.teg"
+          @deleteTag="deleteTagInModalWindow(index)"
         />
 
         <ComponentWithDropdown
@@ -83,6 +85,10 @@ const { note, AddNote, visibleModal, openModal, closeModal, noneTitleMistake } =
 const { chooseTeg, options } = useTags();
 
 let error = ref('');
+
+const deleteTagInModalWindow = (index) => {
+    note.value.teg.splice(index, 1);
+};
 
 </script>
 
@@ -131,6 +137,10 @@ let error = ref('');
   font-size: 85%;
   margin-left: 40%;
   margin-top: 7%;
+}
+
+.open-modal-btn {
+  margin-top: 15px;
 }
 
 .modal {

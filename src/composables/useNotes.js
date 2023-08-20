@@ -19,13 +19,15 @@ const notes = ref([
       title: 'Сделать все задачи',
       descr: 'На отлично!',
       impr: 'Очень важно',
-      date: 'new Date(Date.now()).toTimeString()',
+      beginDate: '20.06.2023, 17:42:59',
+      date: '24-07-2023',
       teg: ['Работа'],
     },
     {
       title: 'Выучить Composbles',
       descr: 'Описан в документации Vue',
-      impr: 'Нормально',
+      impr: 'Важно',
+      beginDate: '22.07.2023, 10:30:48',
       date: '24.07.2023',
       teg: ['Учеба'],
     },
@@ -33,7 +35,8 @@ const notes = ref([
       title: 'Вычесать кота',
       descr: 'А то опять разбросает шерсть',
       impr: 'Не важно',
-      date: "24.07.2023",
+      beginDate: '21.08.2023, 12:40:35',
+      date: "24-08-2023",
       teg: ['Семья'],
     },
   ]
@@ -43,9 +46,12 @@ let note = ref({
   title: '',
   descr: '',
   impr: '',
+  beginDate: '',
   date: '',
   teg: [],
 });
+
+let notesOnServer = JSON.parse(localStorage.getItem("notes")) || [];
 
 export function useNotes() {
 
@@ -53,41 +59,40 @@ export function useNotes() {
     notes.value.splice(index, 1);
   };
 
-  function AddNote() {
+function AddNote() {
+
     let { title, descr, impr, teg, date } = note.value;
+
     if (title === '' && descr === '') {
-      noneTitleMistake.value = 'Введите заголовок или описание';
-      return false;
+        noneTitleMistake.value = 'Введите заголовок или описание';
+        return false;
     }
-    // if (impr === '') {
-    //   NewImr = 'Choose the importance of note';
-    //   return false;
-    // }
-    notes.value.push({
-      title,
-      descr,
-      impr,
-      date,
-      teg,
-    });
+
+    let newNote = {
+        title,
+        descr,
+        impr,
+        date,
+        teg,
+        beginDate: new Date().toLocaleString() 
+    };
+
+    notes.value.push(newNote);
+
+    localStorage.setItem("notes", JSON.stringify(notes.value));
+
     noneTitleMistake.value = null;
-    // NewImr.value  = null;
     note.value.date = '';
     note.value.title = '';
     note.value.descr = '';
     note.value.impr = '';
     note.value.teg = [];
+    closeModal(); 
 
-    closeModal();
-  }
+    return notes.value;
+ }
 
-  // function changeNo1 (index) {
-  //   if (curIndex.value === index) {
-  //     curIndex.value = undefined
-  //   }
-  //   else curIndex.value = index
 
-  // }
 
   return { notes, note, removeNote, AddNote, visibleModal, openModal, closeModal, noneTitleMistake};
 }

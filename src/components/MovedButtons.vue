@@ -1,5 +1,6 @@
 <template>
-  <div class="icons">
+
+<div class="moved-buttons">
     <BaseButtonForSVG
       :class="{ active: viewMode === GridMode.Grid }"
       @click="changeGrid(GridMode.Grid)"
@@ -15,7 +16,7 @@
     >
       <SvgForButtons :name="'svg-list'" />
     </BaseButtonForSVG>
-  </div>
+</div>
 </template>
 
 <script setup lang="ts">
@@ -30,11 +31,10 @@ const { changeGrid, viewMode } = useFilter();
 
 <style>
 .active {
-  color: rgb(115, 96, 241);
+  color: #494ce8;
+}
+.moved-buttons {
+  gap: 2px;
 }
 
-.BaseButtonForSVG {
-  background: transparent;
-  border: none;
-}
 </style>

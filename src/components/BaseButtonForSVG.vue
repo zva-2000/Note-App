@@ -8,7 +8,7 @@
 
 <style>
 .button {
-  background: transparent;
+  background: none;
   border: none;
 }
 </style>

@@ -4,8 +4,8 @@
       class="svg-mesh"
       v-if="name == 'svg-mesh'"
       xmlns="http://www.w3.org/2000/svg"
-      width="40"
-      height="40"
+      width="45"
+      height="45"
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
@@ -25,8 +25,8 @@
       class="svg-list"
       v-if="name == 'svg-list'"
       xmlns="http://www.w3.org/2000/svg"
-      width="40"
-      height="40"
+      width="45"
+      height="45"
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
@@ -90,6 +90,16 @@
   />
 </svg>
 </span>
+
+  <span>
+  <svg 
+  v-if="name == 'svg-delete-teg'"
+  width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="12" cy="12" r="10" stroke="black" stroke-width="1.5"/>
+    <path d="M15 9L9 15" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M9 9L15 15" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+  </span>
 </template>
 
 <script setup lang="ts">

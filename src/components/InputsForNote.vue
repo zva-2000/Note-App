@@ -33,6 +33,7 @@
         :class-name="'teg-input'"
         @chooseTeg="addTagToNote"
         :selectedTegs="note.teg"
+        @deleteTag="deleteTagInChangeNote(index)"
     />
 
     <!-- <SelectedTegs class="note-teg" :items="note.teg"/> -->
@@ -66,7 +67,16 @@ import SelectedTegs from './SelectedTegs.vue';
 
 import { useTags } from '../composables/useTags.js'
 
-const { chooseTeg, options, addTagToNote } = useTags();
+const { chooseTeg, options } = useTags();
+
+
+const addTagToNote = (newTag: string) => {
+    props.note.teg.push(newTag);
+}
+
+const deleteTagInChangeNote = (index) => {
+    props.note.teg.splice(index, 1);
+};
 
 </script>
 
