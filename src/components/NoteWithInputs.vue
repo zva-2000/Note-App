@@ -1,43 +1,37 @@
 <template>
-<div class="note" :class="viewMode">
-
+  <div class="note" :class="viewMode">
     <div v-if="edit">
-
-        <BaseNote :note="note" :index="index"/> 
-        
-      </div>
+      <BaseNote :note="note" :index="index" />
+    </div>
 
     <div v-if="!edit">
+      <InputsForNote :note="note" />
+    </div>
 
-      <InputsForNote :note="note"/>
-
-    </div>  
-
-    <ChangeNoteButton @click="editor" class="change-btn"/>   
-
-</div> 
-
+    <ChangeNoteButton @click="editor" class="change-btn" />
+  </div>
 </template>
 
 <script setup lang="ts">
-
 import { ref } from 'vue';
 
 const props = defineProps<{
-  note: {title: string,
-  descr: string,
-  impr: string,
-  date: string,
-  beginDate: string, 
-  teg: string[]};
+  note: {
+    title: string;
+    descr: string;
+    impr: string;
+    date: string;
+    beginDate: string;
+    teg: string[];
+  };
   index: number;
 }>();
 
-const edit = ref(true)
+const edit = ref(true);
 
-const editor = () => (edit.value = !edit.value)
+const editor = () => (edit.value = !edit.value);
 
-import BaseNote from './BaseNote.vue'
+import BaseNote from './BaseNote.vue';
 
 import ChangeNoteButton from './ChangeNoteButton.vue';
 
@@ -50,22 +44,19 @@ const { notes, removeNote } = useNotes();
 import { useFilter } from '../composables/useFilter.ts';
 
 const { notesFilter, viewMode, notesFilterByTag } = useFilter();
-
 </script>
 
 <style lang="scss">
-
 .note {
-  display: flex;
   width: 48%;
   padding: 18px 20px;
   margin-bottom: 20px;
   background-color: #ffffff;
-  transition: all .25s cubic-bezier(.02,.01,.47,1);
-  box-shadow: 0 30px 30px rgba(0,0,0,.02);
+  transition: all 0.25s cubic-bezier(0.02, 0.01, 0.47, 1);
+  box-shadow: 0 30px 30px rgba(0, 0, 0, 0.02);
   &:hover {
-    box-shadow: 0 30px 30px rgba(0,0,0,.04);
-    transform: translate(0,-6px);
+    box-shadow: 0 30px 30px rgba(0, 0, 0, 0.04);
+    transform: translate(0, -6px);
     transition-delay: 0s !important;
   }
   &.List {
@@ -87,9 +78,9 @@ const { notesFilter, viewMode, notesFilterByTag } = useFilter();
 .delete-button {
   margin-right: 12px;
   color: #999999;
-    &:last-child {
-      margin-right: 0;
-    }
+  &:last-child {
+    margin-right: 0;
+  }
 }
 
 .note-teg {
@@ -99,5 +90,4 @@ const { notesFilter, viewMode, notesFilterByTag } = useFilter();
 .change-btn {
   margin-left: 300px;
 }
-
 </style>

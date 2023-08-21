@@ -1,19 +1,21 @@
 <template>
-    <ul class="selected-tags">
-      <li 
+  <ul class="selected-tags">
+    <li
       class="tags-li"
-      v-for="(item, index) in items" :key="index" @click="ChooseTag(item)">
-        {{ item }}
-      <ButtonForDeleteTeg v-if="showButton" @click="deleteTag(index)"/>  
-      </li>
-    </ul>
+      v-for="(item, index) in items"
+      :key="index"
+      @click="ChooseTag(item)"
+    >
+      {{ item }}
+      <ButtonForDeleteTeg v-if="showButton" @click="deleteTag(index)" />
+    </li>
+  </ul>
 </template>
 
 <script setup lang="ts">
+import ButtonForDeleteTeg from './buttons/ButtonForDeleteTeg.vue';
 
-import ButtonForDeleteTeg from './buttons/ButtonForDeleteTeg.vue'
-
-import { useTags } from '../composables/useTags.js'
+// import { useTags } from '../composables/useTags.js'
 
 // const { deleteTag } = useTags();
 
@@ -34,7 +36,6 @@ const ChooseTag = (item: string) => {
 const deleteTag = (index: number) => {
   emit('deleteTag', index);
 };
-
 </script>
 
 <style>

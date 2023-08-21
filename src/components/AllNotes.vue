@@ -1,19 +1,18 @@
 <template>
-
-<div class="notes">
-
-  <div >
-    <NoteWithInputs v-for="(note, index) in notesFilterByTag" :key="index" :note="note" :index="index"/>
+  <div class="notes">
+    <NoteWithInputs
+      v-for="(note, index) in notesFilterByTag"
+      :key="index"
+      :note="note"
+      :index="index"
+    />
   </div>
-
-</div>
-
 </template>
 
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
 
-import NoteWithInputs from './NoteWithInputs.vue'
+import NoteWithInputs from './NoteWithInputs.vue';
 
 import { useTags } from '../composables/useTags.js';
 
@@ -21,13 +20,20 @@ import { useNotes } from '../composables/useNotes.js';
 
 import { useFilter } from '../composables/useFilter.ts';
 
-
 const { notesFilter, viewMode, notesFilterByTag } = useFilter();
 
-const { notes, removeNote, visibleModal, openModal, closeModal, note, curIndex, changeNo1 } = useNotes();
+const {
+  notes,
+  removeNote,
+  visibleModal,
+  openModal,
+  closeModal,
+  note,
+  curIndex,
+  changeNo1,
+} = useNotes();
 
 const { tags } = useTags();
-
 </script>
 
 <style lang="scss">
@@ -47,8 +53,8 @@ const { tags } = useTags();
   display: flex;
   align-items: center;
   justify-content: space-between;
-  // flex-wrap: wrap;
-  // padding: 40px 0;
+  flex-wrap: wrap;
+  padding: 40px 0;
 }
 
 .note-header {
@@ -64,19 +70,19 @@ const { tags } = useTags();
   }
 }
 .note-header .List {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    h1 {
-      font-size: 32px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  h1 {
+    font-size: 32px;
+  }
+  p {
+    justify-content: center;
+    margin-right: 16px;
+    &:last-child {
+      margin-right: 0;
     }
-    p {
-      justify-content: center;
-      margin-right: 16px;
-      &:last-child {
-        margin-right: 0;
-      }
-    }
+  }
 }
 
 .note-body {
@@ -115,9 +121,9 @@ const { tags } = useTags();
 .delete-button {
   margin-right: 12px;
   color: #999999;
-    &:last-child {
-      margin-right: 0;
-    }
+  &:last-child {
+    margin-right: 0;
+  }
 }
 
 .note-teg {
