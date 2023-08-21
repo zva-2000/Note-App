@@ -61,8 +61,9 @@ const { notes, visibleModal } = useNotes();
 .notes-window-header {
   display: flex;
   justify-content: center;
-  gap: 250px;
+  gap: 150px;
   height: 80px;
+  margin: auto;
 }
 
 .notes-window-main-content {
@@ -77,7 +78,7 @@ const { notes, visibleModal } = useNotes();
 }
 
 .all-notes {
-  margin-left: 8rem;
+  margin: auto;
   width: 1000px;
 }
 

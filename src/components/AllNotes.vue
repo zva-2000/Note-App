@@ -54,7 +54,7 @@ const { tags } = useTags();
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  padding: 40px 0;
+  padding: 13px 0;
 }
 
 .note-header {
