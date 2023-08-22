@@ -73,8 +73,9 @@ const { notes, visibleModal } = useNotes();
 .tags {
   display: flex;
   flex-direction: column;
-  margin-left: 2rem;
-  zoom: 120%;
+  margin-left: 6.5rem;
+  zoom: 115%;
+  z-index: -1;
 }
 
 .all-notes {

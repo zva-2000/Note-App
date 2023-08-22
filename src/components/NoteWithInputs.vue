@@ -1,12 +1,10 @@
 <template>
   <div class="note" :class="viewMode">
-    <div v-if="edit">
-      <BaseNote :note="note" :index="index" />
-    </div>
+    <BaseDeleteButton class="delete-button" @click="removeNote(index)" />
+    
+      <BaseNote :note="note" :index="index" v-if="edit"/>
 
-    <div v-if="!edit">
-      <InputsForNote :note="note" />
-    </div>
+      <InputsForNote :note="note" v-if="!edit" :index="index"/>
 
     <ChangeNoteButton @click="editor" class="change-btn" />
   </div>
@@ -36,6 +34,8 @@ import BaseNote from './BaseNote.vue';
 import ChangeNoteButton from './ChangeNoteButton.vue';
 
 import InputsForNote from './InputsForNote.vue';
+
+import BaseDeleteButton from './BaseDeleteButton.vue';
 
 import { useNotes } from '../composables/useNotes.js';
 
@@ -76,11 +76,11 @@ const { notesFilter, viewMode, notesFilterByTag } = useFilter();
 }
 
 .delete-button {
-  margin-right: 12px;
-  color: #999999;
-  &:last-child {
-    margin-right: 0;
-  }
+  margin-left: 42px;
+    color: #999999;
+    float: right;
+    position: relative;
+    left: 21px;
 }
 
 .note-teg {
@@ -88,6 +88,6 @@ const { notesFilter, viewMode, notesFilterByTag } = useFilter();
 }
 
 .change-btn {
-  margin-left: 300px;
+  margin-left: 93%;
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div class="note-header" :class="viewMode">
     <h1>{{ note.title }}</h1>
-    <BaseDeleteButton class="delete-button" @click="removeNote(index)" />
+    <!-- <BaseDeleteButton class="delete-button" @click="removeNote(index)" /> -->
   </div>
   <div class="note-body" :class="viewMode">
     <p>{{ note.descr }}</p>
@@ -31,8 +31,6 @@ const props = defineProps<{
 
 import SelectedTegs from './SelectedTegs.vue';
 
-import BaseDeleteButton from './BaseDeleteButton.vue';
-
 import { useNotes } from '../composables/useNotes.js';
 
 const { notes, removeNote } = useNotes();
@@ -43,7 +41,7 @@ const { notesFilter, viewMode, notesFilterByTag } = useFilter();
 
 const importanceColors = ref({
   'Очень важно': '#ee9191',
-  Важно: '#ffd261',
+  'Важно': '#ffd261',
   'Не важно': '#a7be8e',
 });
 
