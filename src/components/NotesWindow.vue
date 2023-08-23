@@ -1,30 +1,28 @@
 <template>
+  <h1 class="title main-title">Твои заметки</h1>
 
-<h1 class="title main-title">Твои заметки</h1>  
+  <div class="notes-window-header">
+    <MovedButtons class="position-moved-buttons" />
 
-<div class="notes-window-header">
+    <SearchInput v-model:value="search" />
 
-  <MovedButtons class="position-moved-buttons"/>
+    <ModalWindow />
+  </div>
 
-  <SearchInput v-model:value="search"/>
-
-  <ModalWindow/>
-
-</div>
-
-<div class="notes-window-main-content">
-
-  <SelectedTegs class="tags" :items="tagsForMainWindow" @chooseTag="setTag" :showButton="false"/>
-
-  <AllNotes class="all-notes"/>
-
-</div>
-
+  <div class="notes-window-main-content">
+    <div class="tags">
+      <SelectedTegs
+        :items="tagsForMainWindow"
+        @choose-tag="setTag"
+        :showButton="false"
+      />
+    </div>
+    <AllNotes class="all-notes" />
+  </div>
 </template>
 
 <script setup lang="ts">
-
-import ModalWindow from './ModalWindow.vue'
+import ModalWindow from './ModalWindow.vue';
 
 import MovedButtons from './MovedButtons.vue';
 
@@ -45,12 +43,9 @@ const { notesFilter, setTag, SelectedTeg, search } = useFilter();
 const { tagsForMainWindow } = useTags();
 
 const { notes, visibleModal } = useNotes();
-
-
 </script>
 
 <style>
-
 .main-title {
   text-align: center;
   font-weight: 600;
@@ -71,11 +66,11 @@ const { notes, visibleModal } = useNotes();
 }
 
 .tags {
+  cursor: pointer;
   display: flex;
   flex-direction: column;
   margin-left: 6.5rem;
   zoom: 115%;
-  z-index: -1;
 }
 
 .all-notes {

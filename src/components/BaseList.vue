@@ -7,7 +7,6 @@
 </template>
 
 <script setup lang="ts">
-
 const props = defineProps<{
   isVisible: boolean;
   items: string[];
@@ -29,6 +28,7 @@ const chooseItem = (option: string) => {
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   top: 100%;
+  z-index: 1;
 }
 
 .dropdown-content li {

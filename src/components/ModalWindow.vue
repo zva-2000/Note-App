@@ -1,17 +1,16 @@
 <template>
-
-<base-button @click="openModal" class="open-modal-btn">
+  <base-button @click="openModal" class="open-modal-btn">
     <span>Добавить</span>
-</base-button>
+  </base-button>
 
-<div class="modal" v-if="visibleModal">
-  <div class="modal-content">
-    <div class="input-container">
+  <div class="modal" v-if="visibleModal">
+    <div class="modal-content">
+      <div class="input-container">
         <p class="error">{{ error }}</p>
 
-        <p class="error">{{ noneTitleMistake }}</p>        
+        <p class="error">{{ noneTitleMistake }}</p>
 
-        <BaseDeleteButton class="delete-button" @click="closeModal"/>
+        <BaseDeleteButton class="delete-button" @click="closeModal" />
 
         <BaseInput
           placeholder="Введите текст"
@@ -28,7 +27,6 @@
       </div>
 
       <div class="container">
-
         <p>Сделать до:</p>
         <BaseInput
           class="date-input"
@@ -50,18 +48,16 @@
           v-model:value="note.impr"
           v-model:options="options"
         />
-
       </div>
 
       <base-button @click="AddNote" class="save-button">
         <span>Сохранить</span>
       </base-button>
+    </div>
   </div>
-</div>
 </template>
 
 <script setup lang="ts">
-
 import { ref } from 'vue';
 
 import BaseDeleteButton from './BaseDeleteButton.vue';
@@ -72,28 +68,27 @@ import BaseTextarea from './BaseTextarea.vue';
 
 import BaseButton from './BaseButton.vue';
 
-import ComponentWithDropdown from './ComponentWithDropdown.vue'
+import ComponentWithDropdown from './ComponentWithDropdown.vue';
 
 import addTegComponent from './addTegComponent.vue';
 
-import { useNotes } from '../composables/useNotes.js'
+import { useNotes } from '../composables/useNotes.js';
 
-import { useTags } from '../composables/useTags.js'
+import { useTags } from '../composables/useTags.js';
 
-const { note, AddNote, visibleModal, openModal, closeModal, noneTitleMistake } = useNotes();
+const { note, AddNote, visibleModal, openModal, closeModal, noneTitleMistake } =
+  useNotes();
 
 const { chooseTeg, options } = useTags();
 
 let error = ref('');
 
-const deleteTagInModalWindow = (index) => {
-    note.value.teg.splice(index, 1);
+const deleteTagInModalWindow = (index: any) => {
+  note.value.teg.splice(index, 1);
 };
-
 </script>
 
 <style>
-
 .container {
   flex-grow: 1;
   display: flex;
@@ -144,27 +139,27 @@ const deleteTagInModalWindow = (index) => {
 }
 
 .modal {
-    position: fixed; 
-    z-index: 1; 
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    width: 100%; 
-    height: 100%; 
-    overflow: auto;
-    background-color: rgba(0,0,0,0.4); 
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
 .modal-content {
-    position: relative;
-    justify-content: center;
-    background-color: #fefefe;
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 70%; 
-    border-radius: 5px;
+  position: relative;
+  justify-content: center;
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 70%;
+  border-radius: 5px;
 }
 
 .error {
