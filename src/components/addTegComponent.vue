@@ -13,7 +13,7 @@
     </BaseButtonForSVG>
 
     <SelectedTegs 
-    class="tags"
+    class="select-tags"
     :items="selectedTegs"
     :show-button="true"
     @delete-tag="deleteTag"/>
@@ -117,8 +117,11 @@ const filteredTegs = computed(() => {
   margin-top: 9px;
 }
 
-.tags {
-  margin-top: 10px;
+.select-tags {
+  display: flex;
+  /* margin: 15px; */
+  flex-direction: initial;
+  float: right;
 }
 
 </style>

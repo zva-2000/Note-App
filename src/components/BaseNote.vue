@@ -3,7 +3,7 @@
     <h1>{{ note.title }}</h1>
     <!-- <BaseDeleteButton class="delete-button" @click="removeNote(index)" /> -->
   </div>
-  <div class="note-body" :class="viewMode">
+  <div class="note-body">
     <p>{{ note.descr }}</p>
     <p class="note-date">Дата создания: {{ note.beginDate }}</p>
     <p class="note-date">Сделать до: {{ note.date }}</p>

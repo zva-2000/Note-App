@@ -41,11 +41,11 @@ const deleteTag = (index: number) => {
 <style>
 .selected-tags {
   max-width: 310px;
-  position: absolute;
+  /* position: absolute; */
   align-items: center;
   display: flex;
   cursor: default;
-  gap: 5px;
+  /* gap: 5px; */
   line-height: var(#eaf1ff);
 }
 
@@ -55,5 +55,9 @@ const deleteTag = (index: number) => {
   background-color: #a2c9ff;
   line-height: #eaf1ff;
   border-radius: 6px;
+}
+
+.tags-li:hover {
+  background-color: #494ce8;
 }
 </style>

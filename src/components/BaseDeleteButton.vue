@@ -1,7 +1,8 @@
 <template>
   <div class="icons">
     <BaseButtonForSVG class="x-button">
-      <SvgForButtons :name="'svg-delete'"></SvgForButtons>
+      <SvgForButtons :name="'svg-trash-can'"></SvgForButtons>
+      <SvgForButtons :name="'svg-delete'"></SvgForButtons>      
     </BaseButtonForSVG>
   </div>
 </template>

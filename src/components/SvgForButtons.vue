@@ -100,6 +100,20 @@
     <path d="M9 9L15 15" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
   </svg>
   </span>
+
+<span>
+  <svg v-if="name == 'svg-trash-can'" width="24" height="24" xmlns="http://www.w3.org/2000/svg">
+    <g fill="none" stroke="black" stroke-width="2">
+        <path d="M6 6h12c1.1 0 2 0.9 2 2v12c0 1.1-0.9 2-2 2H6c-1.1 0-2-0.9-2-2V8c0-1.1 0.9-2 2-2z"/>
+        <path d="M8 5v-2h8v2"/>
+        <line x1="7" y1="10" x2="7" y2="20"/>
+        <line x1="12" y1="10" x2="12" y2="20"/>
+        <line x1="17" y1="10" x2="17" y2="20"/>
+    </g>
+</svg>
+
+</span>
+
 </template>
 
 <script setup lang="ts">

@@ -10,13 +10,12 @@
   </div>
 
   <div class="notes-window-main-content">
-    <div class="tags">
       <SelectedTegs
         :items="tagsForMainWindow"
         @choose-tag="setTag"
         :showButton="false"
+        class="tags-in-main-wndw"
       />
-    </div>
     <AllNotes class="all-notes" />
   </div>
 </template>
@@ -62,15 +61,18 @@ const { notes, visibleModal } = useNotes();
 }
 
 .notes-window-main-content {
-  /* display: flex; */
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin: 10px 235px;
 }
 
-.tags {
+.tags-in-main-wndw {
   cursor: pointer;
   display: flex;
   flex-direction: column;
-  margin-left: 6.5rem;
-  zoom: 115%;
+  gap: 5px;
+  font-size: 20px;
 }
 
 .all-notes {
