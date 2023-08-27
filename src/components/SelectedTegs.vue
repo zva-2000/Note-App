@@ -15,10 +15,6 @@
 <script setup lang="ts">
 import ButtonForDeleteTeg from './buttons/ButtonForDeleteTeg.vue';
 
-// import { useTags } from '../composables/useTags.js'
-
-// const { deleteTag } = useTags();
-
 const props = defineProps<{
   items: string[];
   showButton: boolean;
@@ -51,13 +47,17 @@ const deleteTag = (index: number) => {
 
 .tags-li {
   display: flex;
-  padding: 2px 6px 2px 8px;
+  padding: 4px 8px 4px 8px;
   background-color: #a2c9ff;
   line-height: #eaf1ff;
-  border-radius: 6px;
+  border-radius: 20px;
 }
 
 .tags-li:hover {
   background-color: #494ce8;
+}
+
+.tags-li:focus {
+  background-color: aquamarine;
 }
 </style>

@@ -7,6 +7,7 @@
       <InputsForNote :note="note" v-if="!edit" :index="index"/>
 
     <ChangeNoteButton @click="editor" class="change-btn" />
+
   </div>
 </template>
 
@@ -48,17 +49,12 @@ const { notesFilter, viewMode, notesFilterByTag } = useFilter();
 
 <style lang="scss">
 .note {
-  width: 48%;
+  border-radius: 20px;
+  width: 50%;
   padding: 18px 20px;
   margin-bottom: 20px;
   background-color: #ffffff;
-  transition: all 0.25s cubic-bezier(0.02, 0.01, 0.47, 1);
-  box-shadow: 0 30px 30px rgba(0, 0, 0, 0.02);
-  &:hover {
-    box-shadow: 0 30px 30px rgba(0, 0, 0, 0.04);
-    transform: translate(0, -6px);
-    transition-delay: 0s !important;
-  }
+  height: 100%;
   &.List {
     width: 100%;
     text-align: center;
@@ -73,6 +69,7 @@ const { notesFilter, viewMode, notesFilterByTag } = useFilter();
   width: 100%;
   justify-content: center;
   text-align: center;
+  margin: auto;
 }
 
 .delete-button {

@@ -22,6 +22,7 @@ export function useFilter() {
   
   function setTag(tag: string) {
     SelectedTeg.value = tag;
+    SelectedTeg.style.backgroundColor = "blue";
   }
 
   const notesFilter = computed(() => {

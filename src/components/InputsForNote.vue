@@ -1,4 +1,7 @@
 <template>
+
+  <p style="color: rgb(78, 78, 78)">Заголовок:</p>
+        
   <BaseInput
     placeholder="Введите текст"
     v-model:value="note.title"
@@ -6,13 +9,17 @@
     class="header-input"
   />
 
+  <p class="modal-p">Содержимое:</p>
+
   <BaseTextarea
     placeholder="Введите текст"
     v-model:value="note.descr"
     class="note-textarea"
   />
   <div class="date-note">
-    <!-- <p class="date-text">Дедлайн:</p> -->
+
+    <p class="modal-p">Сделать до:</p>
+
     <BaseInput
       class="date-note-input"
       v-model:value="note.date"
@@ -21,12 +28,17 @@
     />
   </div>
 
+  <p class="modal-p">Важность:</p>
+
   <ComponentWithDropdown
     class="impr-input-note"
     v-model:value="note.impr"
     v-model:options="options"
   />
 
+  <!-- <p class="error">{{ error }}</p> -->
+
+  <p class="modal-p">Теги:</p>
   <addTegComponent
     :class-name="'teg-input-note'"
     @chooseTeg="addTagToNote"
@@ -77,45 +89,16 @@ const deleteTagInChangeNote = (index) => {
 </script>
 
 <style>
+
+.teg-input-note,
+.impr-input-note,
+.note-textarea,
+.date-note,
 .header-input {
-  position: relative;
-  bottom: 28px;
-  width: 405px;
-}
-
-.note-textarea {
-  position: relative;
-  bottom: 21px;
-  width: 405px;
-}
-
-.date-note {
-  display: flex;
-  position: relative;
-  bottom: 15px;
-  width: 405px;
-  gap: 10px;
+  width: 92%;
 }
 
 .date-note-input {
-  width: 405px;
-}
-/* //320 */
-.date-text {
-  width: 77px;
-  position: relative;
-  top: 10px;
-}
-
-.impr-input-note {
-  position: relative;
-  bottom: 8px;
-  width: 405px;
-}
-
-.teg-input-note {
-  position: relative;
-  bottom: 8px;
-  width: 405px;
+  width: 100%;
 }
 </style>

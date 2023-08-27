@@ -4,7 +4,7 @@
       name="imprInput"
       v-model:value="model"
       @click="toggleVisibility"
-      placeholder="Выберите важность заметки"
+      placeholder=""
       type="text"
     />
     <BaseList

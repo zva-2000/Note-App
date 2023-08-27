@@ -53,10 +53,11 @@ const importanceColor = computed(() => {
 <style lang="scss">
 .impr {
   padding: 2px 6px 2px 8px;
-  line-height: #eaf1ff;
-  border-radius: 6px;
-  color: rgb(0, 0, 0);
-  max-width: 120px;
+    line-height: #eaf1ff;
+    border-radius: 15px;
+    color: rgb(0, 0, 0);
+    max-width: 140px;
+    text-align: center;
 }
 .note-header .Grid {
   display: flex;
@@ -86,18 +87,41 @@ const importanceColor = computed(() => {
   }
 }
 
-// .note-body .Grid {
-//   p {
-//     margin: 20px 0;
-//   }
-//   span {
-//     font-size: 14px;
-//     color: #999999;
-//   }
-// }
+.note-body {
+  p {
+    margin: 20px 0;
+  }
+  span {
+    font-size: 14px;
+    color: #999999;
+  }
+}
 
-// .note-body .List{
-//     width: 100%;
-//     text-align: center;
-// }
+.note-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  h1 {
+    font-size: 32px;
+  }
+  p {
+    font-size: 22px;
+    color: #402caf;
+  }
+}
+.note-header .List {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  h1 {
+    font-size: 32px;
+  }
+  p {
+    justify-content: center;
+    margin-right: 16px;
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
 </style>

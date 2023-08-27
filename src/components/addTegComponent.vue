@@ -4,7 +4,7 @@
       class="input-teg"
       v-model:value="newTag"
       @click="toggleVisibility"
-      placeholder="Выберите группу"
+      placeholder=""
       type="text"
     />
 
@@ -52,14 +52,13 @@ const { note } = useNotes();
 
 const props = defineProps<{
   selectedTegs: string[];
-  className: string;
+  // className: string;
 }>();
 
 let isVisible = ref(true);
 
 const toggleVisibility: any = () => {
   isVisible.value = !isVisible.value;
-  console.log('Button clicked! Visible');
 };
 
 const emit = defineEmits<{
@@ -119,9 +118,13 @@ const filteredTegs = computed(() => {
 
 .select-tags {
   display: flex;
-  /* margin: 15px; */
-  flex-direction: initial;
-  float: right;
+    /* margin: 15px; */
+    flex-direction: initial;
+    float: left;
+    gap: 4px;
+    position: relative;
+    top: 10px;
+
 }
 
 </style>

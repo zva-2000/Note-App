@@ -75,6 +75,10 @@ const { notes, visibleModal } = useNotes();
   font-size: 20px;
 }
 
+.tags-in-main-wndw:focus {
+  background-color: aquamarine;
+}
+
 .all-notes {
   margin: auto;
   width: 1000px;
