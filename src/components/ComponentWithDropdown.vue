@@ -3,14 +3,15 @@
     <BaseInput
       name="imprInput"
       v-model:value="model"
-      @click="toggleVisibility"
+      @click="toggleDropdown"
       placeholder=""
       type="text"
     />
     <BaseList
       :items="options"
-      :is-visible="isVisible"
+      :is-visible="isDropdownOpen"    
       @choose-item="chooseImportance"
+      :is-any-dropdown-open="isAnyDropdownOpen"
     />
   </div>
 </template>
@@ -21,6 +22,10 @@ import BaseList from './BaseList.vue';
 import BaseInput from './BaseInput.vue';
 
 import { ref, computed } from 'vue';
+
+import { useVisible } from '../composables/useVisible.ts'
+
+const { isDropdownOpen, toggleDropdown, isAnyDropdownOpen } = useVisible();
 
 const props = defineProps<{
   value: string;

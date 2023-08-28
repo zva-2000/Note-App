@@ -3,7 +3,7 @@
     <InputForDropdown
       class="input-teg"
       v-model:value="newTag"
-      @click="toggleVisibility"
+      @click="toggleDropdown"
       placeholder=""
       type="text"
     />
@@ -12,17 +12,20 @@
       <SvgForButtons :name="'svg-plus'"></SvgForButtons>
     </BaseButtonForSVG>
 
+    <BaseList
+      :items="filteredTegs"
+      :is-visible="isDropdownOpen"
+      @choose-item="chooseTeg"
+      :is-any-dropdown-open="isAnyDropdownOpen"
+    />
+
     <SelectedTegs 
     class="select-tags"
     :items="selectedTegs"
     :show-button="true"
-    @delete-tag="deleteTag"/>
-
-    <BaseList
-      :items="filteredTegs"
-      :is-visible="isVisible"
-      @choose-item="chooseTeg"
+    @delete-tag="deleteTag"
     />
+
   </div>
 
 </template>
@@ -33,6 +36,8 @@ import { computed, ref } from 'vue';
 import { useTags } from '../composables/useTags.js'
 
 import { useNotes } from '../composables/useNotes.js'
+
+import { useVisible } from '../composables/useVisible.ts'
 
 import BaseButtonForSVG from './BaseButtonForSVG.vue';
 
@@ -49,6 +54,8 @@ import BaseButton from './BaseButton.vue';
 const { addTegFunctionForCompose, newTag, tags, choosenTegs } = useTags();
 
 const { note } = useNotes();
+
+const {  isDropdownOpen, toggleDropdown, isAnyDropdownOpen } = useVisible();
 
 const props = defineProps<{
   selectedTegs: string[];

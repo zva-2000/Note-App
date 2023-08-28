@@ -9,6 +9,7 @@
 <script setup lang="ts">
 const props = defineProps<{
   isVisible: boolean;
+  isAnyDropdownOpen: boolean;
   items: string[];
 }>();
 
@@ -29,6 +30,7 @@ const chooseItem = (option: string) => {
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   top: 100%;
   z-index: 1;
+  border-radius: 20px;
 }
 
 .dropdown-content li {
@@ -36,5 +38,10 @@ const chooseItem = (option: string) => {
   padding: 12px 16px;
   text-decoration: none;
   display: block;
+}
+
+.dropdown-content li:hover {
+  background-color: #bbbbbb;
+  border-radius: 20px;
 }
 </style>

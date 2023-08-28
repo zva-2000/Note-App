@@ -70,6 +70,7 @@ svg {
   padding-right: 16px;
   align-items: center;
   display: flex;
+  margin-left: 54px;
 }
 .search-input {
   padding: 16px 16px 16px 56px !important;
