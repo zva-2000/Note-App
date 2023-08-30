@@ -2,13 +2,14 @@
   <h1 class="title main-title">Твои заметки</h1>
 
   <div class="notes-window-header">
-    <MovedButtons class="position-moved-buttons" />
 
     <SearchInput v-model:value="search" />
 
     <ModalWindow />
   </div>
 
+  <MovedButtons class="position-moved-buttons" />
+  
   <div class="notes-window-main-content">
       <SelectedTegs
         :items="tagsForMainWindow"

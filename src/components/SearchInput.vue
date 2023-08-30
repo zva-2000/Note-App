@@ -20,19 +20,18 @@
       </div>
     </div>
 
-    <base-input
+    <input
       class="search-input"
-      v-model:value="model"
+      v-model="model"
       placeholder="Найдите заметку"
-      type="text"
-    ></base-input>
+      type="text">
   </div>
 </template>
 
 <script setup lang="ts">
 import { watch, ref, computed } from 'vue';
 
-import baseInput from './BaseInput.vue';
+// import baseInput from './BaseInput.vue';
 
 const props = defineProps<{
   value: string;
@@ -70,15 +69,16 @@ svg {
   padding-right: 16px;
   align-items: center;
   display: flex;
-  margin-left: 54px;
+  margin-left: 5px;
 }
 .search-input {
   padding: 16px 16px 16px 56px !important;
-  margin-bottom: 0px;
-  border-radius: 30px;
-  color: #909399;
-  font-size: 16px;
-  min-width: 400px;
-  height: auto;
+    margin-top: 16px;
+    border-radius: 30px;
+    color: #000000;
+    font-size: 15px;
+    min-width: 323px;
+    height: auto;
+    outline: none;
 }
 </style>

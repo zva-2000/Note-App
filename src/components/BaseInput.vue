@@ -1,6 +1,6 @@
 <template>
   <div class="input-wrapper">
-    <input :type="type" v-model="model" :placeholder="placeholder" />
+    <input :type="type" v-model="model" :placeholder="placeholder" :readonly="isReadonly" />
     <slot></slot>
   </div>
 </template>
@@ -12,6 +12,7 @@ const props = defineProps<{
   value: string;
   type: string;
   placeholder: string;
+  isReadonly: boolean; 
 }>();
 
 const model = computed({

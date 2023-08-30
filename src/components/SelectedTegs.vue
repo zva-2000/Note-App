@@ -41,7 +41,7 @@ const deleteTag = (index: number) => {
   align-items: center;
   display: flex;
   cursor: default;
-  /* gap: 5px; */
+  gap: 5px;
   line-height: var(#eaf1ff);
 }
 

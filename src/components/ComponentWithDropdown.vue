@@ -3,29 +3,33 @@
     <BaseInput
       name="imprInput"
       v-model:value="model"
-      @click="toggleDropdown"
+      @click="toggleVisibility"
       placeholder=""
       type="text"
+      :isReadonly="true"
     />
     <BaseList
       :items="options"
-      :is-visible="isDropdownOpen"    
+      :is-visible="isVisible"    
       @choose-item="chooseImportance"
-      :is-any-dropdown-open="isAnyDropdownOpen"
+      v-on-click-outside="toggleVisibility"
     />
   </div>
 </template>
 
 <script setup lang="ts">
+
+// import { vOnClickOutside } from '@vueuse/components';
+
 import BaseList from './BaseList.vue';
 
 import BaseInput from './BaseInput.vue';
 
 import { ref, computed } from 'vue';
 
-import { useVisible } from '../composables/useVisible.ts'
+// import { useVisible } from '../composables/useVisible.ts'
 
-const { isDropdownOpen, toggleDropdown, isAnyDropdownOpen } = useVisible();
+// const { isDropdownOpen, toggleDropdown, isAnyDropdownOpen } = useVisible();
 
 const props = defineProps<{
   value: string;

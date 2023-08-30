@@ -90,9 +90,7 @@ import { useTags } from '../composables/useTags.js';
 const { note, AddNote, visibleModal, openModal, closeModal, noneTitleMistake } =
   useNotes();
 
-const { chooseTeg, options } = useTags();
-
-let error = ref('');
+const { chooseTeg, options, error } = useTags();
 
 const deleteTagInModalWindow = (index: any) => {
   note.value.teg.splice(index, 1);

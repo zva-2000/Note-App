@@ -9,6 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@mahdikhashan/vue3-click-outside": "^0.1.2",
+    "v-click-outside": "^3.2.0",
     "vue": "^3.2.47"
   },
   "devDependencies": {

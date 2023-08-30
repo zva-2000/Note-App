@@ -12,13 +12,20 @@ const tags = ref(['Учеба', 'Работа', 'Семья'])
 
 let choosenTegs = ref([]);
 
+let error = ref('');
+
 export function useTags() {
   const newTag = ref('');
 
   const addTegFunctionForCompose = () => {
+    if (newTag.value === '') {
+      error.value = 'Введите тег, если хотите его добавить'
+    } else {
     tags.value.push(newTag.value);
     tagsForMainWindow.value.push(newTag.value);
     newTag.value = '';
+    error.value = '';
+   }
   };
 
   const chooseTeg = (newTag) => {
@@ -32,5 +39,5 @@ export function useTags() {
     note.value.teg.splice(index, 1);
   };
 
-  return { addTegFunctionForCompose, newTag, tags, chooseTeg, choosenTegs, tagsForMainWindow, options, deleteTag };
+  return { addTegFunctionForCompose, newTag, tags, chooseTeg, choosenTegs, tagsForMainWindow, options, deleteTag, error };
 }
