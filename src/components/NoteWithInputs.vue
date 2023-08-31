@@ -6,8 +6,6 @@
 
       <InputsForNote :note="note" v-if="!edit" :index="index"/>
 
-    <ChangeNoteButton @click="editor" class="change-btn" />
-
   </div>
 </template>
 
@@ -26,13 +24,13 @@ const props = defineProps<{
   index: number;
 }>();
 
-const edit = ref(true);
+// const edit = ref(true);
 
-const editor = () => (edit.value = !edit.value);
+// const editor = () => (edit.value = !edit.value);
 
 import BaseNote from './BaseNote.vue';
 
-import ChangeNoteButton from './ChangeNoteButton.vue';
+import ChangeNoteButton from './buttons/ChangeNoteButton.vue';
 
 import InputsForNote from './InputsForNote.vue';
 
@@ -45,6 +43,11 @@ const { notes, removeNote } = useNotes();
 import { useFilter } from '../composables/useFilter.ts';
 
 const { notesFilter, viewMode, notesFilterByTag } = useFilter();
+
+import { useVisible } from '../composables/useVisible.ts'
+
+const { edit } = useVisible();
+
 </script>
 
 <style lang="scss">
@@ -58,6 +61,7 @@ const { notesFilter, viewMode, notesFilterByTag } = useFilter();
   &.List {
     width: 100%;
     text-align: center;
+    margin-bottom: 15px;
   }
 }
 
@@ -84,7 +88,4 @@ const { notesFilter, viewMode, notesFilterByTag } = useFilter();
   margin-top: 0px;
 }
 
-.change-btn {
-  margin-left: 93%;
-}
 </style>

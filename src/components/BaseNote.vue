@@ -12,9 +12,12 @@
     </p>
     <SelectedTegs class="note-teg" :items="note.teg" :showButton="false" />
   </div>
+
+  <ChangeNoteButton @click="editor" class="change-btn" />
 </template>
 
 <script setup lang="ts">
+
 import { ref, computed } from 'vue';
 
 const props = defineProps<{
@@ -31,11 +34,17 @@ const props = defineProps<{
 
 import SelectedTegs from './SelectedTegs.vue';
 
+import ChangeNoteButton from './buttons/ChangeNoteButton.vue';
+
 import { useNotes } from '../composables/useNotes.js';
 
-const { notes, removeNote } = useNotes();
+import { useVisible } from '../composables/useVisible.ts'
 
 import { useFilter } from '../composables/useFilter.ts';
+
+const { editor } = useVisible();
+
+const { notes, removeNote } = useNotes();
 
 const { notesFilter, viewMode, notesFilterByTag } = useFilter();
 
@@ -123,5 +132,9 @@ const importanceColor = computed(() => {
       margin-right: 0;
     }
   }
+}
+
+.change-btn {
+  margin-left: 93%;
 }
 </style>

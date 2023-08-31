@@ -74,6 +74,7 @@ const { notes, visibleModal } = useNotes();
   flex-direction: column;
   gap: 5px;
   font-size: 20px;
+  text-align: center;
 }
 
 .tags-in-main-wndw:focus {

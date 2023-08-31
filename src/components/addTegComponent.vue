@@ -3,7 +3,7 @@
     <InputForDropdown
       class="input-teg"
       v-model:value="newTag"
-      @click="toggleDropdown"
+      @click="toggleVisibility"
       placeholder=""
       type="text"
     />
@@ -13,10 +13,10 @@
     </BaseButtonForSVG>
 
     <BaseList
+      v-click-outside="toggleVisibility"
       :items="filteredTegs"
-      :is-visible="isDropdownOpen"
+      :is-visible="isVisible"
       @choose-item="chooseTeg"
-      :is-any-dropdown-open="isAnyDropdownOpen"
     />
 
     <SelectedTegs 
@@ -31,6 +31,11 @@
 </template>
 
 <script setup lang="ts">
+
+import { ClickOutside } from '../CustomDirectives/ClickOutside.ts';
+
+app.directive('clickOutside', ClickOutside);
+
 import { computed, ref } from 'vue';
 
 import { useTags } from '../composables/useTags.js'
@@ -55,7 +60,7 @@ const { addTegFunctionForCompose, newTag, tags, choosenTegs } = useTags();
 
 const { note } = useNotes();
 
-const {  isDropdownOpen, toggleDropdown, isAnyDropdownOpen } = useVisible();
+// const {  isDropdownOpen, toggleDropdown, isAnyDropdownOpen } = useVisible();
 
 const props = defineProps<{
   selectedTegs: string[];

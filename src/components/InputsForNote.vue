@@ -46,7 +46,8 @@
     @deleteTag="deleteTagInChangeNote(index)"
   />
 
-  <!-- <SelectedTegs class="note-teg" :items="note.teg"/> -->
+  <SaveButton @click="editor" class="save-btn"/>
+
 </template>
 
 <script setup lang="ts">
@@ -63,7 +64,11 @@ const props = defineProps<{
 
 import { useNotes } from '../composables/useNotes.js';
 
+import { useVisible } from '../composables/useVisible.ts'
+
 const { notes, removeNote, visibleModal, openModal, closeModal } = useNotes();
+
+const { editor } = useVisible();
 
 import BaseInput from './BaseInput.vue';
 
@@ -73,7 +78,7 @@ import ComponentWithDropdown from './ComponentWithDropdown.vue';
 
 import addTegComponent from './addTegComponent.vue';
 
-import SelectedTegs from './SelectedTegs.vue';
+import SaveButton from './buttons/SaveButton.vue';
 
 import { useTags } from '../composables/useTags.js';
 
@@ -100,5 +105,9 @@ const deleteTagInChangeNote = (index) => {
 
 .date-note-input {
   width: 100%;
+}
+
+.save-btn {
+  margin-left: 93%;
 }
 </style>

@@ -1,29 +1,12 @@
 import { watch, ref } from 'vue';
 
-const isDropdownOpen = ref(false);
-
-const isAnyDropdownOpen  = ref(false);
+const edit = ref(true);
 
 export function useVisible() {
 
-    const toggleDropdown = () => {
-      isDropdownOpen.value = !isDropdownOpen.value;
+const editor = () => (edit.value = !edit.value);
 
-      if (isDropdownOpen.value) {
-        isAnyDropdownOpen.value = true;
-      }
-    };
+return { edit, editor }
 
-    watch(isAnyDropdownOpen, (newValue) => {
-      if (newValue && isDropdownOpen.value) {
-        isDropdownOpen.value = false;
-      }
-    });
-
-    return {
-      isAnyDropdownOpen,  
-      isDropdownOpen,
-      toggleDropdown
-    };
 }
 
