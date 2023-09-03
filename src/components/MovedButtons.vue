@@ -1,7 +1,7 @@
 <template>
 
 <div class="moved-buttons">
-  <BaseButton
+  <!-- <BaseButton
   :class="{ active: viewMode === GridMode.Grid }"
       @click="changeGrid(GridMode.Grid)"
       style="cursor: pointer"
@@ -10,8 +10,8 @@
     :class="{ active: viewMode === GridMode.List }"
       @click="changeGrid(GridMode.List)"
       style="cursor: pointer"
-    >Списком</BaseButton>
-    <!-- <BaseButtonForSVG
+    >Списком</BaseButton> -->
+    <BaseButtonForSVG
       :class="{ active: viewMode === GridMode.Grid }"
       @click="changeGrid(GridMode.Grid)"
       style="cursor: pointer"
@@ -25,7 +25,7 @@
       style="cursor: pointer"
     >
       <SvgForButtons :name="'svg-list'" />
-    </BaseButtonForSVG> -->
+    </BaseButtonForSVG>
 </div>
 </template>
 

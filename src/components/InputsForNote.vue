@@ -46,7 +46,7 @@
     @deleteTag="deleteTagInChangeNote(index)"
   />
 
-  <SaveButton @click="editor" class="save-btn"/>
+  <!-- <SaveButton @click="editNote" class="save-btn"/> -->
 
 </template>
 
@@ -91,6 +91,17 @@ const addTagToNote = (newTag: string) => {
 const deleteTagInChangeNote = (index) => {
   props.note.teg.splice(index, 1);
 };
+
+const emit = defineEmits<{
+  [x: string]: any;
+  (e: 'editNote', editOne: boolean): void;
+}>();
+
+const editNote = (editOne: boolean) => {
+  emit('editNote', editOne);
+};
+
+
 </script>
 
 <style>

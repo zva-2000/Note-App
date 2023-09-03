@@ -36,13 +36,16 @@ const deleteTag = (index: number) => {
 
 <style>
 .selected-tags {
-  max-width: 310px;
+  /* max-width: 310px; */
   /* position: absolute; */
   align-items: center;
   display: flex;
   cursor: default;
   gap: 5px;
   line-height: var(#eaf1ff);
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 .tags-li {
@@ -58,6 +61,10 @@ const deleteTag = (index: number) => {
 }
 
 .tags-li:focus {
+  background-color: aquamarine;
+}
+
+.tags-li:active {
   background-color: aquamarine;
 }
 </style>

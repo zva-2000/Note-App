@@ -13,7 +13,7 @@
     </BaseButtonForSVG>
 
     <BaseList
-      v-click-outside="toggleVisibility"
+      v-click-outside="isVisible"
       :items="filteredTegs"
       :is-visible="isVisible"
       @choose-item="chooseTeg"
@@ -31,10 +31,6 @@
 </template>
 
 <script setup lang="ts">
-
-import { ClickOutside } from '../CustomDirectives/ClickOutside.ts';
-
-app.directive('clickOutside', ClickOutside);
 
 import { computed, ref } from 'vue';
 

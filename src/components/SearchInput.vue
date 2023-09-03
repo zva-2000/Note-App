@@ -77,7 +77,7 @@ svg {
     border-radius: 30px;
     color: #000000;
     font-size: 15px;
-    min-width: 323px;
+    min-width: 53em;
     height: auto;
     outline: none;
 }

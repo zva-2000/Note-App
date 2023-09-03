@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@mahdikhashan/vue3-click-outside": "^0.1.2",
+    "mixin": "^0.2.0",
     "v-click-outside": "^3.2.0",
     "vue": "^3.2.47"
   },

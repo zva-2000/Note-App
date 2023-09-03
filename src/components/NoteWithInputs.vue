@@ -1,10 +1,19 @@
 <template>
   <div class="note" :class="viewMode">
-    <BaseDeleteButton class="delete-button" @click="removeNote(index)" />
+
+    <div class="note-btns">
+      
+      <ChangeNoteButton @click="editor" class="change-btn" v-show="edit"/>
+
+      <SaveButton @click="editor" class="change-btn" v-show="!edit"/>
+      
+      <BaseDeleteButton class="delete-button" @click="removeNote(index)"/>
+
+    </div>  
     
       <BaseNote :note="note" :index="index" v-if="edit"/>
 
-      <InputsForNote :note="note" v-if="!edit" :index="index"/>
+      <InputsForNote :note="note" v-if="!edit" :index="index" @editNote="editor"/>
 
   </div>
 </template>
@@ -24,9 +33,11 @@ const props = defineProps<{
   index: number;
 }>();
 
-// const edit = ref(true);
+const edit = ref(true);
 
-// const editor = () => (edit.value = !edit.value);
+const editor = () => (edit.value = !edit.value);
+
+import SaveButton from './buttons/SaveButton.vue';
 
 import BaseNote from './BaseNote.vue';
 
@@ -46,7 +57,7 @@ const { notesFilter, viewMode, notesFilterByTag } = useFilter();
 
 import { useVisible } from '../composables/useVisible.ts'
 
-const { edit } = useVisible();
+// const { editor } = useVisible();
 
 </script>
 
@@ -60,7 +71,7 @@ const { edit } = useVisible();
   height: 100%;
   &.List {
     width: 100%;
-    text-align: center;
+    // text-align: center;
     margin-bottom: 15px;
   }
 }
@@ -71,21 +82,31 @@ const { edit } = useVisible();
 
 .List {
   width: 100%;
-  justify-content: center;
-  text-align: center;
-  margin: auto;
+  // text-align: center;
+  // margin: auto;
 }
 
 .delete-button {
-  margin-left: 42px;
+  // margin-left: 42px;
     color: #999999;
     float: right;
     position: relative;
-    left: 21px;
+    // left: 21px;
 }
 
 .note-teg {
   margin-top: 0px;
 }
 
+.note-btns {
+  display: flex;
+}
+
+.change-btn {
+  margin-left: auto;
+}
+
+// .display-none {
+//   display: none;
+// }
 </style>

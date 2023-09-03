@@ -13,7 +13,7 @@
     <SelectedTegs class="note-teg" :items="note.teg" :showButton="false" />
   </div>
 
-  <ChangeNoteButton @click="editor" class="change-btn" />
+  <!-- <ChangeNoteButton @click="editor" class="change-btn" /> -->
 </template>
 
 <script setup lang="ts">
@@ -88,7 +88,7 @@ const importanceColor = computed(() => {
     font-size: 32px;
   }
   p {
-    justify-content: center;
+    // justify-content: center;
     margin-right: 16px;
     &:last-child {
       margin-right: 0;
@@ -126,7 +126,7 @@ const importanceColor = computed(() => {
     font-size: 32px;
   }
   p {
-    justify-content: center;
+    // justify-content: center;
     margin-right: 16px;
     &:last-child {
       margin-right: 0;
@@ -134,7 +134,4 @@ const importanceColor = computed(() => {
   }
 }
 
-.change-btn {
-  margin-left: 93%;
-}
 </style>

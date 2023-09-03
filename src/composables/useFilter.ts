@@ -8,7 +8,7 @@ import { useTags } from './useTags.js';
 
 const { notes } = useNotes();
 
-const { tags } = useTags();
+const { tags, options } = useTags();
 
 let viewMode = ref<keyof typeof GridMode>(GridMode.Grid);
 
@@ -16,13 +16,18 @@ const search = ref('');
 
 const SelectedTeg = ref('');
 
-const allTags = ref('Все теги')
+const Importance = ref('');
+
+// const allTags = ref('Все теги')
 
 export function useFilter() {
   
   function setTag(tag: string) {
     SelectedTeg.value = tag;
-    SelectedTeg.style.backgroundColor = "blue";
+  }
+
+  function setImpr(impr: string) {
+    Importance.value = impr;
   }
 
   const notesFilter = computed(() => {
@@ -31,7 +36,7 @@ export function useFilter() {
     if (!search.value) return array;
 
     let valueOfSearch = search.value.trim().toLowerCase();
-    array = array.filter(function (note) {
+    array = array.filter(function (note: { title: string; descr: string; date: string; teg: string[]; }) {
       return (
         note.title.toLowerCase().includes(valueOfSearch) ||
         note.descr.toLowerCase().includes(valueOfSearch) ||
@@ -47,16 +52,23 @@ export function useFilter() {
 
   const notesFilterByTag = computed(() => {
     if (!SelectedTeg.value) return notesFilter.value;
-    if (SelectedTeg.value === 'Все теги') return notesFilter.value;
+    if (SelectedTeg.value === 'Все теги') return notesFilter.value; 
     return notesFilter.value.filter((note: any) =>
-      note.teg.find((item: string) => item === SelectedTeg.value)
-    );
+    note.teg.find((item: string) => item === SelectedTeg.value) 
+    // note.impr.value === Importance.value
+    ); 
+    // return (note: any) => ( 
+    //   note.impr.value === Importance.value, 
+    //   notesFilter.value.filter(note.impr))
   });
+
+
+  
 
   function changeGrid(newMode: keyof typeof GridMode) {
     console.log(newMode);
     viewMode.value = newMode;
   }
 
-  return { notesFilter, changeGrid, search, viewMode, setTag, SelectedTeg, notesFilterByTag };
+  return { notesFilter, changeGrid, search, viewMode, setTag, setImpr, SelectedTeg, notesFilterByTag };
 }
