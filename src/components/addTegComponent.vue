@@ -13,32 +13,29 @@
     </BaseButtonForSVG>
 
     <BaseList
-      v-click-outside="isVisible"
+      v-click-outside="toggleVisibility"
       :items="filteredTegs"
       :is-visible="isVisible"
       @choose-item="chooseTeg"
     />
 
-    <SelectedTegs 
-    class="select-tags"
-    :items="selectedTegs"
-    :show-button="true"
-    @delete-tag="deleteTag"
+    <SelectedTegs
+      class="select-tags"
+      :items="selectedTegs"
+      :show-button="true"
+      @delete-tag="deleteTag"
     />
-
   </div>
-
 </template>
 
 <script setup lang="ts">
-
 import { computed, ref } from 'vue';
 
-import { useTags } from '../composables/useTags.js'
+import { useTags } from '../composables/useTags.js';
 
-import { useNotes } from '../composables/useNotes.js'
+import { useNotes } from '../composables/useNotes.js';
 
-import { useVisible } from '../composables/useVisible.ts'
+import { useVisible } from '../composables/useVisible.ts';
 
 import BaseButtonForSVG from './BaseButtonForSVG.vue';
 
@@ -108,7 +105,6 @@ const filteredTegs = computed(() => {
     );
   }
 });
-
 </script>
 
 <style>
@@ -126,13 +122,11 @@ const filteredTegs = computed(() => {
 
 .select-tags {
   display: flex;
-    /* margin: 15px; */
-    flex-direction: initial;
-    float: left;
-    gap: 4px;
-    position: relative;
-    top: 10px;
-
+  /* margin: 15px; */
+  flex-direction: initial;
+  float: left;
+  gap: 4px;
+  position: relative;
+  top: 10px;
 }
-
 </style>

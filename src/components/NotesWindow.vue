@@ -2,39 +2,33 @@
   <h1 class="title main-title">Мои заметки</h1>
 
   <div class="notes-window-header">
-
     <SearchInput v-model:value="search" />
 
     <ModalWindow />
-
   </div>
 
   <div class="notes-window-main-content">
+    <SelectedTegs
+      :items="tagsForMainWindow"
+      @choose-tag="setTag"
+      :showButton="false"
+      class="tags-in-main-wndw"
+    />
 
-      <SelectedTegs
-          :items="tagsForMainWindow"
-          @choose-tag="setTag"
-          :showButton="false"
-          class="tags-in-main-wndw"
-        />
-<!-- 
-      <SelectedTegs
-          :items="options"
-          @choose-tag="setImpr"
-          :showButton="false"
-          class="tags-in-main-wndw"
-        />   -->
+    <!-- <SelectedTegs
+      :items="options"
+      @choose-tag="setImpr"
+      :showButton="false"
+      class="tags-in-main-wndw"
+    /> -->
 
-        <MovedButtons class="position-moved-buttons" />
+    <MovedButtons class="position-moved-buttons" />
+  </div>
 
-    </div>
-
-    <AllNotes class="all-notes" />
-
+  <AllNotes class="all-notes" />
 </template>
 
 <script setup lang="ts">
-
 // import FilterSegmentedItem from './FilterSegmentedItem.vue';
 
 import ModalWindow from './ModalWindow.vue';
@@ -81,6 +75,7 @@ const { notes, visibleModal } = useNotes();
   gap: 15rem;
   justify-content: center;
   margin: auto;
+  align-items: flex-end;
 }
 
 .tags-in-main-wndw {
@@ -103,7 +98,6 @@ const { notes, visibleModal } = useNotes();
 .all-notes {
   margin: auto;
   width: 1000px;
-
 }
 
 .position-moved-buttons {

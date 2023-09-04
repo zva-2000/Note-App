@@ -1,10 +1,10 @@
 <template>
   <ul class="selected-tags">
     <li
-      class="tags-li"
       v-for="(item, index) in items"
       :key="index"
       @click="ChooseTag(item)"
+      :class="['tags-li', { 'seleted-tag': item === SelectedTeg }]"
     >
       {{ item }}
       <ButtonForDeleteTeg v-if="showButton" @click="deleteTag(index)" />
@@ -13,7 +13,15 @@
 </template>
 
 <script setup lang="ts">
+import { watch } from 'vue';
+import { useFilter } from '../composables/useFilter';
 import ButtonForDeleteTeg from './buttons/ButtonForDeleteTeg.vue';
+
+const { SelectedTeg } = useFilter();
+
+// watch(SelectedTeg, () => {
+//   console.log(SelectedTeg.value);
+// });
 
 const props = defineProps<{
   items: string[];
@@ -46,6 +54,10 @@ const deleteTag = (index: number) => {
   flex-wrap: wrap;
   justify-content: flex-start;
   align-items: center;
+}
+
+.seleted-tag {
+  background-color: rebeccapurple;
 }
 
 .tags-li {

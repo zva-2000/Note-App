@@ -21,7 +21,6 @@ const Importance = ref('');
 // const allTags = ref('Все теги')
 
 export function useFilter() {
-  
   function setTag(tag: string) {
     SelectedTeg.value = tag;
   }
@@ -36,7 +35,12 @@ export function useFilter() {
     if (!search.value) return array;
 
     let valueOfSearch = search.value.trim().toLowerCase();
-    array = array.filter(function (note: { title: string; descr: string; date: string; teg: string[]; }) {
+    array = array.filter(function (note: {
+      title: string;
+      descr: string;
+      date: string;
+      teg: string[];
+    }) {
       return (
         note.title.toLowerCase().includes(valueOfSearch) ||
         note.descr.toLowerCase().includes(valueOfSearch) ||
@@ -52,23 +56,28 @@ export function useFilter() {
 
   const notesFilterByTag = computed(() => {
     if (!SelectedTeg.value) return notesFilter.value;
-    if (SelectedTeg.value === 'Все теги') return notesFilter.value; 
+    if (SelectedTeg.value === 'Все теги') return notesFilter.value;
     return notesFilter.value.filter((note: any) =>
-    note.teg.find((item: string) => item === SelectedTeg.value) 
-    // note.impr.value === Importance.value
-    ); 
-    // return (note: any) => ( 
-    //   note.impr.value === Importance.value, 
+      note.teg.find((item: string) => item === SelectedTeg.value)
+    );
+    // return (note: any) => (
+    //   note.impr.value === Importance.value,
     //   notesFilter.value.filter(note.impr))
   });
-
-
-  
 
   function changeGrid(newMode: keyof typeof GridMode) {
     console.log(newMode);
     viewMode.value = newMode;
   }
 
-  return { notesFilter, changeGrid, search, viewMode, setTag, setImpr, SelectedTeg, notesFilterByTag };
+  return {
+    notesFilter,
+    changeGrid,
+    search,
+    viewMode,
+    setTag,
+    setImpr,
+    SelectedTeg,
+    notesFilterByTag,
+  };
 }
