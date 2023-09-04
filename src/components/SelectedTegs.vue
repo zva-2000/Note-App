@@ -4,7 +4,7 @@
       v-for="(item, index) in items"
       :key="index"
       @click="ChooseTag(item)"
-      :class="['tags-li', { 'seleted-tag': item === SelectedTeg }]"
+      :class="['tags-li', { 'seleted-tag': item === SelectedTeg, 'seleted-impr': item === Importance}]"
     >
       {{ item }}
       <ButtonForDeleteTeg v-if="showButton" @click="deleteTag(index)" />
@@ -17,11 +17,7 @@ import { watch } from 'vue';
 import { useFilter } from '../composables/useFilter';
 import ButtonForDeleteTeg from './buttons/ButtonForDeleteTeg.vue';
 
-const { SelectedTeg } = useFilter();
-
-// watch(SelectedTeg, () => {
-//   console.log(SelectedTeg.value);
-// });
+const { SelectedTeg, Importance } = useFilter();
 
 const props = defineProps<{
   items: string[];
@@ -57,7 +53,13 @@ const deleteTag = (index: number) => {
 }
 
 .seleted-tag {
-  background-color: rebeccapurple;
+  background-color: #494ce8 !important;
+  color: rgb(255, 255, 255);
+}
+
+.seleted-impr {
+  background-color: #494ce8 !important;
+  color: rgb(255, 255, 255);
 }
 
 .tags-li {
@@ -72,11 +74,4 @@ const deleteTag = (index: number) => {
   background-color: #494ce8;
 }
 
-.tags-li:focus {
-  background-color: aquamarine;
-}
-
-.tags-li:active {
-  background-color: aquamarine;
-}
 </style>

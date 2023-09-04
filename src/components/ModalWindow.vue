@@ -174,7 +174,6 @@ const deleteTagInModalWindow = (index: any) => {
   padding: 20px;
   border: 1px solid #888;
   width: 40%;
-  height: 97%;
   border-radius: 5px;
 }
 

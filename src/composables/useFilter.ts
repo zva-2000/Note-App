@@ -27,6 +27,7 @@ export function useFilter() {
 
   function setImpr(impr: string) {
     Importance.value = impr;
+    console.log(Importance.value);
   }
 
   const notesFilter = computed(() => {
@@ -55,15 +56,20 @@ export function useFilter() {
   });
 
   const notesFilterByTag = computed(() => {
-    if (!SelectedTeg.value) return notesFilter.value;
-    if (SelectedTeg.value === 'Все теги') return notesFilter.value;
-    return notesFilter.value.filter((note: any) =>
-      note.teg.find((item: string) => item === SelectedTeg.value)
-    );
-    // return (note: any) => (
-    //   note.impr.value === Importance.value,
-    //   notesFilter.value.filter(note.impr))
+    if (!SelectedTeg.value && !Importance.value) return notesFilter.value;
+    if (SelectedTeg.value === 'Сбросить фильтр тегов') return notesFilter.value;
+    if (Importance.value === 'Сбросить фильтр тегов') return notesFilter.value;
+    // return notesFilter.value.filter((note: any) =>
+    //   note.teg.find((item: string) => item === SelectedTeg.value) && note.impr.includes(Importance.value)
+    // );
+    return notesFilter.value.filter((note: any) => {
+      const tagMatch = SelectedTeg.value ? note.teg.find((item: string) => item === SelectedTeg.value) : true;
+      const importanceMatch = Importance.value ? note.impr.includes(Importance.value) : true;
+  
+      return tagMatch && importanceMatch;
+    });
   });
+
 
   function changeGrid(newMode: keyof typeof GridMode) {
     console.log(newMode);
@@ -78,6 +84,7 @@ export function useFilter() {
     setTag,
     setImpr,
     SelectedTeg,
+    Importance,
     notesFilterByTag,
   };
 }

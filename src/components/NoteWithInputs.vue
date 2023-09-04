@@ -65,7 +65,7 @@ import { useVisible } from '../composables/useVisible.ts'
 .note {
   border-radius: 20px;
   width: 50%;
-  padding: 18px 20px;
+  padding: 0px 14px 34px 32px;
   margin-bottom: 20px;
   background-color: #ffffff;
   height: 100%;
@@ -100,6 +100,8 @@ import { useVisible } from '../composables/useVisible.ts'
 
 .note-btns {
   display: flex;
+  position: relative;
+  top: 12px;
 }
 
 .change-btn {

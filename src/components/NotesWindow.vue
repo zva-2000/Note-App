@@ -5,9 +5,13 @@
     <SearchInput v-model:value="search" />
 
     <ModalWindow />
+
   </div>
 
+  <a class="take-of-filter" @click="setTag('Сбросить фильтр тегов'); setImpr('Сбросить фильтр тегов')">Сбросить выбор тегов</a>
+
   <div class="notes-window-main-content">
+
     <SelectedTegs
       :items="tagsForMainWindow"
       @choose-tag="setTag"
@@ -15,13 +19,14 @@
       class="tags-in-main-wndw"
     />
 
-    <!-- <SelectedTegs
+    <SelectedTegs
       :items="options"
       @choose-tag="setImpr"
       :showButton="false"
       class="tags-in-main-wndw"
-    /> -->
-
+      :style="{ backgroundColor: importanceColor }"
+    />
+  
     <MovedButtons class="position-moved-buttons" />
   </div>
 
@@ -30,6 +35,8 @@
 
 <script setup lang="ts">
 // import FilterSegmentedItem from './FilterSegmentedItem.vue';
+
+import { ref, computed } from 'vue';
 
 import ModalWindow from './ModalWindow.vue';
 
@@ -52,6 +59,17 @@ const { notesFilter, setTag, SelectedTeg, search, setImpr } = useFilter();
 const { tagsForMainWindow, options } = useTags();
 
 const { notes, visibleModal } = useNotes();
+
+const importanceColors = ref({
+  'Очень важно': '#ee9191',
+  'Важно': '#ffd261',
+  'Не важно': '#a7be8e',
+});
+
+const importanceColor = computed(() => {
+  return importanceColors.value[options];
+});
+
 </script>
 
 <style>
@@ -72,7 +90,7 @@ const { notes, visibleModal } = useNotes();
 
 .notes-window-main-content {
   display: flex;
-  gap: 15rem;
+  gap: 3rem;
   justify-content: center;
   margin: auto;
   align-items: flex-end;
@@ -87,7 +105,7 @@ const { notes, visibleModal } = useNotes();
   text-align: center;
   margin-left: 10px;
   max-width: 35rem;
-  width: 35rem;
+  width: 21.6rem;
   float: left;
 }
 
@@ -103,6 +121,16 @@ const { notes, visibleModal } = useNotes();
 .position-moved-buttons {
   float: left;
 }
+
+.take-of-filter {
+  display: flex;
+  gap: 3rem;
+  justify-content: center;
+  margin: auto;
+  align-items: flex-end;
+  cursor: pointer;
+}
+
 
 /* .search {
   margin-top: 15px;

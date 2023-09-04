@@ -10,9 +10,9 @@
     />
     <BaseList
       :items="options"
+      v-click-outside="toggleVisibility"
       :is-visible="isVisible"    
       @choose-item="chooseImportance"
-      v-on-click-outside="toggleVisibility"
     />
   </div>
 </template>

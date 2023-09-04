@@ -6,7 +6,7 @@ const { note, notes } = useNotes();
 
 const options = ref(['Очень важно', 'Важно', 'Не важно']);
 
-const tagsForMainWindow = ref(['Все теги','Учеба', 'Работа', 'Семья'])
+const tagsForMainWindow = ref(['Учеба', 'Работа', 'Семья'])
 
 const tags = ref(['Учеба', 'Работа', 'Семья'])
 
