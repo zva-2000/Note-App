@@ -57,6 +57,7 @@ const { note } = useNotes();
 
 const props = defineProps<{
   selectedTegs: string[];
+  // index: number;
   // className: string;
 }>();
 

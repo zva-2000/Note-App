@@ -30,6 +30,8 @@ export function useFilter() {
     console.log(Importance.value);
   }
 
+
+
   const notesFilter = computed(() => {
     let array = notes.value;
 
@@ -40,12 +42,14 @@ export function useFilter() {
       title: string;
       descr: string;
       date: string;
+      beginDate: string;
       teg: string[];
     }) {
       return (
         note.title.toLowerCase().includes(valueOfSearch) ||
         note.descr.toLowerCase().includes(valueOfSearch) ||
         note.date.toLowerCase().includes(valueOfSearch) ||
+        note.beginDate.toLowerCase().includes(valueOfSearch) ||        
         note.teg.some((teg: string) =>
           teg.toLowerCase().includes(valueOfSearch)
         )
@@ -55,21 +59,19 @@ export function useFilter() {
     return array;
   });
 
+  function takeOffFilter() {  
+    SelectedTeg.value = '';
+    Importance.value = '';
+  }
+
   const notesFilterByTag = computed(() => {
     if (!SelectedTeg.value && !Importance.value) return notesFilter.value;
-    if (SelectedTeg.value === 'Сбросить фильтр тегов') return notesFilter.value;
-    if (Importance.value === 'Сбросить фильтр тегов') return notesFilter.value;
-    // return notesFilter.value.filter((note: any) =>
-    //   note.teg.find((item: string) => item === SelectedTeg.value) && note.impr.includes(Importance.value)
-    // );
     return notesFilter.value.filter((note: any) => {
       const tagMatch = SelectedTeg.value ? note.teg.find((item: string) => item === SelectedTeg.value) : true;
       const importanceMatch = Importance.value ? note.impr.includes(Importance.value) : true;
-  
       return tagMatch && importanceMatch;
     });
   });
-
 
   function changeGrid(newMode: keyof typeof GridMode) {
     console.log(newMode);
@@ -77,6 +79,7 @@ export function useFilter() {
   }
 
   return {
+    takeOffFilter,
     notesFilter,
     changeGrid,
     search,

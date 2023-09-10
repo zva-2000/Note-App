@@ -21,6 +21,7 @@
           v-model:value="note.title"
           type="text"
           class="base-input"
+          :isReadonly="false"
         />
 
         <p class="modal-p">Содержимое:</p>
@@ -37,6 +38,7 @@
           v-model:value="note.date"
           type="date"
           placeholder=""
+          :isReadonly="false"
         />
 
         <p class="modal-p">Важность:</p>
@@ -44,6 +46,7 @@
           class="impr-input"
           v-model:value="note.impr"
           v-model:options="options"
+          :isReadonly="true"
         />
 
         <p class="error">{{ error }}</p>
@@ -54,7 +57,7 @@
           @chooseTeg="chooseTeg"
           @update:error="error = $event"
           :selectedTegs="note.teg"
-          @deleteTag="deleteTagInModalWindow(index)"
+          @deleteTag="deleteTagInModalWindow"
         />
         
       </div>
@@ -95,6 +98,7 @@ const { chooseTeg, options, error } = useTags();
 const deleteTagInModalWindow = (index: any) => {
   note.value.teg.splice(index, 1);
 };
+
 </script>
 
 <style>

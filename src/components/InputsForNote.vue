@@ -43,7 +43,7 @@
     :class-name="'teg-input-note'"
     @chooseTeg="addTagToNote"
     :selectedTegs="note.teg"
-    @deleteTag="deleteTagInChangeNote(index)"
+    @deleteTag="deleteTagInChangeNote"
   />
 
   <!-- <SaveButton @click="editNote" class="save-btn"/> -->
@@ -88,7 +88,7 @@ const addTagToNote = (newTag: string) => {
   props.note.teg.push(newTag);
 };
 
-const deleteTagInChangeNote = (index) => {
+const deleteTagInChangeNote = (index: number) => {
   props.note.teg.splice(index, 1);
 };
 

@@ -8,7 +8,7 @@
 
   </div>
 
-  <a class="take-of-filter" @click="setTag('Сбросить фильтр тегов'); setImpr('Сбросить фильтр тегов')">Сбросить выбор тегов</a>
+  <a class="take-of-filter" @click="takeOffFilter">Сбросить выбор тегов</a>
 
   <div class="notes-window-main-content">
 
@@ -50,25 +50,17 @@ import SelectedTegs from './SelectedTegs.vue';
 
 import AllNotes from './AllNotes.vue';
 
+import BaseInput from './BaseInput.vue';
+
 import { useNotes } from '../composables/useNotes.js';
 
 import { useFilter } from '../composables/useFilter.ts';
 
-const { notesFilter, setTag, SelectedTeg, search, setImpr } = useFilter();
+const { notesFilter, setTag, SelectedTeg, search, setImpr, takeOffFilter } = useFilter();
 
 const { tagsForMainWindow, options } = useTags();
 
 const { notes, visibleModal } = useNotes();
-
-const importanceColors = ref({
-  'Очень важно': '#ee9191',
-  'Важно': '#ffd261',
-  'Не важно': '#a7be8e',
-});
-
-const importanceColor = computed(() => {
-  return importanceColors.value[options];
-});
 
 </script>
 

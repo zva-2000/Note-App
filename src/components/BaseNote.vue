@@ -60,6 +60,7 @@ const importanceColor = computed(() => {
 </script>
 
 <style lang="scss">
+
 .impr {
   padding: 2px 6px 2px 8px;
     line-height: #eaf1ff;
