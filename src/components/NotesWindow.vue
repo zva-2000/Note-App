@@ -10,7 +10,18 @@
 
   <a class="take-of-filter" @click="takeOffFilter">Сбросить выбор тегов</a>
 
+
   <div class="notes-window-main-content">
+
+    <p>{{ filterDateOne1 }}</p>
+
+    <BaseInput
+          placeholder=""
+          v-model:value="filterDateOne"
+          type="date"
+          class="base-input"
+          :isReadonly="false"
+        />
 
     <SelectedTegs
       :items="tagsForMainWindow"
@@ -24,7 +35,6 @@
       @choose-tag="setImpr"
       :showButton="false"
       class="tags-in-main-wndw"
-      :style="{ backgroundColor: importanceColor }"
     />
   
     <MovedButtons class="position-moved-buttons" />
@@ -34,7 +44,6 @@
 </template>
 
 <script setup lang="ts">
-// import FilterSegmentedItem from './FilterSegmentedItem.vue';
 
 import { ref, computed } from 'vue';
 
@@ -56,11 +65,15 @@ import { useNotes } from '../composables/useNotes.js';
 
 import { useFilter } from '../composables/useFilter.ts';
 
-const { notesFilter, setTag, SelectedTeg, search, setImpr, takeOffFilter } = useFilter();
+const { notesFilter, setTag, SelectedTeg, search, setImpr, takeOffFilter, filterDateOne } = useFilter();
 
 const { tagsForMainWindow, options } = useTags();
 
 const { notes, visibleModal } = useNotes();
+
+const filterDateOne1 = ref(new Date(filterDateOne).toLocaleDateString());
+
+
 
 </script>
 

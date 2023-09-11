@@ -6,7 +6,7 @@
   <div class="note-body">
     <p>{{ note.descr }}</p>
     <p class="note-date">Дата создания: {{ note.beginDate }}</p>
-    <p class="note-date">Сделать до: {{ note.date }}</p>
+    <p class="note-date">Сделать до: {{ noteDate }}</p>
     <p class="impr" :style="{ backgroundColor: importanceColor }">
       {{ note.impr }}
     </p>
@@ -25,12 +25,14 @@ const props = defineProps<{
     title: string;
     descr: string;
     impr: string;
-    date: string;
+    date: number;
     beginDate: string;
     teg: string[];
   };
   index: number;
 }>();
+
+const noteDate = new Date(props.note.date).toLocaleDateString()
 
 import SelectedTegs from './SelectedTegs.vue';
 
@@ -57,6 +59,7 @@ const importanceColors = ref({
 const importanceColor = computed(() => {
   return importanceColors.value[props.note.impr];
 });
+
 </script>
 
 <style lang="scss">

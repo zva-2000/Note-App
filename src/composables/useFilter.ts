@@ -18,19 +18,26 @@ const SelectedTeg = ref('');
 
 const Importance = ref('');
 
-// const allTags = ref('Все теги')
+const filterDateOne = ref('');
+
+const filterDateTwo = ref();
+
+const timestampDateOne = new Date(filterDateOne.value).getTime()
+
+
+
+
 
 export function useFilter() {
   function setTag(tag: string) {
     SelectedTeg.value = tag;
+    console.log(timestampDateOne);
   }
 
   function setImpr(impr: string) {
     Importance.value = impr;
     console.log(Importance.value);
   }
-
-
 
   const notesFilter = computed(() => {
     let array = notes.value;
@@ -73,6 +80,15 @@ export function useFilter() {
     });
   });
 
+  const notesFilterByDate = computed(() => {
+    return notesFilterByTag.value.filter((note: any) => {
+      if (filterDateOne.value < note.date.value < filterDateTwo.value) {
+        return notesFilterByTag.value
+      }
+    })
+
+  });
+
   function changeGrid(newMode: keyof typeof GridMode) {
     console.log(newMode);
     viewMode.value = newMode;
@@ -89,5 +105,6 @@ export function useFilter() {
     SelectedTeg,
     Importance,
     notesFilterByTag,
+    filterDateOne,
   };
 }

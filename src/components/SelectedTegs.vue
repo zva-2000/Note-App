@@ -4,7 +4,7 @@
       v-for="(item, index) in items"
       :key="index"
       @click="ChooseTag(item)"
-      :class="['tags-li', { 'seleted-tag': item === SelectedTeg, 'seleted-impr': item === Importance}]"
+      :class="['tags-li', {'seleted-tag': item === SelectedTeg, 'seleted-impr': item === Importance}]"
       :style="{ backgroundColor: importanceColor }"
     >
       {{ item }}
