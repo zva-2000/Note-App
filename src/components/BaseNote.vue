@@ -1,19 +1,17 @@
 <template>
   <div class="note-header" :class="viewMode">
     <h1>{{ note.title }}</h1>
-    <!-- <BaseDeleteButton class="delete-button" @click="removeNote(index)" /> -->
   </div>
   <div class="note-body">
     <p>{{ note.descr }}</p>
-    <p class="note-date">Дата создания: {{ note.beginDate }}</p>
-    <p class="note-date">Сделать до: {{ noteDate }}</p>
+    <p class="note-date">Дата создания: {{ formatedNoteDateBegin }}</p>
+    <p class="note-date">Сделать до: {{ formatedNoteDate }}</p>
     <p class="impr" :style="{ backgroundColor: importanceColor }">
       {{ note.impr }}
     </p>
     <SelectedTegs class="note-teg" :items="note.teg" :showButton="false" />
   </div>
 
-  <!-- <ChangeNoteButton @click="editor" class="change-btn" /> -->
 </template>
 
 <script setup lang="ts">
@@ -32,11 +30,7 @@ const props = defineProps<{
   index: number;
 }>();
 
-const noteDate = new Date(props.note.date).toLocaleDateString()
-
 import SelectedTegs from './SelectedTegs.vue';
-
-import ChangeNoteButton from './buttons/ChangeNoteButton.vue';
 
 import { useNotes } from '../composables/useNotes.js';
 
@@ -49,6 +43,10 @@ const { editor } = useVisible();
 const { notes, removeNote } = useNotes();
 
 const { notesFilter, viewMode, notesFilterByTag } = useFilter();
+
+const formatedNoteDate = new Date(props.note.date).toLocaleDateString()
+
+const formatedNoteDateBegin = new Date(props.note.beginDate).toLocaleDateString()
 
 const importanceColors = ref({
   'Очень важно': '#ee9191',
@@ -92,7 +90,6 @@ const importanceColor = computed(() => {
     font-size: 32px;
   }
   p {
-    // justify-content: center;
     margin-right: 16px;
     &:last-child {
       margin-right: 0;

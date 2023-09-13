@@ -9,7 +9,6 @@
 <script setup lang="ts">
 const props = defineProps<{
   isVisible: boolean;
-  // isAnyDropdownOpen: boolean;
   items: string[];
 }>();
 

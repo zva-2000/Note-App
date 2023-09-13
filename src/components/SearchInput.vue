@@ -31,8 +31,6 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 
-// import baseInput from './BaseInput.vue';
-
 const props = defineProps<{
   value: string;
 }>();

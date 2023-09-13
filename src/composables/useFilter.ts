@@ -20,18 +20,26 @@ const Importance = ref('');
 
 const filterDateOne = ref('');
 
-const filterDateTwo = ref();
+const filterDateTwo = ref('');
 
-const timestampDateOne = new Date(filterDateOne.value).getTime()
+const timestampDateOne = computed(() => {
+  return new Date(filterDateOne.value).getTime();
+});
 
+const timestampDateTwo = computed(() => {
+  return new Date(filterDateTwo.value).getTime();
+});
 
-
+// const timestampNoteDate = computed((note: any) => {
+//   return new Date(note.date.value).getTime();
+// });
 
 
 export function useFilter() {
   function setTag(tag: string) {
     SelectedTeg.value = tag;
-    console.log(timestampDateOne);
+    console.log(timestampNoteDate.value);
+    console.log(timestampDateOne.value);
   }
 
   function setImpr(impr: string) {
@@ -69,25 +77,38 @@ export function useFilter() {
   function takeOffFilter() {  
     SelectedTeg.value = '';
     Importance.value = '';
+    filterDateOne.value = '';
+    filterDateTwo.value = '';
   }
 
-  const notesFilterByTag = computed(() => {
+  const notesFilterByTagandDate = computed(() => {
     if (!SelectedTeg.value && !Importance.value) return notesFilter.value;
-    return notesFilter.value.filter((note: any) => {
-      const tagMatch = SelectedTeg.value ? note.teg.find((item: string) => item === SelectedTeg.value) : true;
-      const importanceMatch = Importance.value ? note.impr.includes(Importance.value) : true;
-      return tagMatch && importanceMatch;
-    });
-  });
+    if (!filterDateOne.value && !filterDateTwo.value) return notesFilter.value;
 
-  const notesFilterByDate = computed(() => {
-    return notesFilterByTag.value.filter((note: any) => {
-      if (filterDateOne.value < note.date.value < filterDateTwo.value) {
-        return notesFilterByTag.value
-      }
-    })
+    let notesFilterByTag = notesFilter.value;
+    if (SelectedTeg.value || Importance.value) {
+      notesFilterByTag = notesFilter.value.filter((note: any) => {
+          const tagMatch = SelectedTeg.value ? note.teg.includes(SelectedTeg.value) : true;
+          const importanceMatch = Importance.value ? note.impr.includes(Importance.value) : true;
+          return tagMatch && importanceMatch;
+      });
 
-  });
+    let notesFilterByDate = notesFilterByTag
+    if (filterDateOne.value || filterDateTwo.value) {
+      notesFilterByDate = notesFilterByTag.filter((note: any) => {
+          if (timestampDateOne.value && timestampDateTwo.value) {
+              return (timestampDateOne.value <= note.beginDate && timestampDateTwo.value >= note.beginDate);
+          } else if (timestampDateOne.value) {
+              return timestampDateOne.value <= note.beginDate;
+          } else if (timestampDateTwo.value) {
+              return timestampDateTwo.value >= note.beginDate;
+          }
+          return true; 
+      });
+  }
+  return notesFilterByDate;
+ }});
+
 
   function changeGrid(newMode: keyof typeof GridMode) {
     console.log(newMode);
@@ -104,7 +125,8 @@ export function useFilter() {
     setImpr,
     SelectedTeg,
     Importance,
-    notesFilterByTag,
     filterDateOne,
+    filterDateTwo,
+    notesFilterByTagandDate
   };
 }

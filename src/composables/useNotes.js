@@ -1,6 +1,4 @@
-import { ref } from 'vue'
-
-// let curIndex = ref(undefined)
+import { ref, computed } from 'vue'
 
 let visibleModal = ref(false);
 
@@ -19,7 +17,7 @@ const notes = ref([
       title: 'Сделать все задачи',
       descr: 'На отлично!',
       impr: 'Очень важно',
-      beginDate: '20.06.2023, 17:42:59',
+      beginDate: 1683849600000,
       date: 1694368800000,
       teg: ['Работа'],
     },
@@ -27,39 +25,40 @@ const notes = ref([
       title: 'Выучить Composbles',
       descr: 'Описан в документации Vue',
       impr: 'Важно',
-      beginDate: '22.07.2023, 10:30:48',
-      date: 1674756000000,
+      beginDate: 1689984000000,
+      date: 1692489600000,
       teg: ['Учеба'],
     },
     {
       title: 'Вычесать кота',
       descr: 'А то опять разбросает шерсть',
       impr: 'Не важно',
-      beginDate: '21.08.2023, 12:40:35',
+      beginDate: 1692316800000,
       date: 1691085600000,
       teg: ['Семья'],
     },
   ]
 )
-
 let note = ref({
   title: '',
   descr: '',
   impr: '',
+  formattedDate: '', 
   beginDate: '',
   date: '',
   teg: [],
 });
 
-let notesOnServer = JSON.parse(localStorage.getItem("notes")) || [];
+
 
 export function useNotes() {
 
   const removeNote = (index) => {
     notes.value.splice(index, 1);
+    console.log(timestampNoteDate)
   };
 
-function AddNote() {
+  function AddNote() {
 
     let { title, descr, impr, teg, date } = note.value;
 
@@ -68,13 +67,20 @@ function AddNote() {
         return false;
     }
 
+    let timestampNoteDate = new Date(date).getTime();
+
+    let timestampNoteDateBegin = new Date().getTime();
+
+    let formattedDate = new Date(timestampNoteDate).toLocaleDateString();
+
     let newNote = {
         title,
         descr,
         impr,
-        date,
+        date: timestampNoteDate,     
+        formattedDate,            
         teg,
-        beginDate: new Date().toLocaleString() 
+        beginDate: timestampNoteDateBegin
     };
 
     notes.value.push(newNote);
@@ -87,10 +93,11 @@ function AddNote() {
     note.value.descr = '';
     note.value.impr = '';
     note.value.teg = [];
-    closeModal(); 
+    closeModal()
 
     return notes.value;
- }
+  
+  }
 
 
 

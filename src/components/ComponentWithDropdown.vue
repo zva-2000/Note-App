@@ -19,17 +19,11 @@
 
 <script setup lang="ts">
 
-// import { vOnClickOutside } from '@vueuse/components';
-
 import BaseList from './BaseList.vue';
 
 import BaseInput from './BaseInput.vue';
 
-import { ref, computed } from 'vue';
-
-// import { useVisible } from '../composables/useVisible.ts'
-
-// const { isDropdownOpen, toggleDropdown, isAnyDropdownOpen } = useVisible();
+import { ref, computed } from 'vue';;
 
 const props = defineProps<{
   value: string;

@@ -13,16 +13,6 @@
 
   <div class="notes-window-main-content">
 
-    <p>{{ filterDateOne1 }}</p>
-
-    <BaseInput
-          placeholder=""
-          v-model:value="filterDateOne"
-          type="date"
-          class="base-input"
-          :isReadonly="false"
-        />
-
     <SelectedTegs
       :items="tagsForMainWindow"
       @choose-tag="setTag"
@@ -36,7 +26,29 @@
       :showButton="false"
       class="tags-in-main-wndw"
     />
+
+    </div>
+
+    <p class="take-of-filter">Дата создания:</p>  
+
+  <div class="inputs-window-main-content">   
   
+   От: <BaseInput
+            placeholder=""
+            v-model:value="filterDateOne"
+            type="date"
+            :isReadonly="false"
+            class="date-main-input"
+          />
+
+      До: <BaseInput
+            placeholder=""
+            v-model:value="filterDateTwo"
+            type="date"
+            :isReadonly="false"
+            class="date-main-input"
+        /> 
+
     <MovedButtons class="position-moved-buttons" />
   </div>
 
@@ -65,19 +77,19 @@ import { useNotes } from '../composables/useNotes.js';
 
 import { useFilter } from '../composables/useFilter.ts';
 
-const { notesFilter, setTag, SelectedTeg, search, setImpr, takeOffFilter, filterDateOne } = useFilter();
+const { notesFilter, setTag, SelectedTeg, search, setImpr, takeOffFilter, filterDateOne, filterDateTwo } = useFilter();
 
 const { tagsForMainWindow, options } = useTags();
 
 const { notes, visibleModal } = useNotes();
 
-const filterDateOne1 = ref(new Date(filterDateOne).toLocaleDateString());
-
-
-
 </script>
 
 <style>
+
+.date-main-input {
+  width: 18.3rem;
+}
 .main-title {
   text-align: center;
   font-weight: 600;
@@ -96,6 +108,14 @@ const filterDateOne1 = ref(new Date(filterDateOne).toLocaleDateString());
 .notes-window-main-content {
   display: flex;
   gap: 3rem;
+  justify-content: center;
+  margin: auto;
+  align-items: flex-end;
+}
+
+.inputs-window-main-content {
+  display: flex;
+  gap: 2rem;
   justify-content: center;
   margin: auto;
   align-items: flex-end;
@@ -134,6 +154,8 @@ const filterDateOne1 = ref(new Date(filterDateOne).toLocaleDateString());
   margin: auto;
   align-items: flex-end;
   cursor: pointer;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 

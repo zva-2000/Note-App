@@ -1,7 +1,7 @@
 <template>
   <div class="notes">
     <NoteWithInputs
-      v-for="(note, index) in notesFilterByTag"
+      v-for="(note, index) in notesFilterByTagandDate"
       :key="index"
       :note="note"
       :index="index"
@@ -20,7 +20,7 @@ import { useNotes } from '../composables/useNotes.js';
 
 import { useFilter } from '../composables/useFilter.ts';
 
-const { notesFilter, viewMode, notesFilterByTag } = useFilter();
+const { notesFilter, viewMode, notesFilterByTag, notesFilterByTagandDate } = useFilter();
 
 const {
   notes,

@@ -51,8 +51,6 @@ const importanceColor = computed(() => {
 
 <style>
 .selected-tags {
-  /* max-width: 310px; */
-  /* position: absolute; */
   align-items: center;
   display: flex;
   cursor: default;

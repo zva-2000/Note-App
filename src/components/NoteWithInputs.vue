@@ -55,10 +55,6 @@ import { useFilter } from '../composables/useFilter.ts';
 
 const { notesFilter, viewMode, notesFilterByTag } = useFilter();
 
-import { useVisible } from '../composables/useVisible.ts'
-
-// const { editor } = useVisible();
-
 </script>
 
 <style lang="scss">
@@ -71,7 +67,6 @@ import { useVisible } from '../composables/useVisible.ts'
   height: 100%;
   &.List {
     width: 100%;
-    // text-align: center;
     margin-bottom: 15px;
   }
 }
@@ -82,16 +77,12 @@ import { useVisible } from '../composables/useVisible.ts'
 
 .List {
   width: 100%;
-  // text-align: center;
-  // margin: auto;
 }
 
 .delete-button {
-  // margin-left: 42px;
     color: #999999;
     float: right;
     position: relative;
-    // left: 21px;
 }
 
 .note-teg {

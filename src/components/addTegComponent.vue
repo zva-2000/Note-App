@@ -35,8 +35,6 @@ import { useTags } from '../composables/useTags.js';
 
 import { useNotes } from '../composables/useNotes.js';
 
-import { useVisible } from '../composables/useVisible.ts';
-
 import BaseButtonForSVG from './BaseButtonForSVG.vue';
 
 import SvgForButtons from './SvgForButtons.vue';
@@ -47,18 +45,12 @@ import BaseList from './BaseList.vue';
 
 import SelectedTegs from './SelectedTegs.vue';
 
-import BaseButton from './BaseButton.vue';
-
 const { addTegFunctionForCompose, newTag, tags, choosenTegs } = useTags();
 
 const { note } = useNotes();
 
-// const {  isDropdownOpen, toggleDropdown, isAnyDropdownOpen } = useVisible();
-
 const props = defineProps<{
   selectedTegs: string[];
-  // index: number;
-  // className: string;
 }>();
 
 let isVisible = ref(true);
@@ -123,7 +115,6 @@ const filteredTegs = computed(() => {
 
 .select-tags {
   display: flex;
-  /* margin: 15px; */
   flex-direction: initial;
   float: left;
   gap: 4px;
