@@ -8,7 +8,7 @@
 
   </div>
 
-  <a class="take-of-filter" @click="takeOffFilter">Сбросить выбор тегов</a>
+  <a class="take-of-filter" @click="takeOffFilter">Сбросить фильтры</a>
 
 
   <div class="notes-window-main-content">
@@ -33,7 +33,7 @@
 
   <div class="inputs-window-main-content">   
   
-   От: <BaseInput
+   <BaseInput
             placeholder=""
             v-model:value="filterDateOne"
             type="date"
@@ -88,7 +88,7 @@ const { notes, visibleModal } = useNotes();
 <style>
 
 .date-main-input {
-  width: 18.3rem;
+  width: 20.5rem;
 }
 .main-title {
   text-align: center;
@@ -132,6 +132,7 @@ const { notes, visibleModal } = useNotes();
   max-width: 35rem;
   width: 21.6rem;
   float: left;
+  margin-right: 4rem;
 }
 
 .tags-in-main-wndw:focus {

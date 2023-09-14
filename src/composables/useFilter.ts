@@ -38,7 +38,6 @@ const timestampDateTwo = computed(() => {
 export function useFilter() {
   function setTag(tag: string) {
     SelectedTeg.value = tag;
-    console.log(timestampNoteDate.value);
     console.log(timestampDateOne.value);
   }
 
@@ -82,32 +81,29 @@ export function useFilter() {
   }
 
   const notesFilterByTagandDate = computed(() => {
-    if (!SelectedTeg.value && !Importance.value) return notesFilter.value;
-    if (!filterDateOne.value && !filterDateTwo.value) return notesFilter.value;
+    return notesFilter.value.filter((note: any) => {
+        let tagAndImportanceCheck = true;
+        let dateCheck = true;
 
-    let notesFilterByTag = notesFilter.value;
-    if (SelectedTeg.value || Importance.value) {
-      notesFilterByTag = notesFilter.value.filter((note: any) => {
-          const tagMatch = SelectedTeg.value ? note.teg.includes(SelectedTeg.value) : true;
-          const importanceMatch = Importance.value ? note.impr.includes(Importance.value) : true;
-          return tagMatch && importanceMatch;
-      });
+        if (SelectedTeg.value || Importance.value) {
+            const tagMatch = SelectedTeg.value ? note.teg.includes(SelectedTeg.value) : true;
+            const importanceMatch = Importance.value ? note.impr.includes(Importance.value) : true;
+            tagAndImportanceCheck = tagMatch && importanceMatch;
+        }
 
-    let notesFilterByDate = notesFilterByTag
-    if (filterDateOne.value || filterDateTwo.value) {
-      notesFilterByDate = notesFilterByTag.filter((note: any) => {
-          if (timestampDateOne.value && timestampDateTwo.value) {
-              return (timestampDateOne.value <= note.beginDate && timestampDateTwo.value >= note.beginDate);
-          } else if (timestampDateOne.value) {
-              return timestampDateOne.value <= note.beginDate;
-          } else if (timestampDateTwo.value) {
-              return timestampDateTwo.value >= note.beginDate;
-          }
-          return true; 
-      });
-  }
-  return notesFilterByDate;
- }});
+        if (filterDateOne.value || filterDateTwo.value) {
+            if (timestampDateOne.value && timestampDateTwo.value) {
+                dateCheck = (timestampDateOne <= note.beginDate && timestampDateTwo >= note.beginDate);
+            } else if (timestampDateOne.value) {
+                dateCheck = timestampDateOne.value <= note.beginDate;
+            } else if (timestampDateTwo.value) {
+                dateCheck = timestampDateTwo.value >= note.beginDate;
+            }
+        }
+        
+        return tagAndImportanceCheck && dateCheck;
+    });
+});
 
 
   function changeGrid(newMode: keyof typeof GridMode) {

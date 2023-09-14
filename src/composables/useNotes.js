@@ -25,7 +25,7 @@ const notes = ref([
       title: 'Выучить Composbles',
       descr: 'Описан в документации Vue',
       impr: 'Важно',
-      beginDate: 1689984000000,
+      beginDate: 1689984100000,
       date: 1692489600000,
       teg: ['Учеба'],
     },
@@ -36,6 +36,14 @@ const notes = ref([
       beginDate: 1692316800000,
       date: 1691085600000,
       teg: ['Семья'],
+    },
+    {
+      title: 'Основы Node.js',
+      descr: 'Посмотреть видео на ютубе',
+      impr: 'Важно',
+      beginDate: 1691485600000,
+      date: 1699316800000,
+      teg: ['Работа', 'Учеба'],
     },
   ]
 )
