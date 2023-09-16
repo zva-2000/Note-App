@@ -11,11 +11,9 @@
     </p>
     <SelectedTegs class="note-teg" :items="note.teg" :showButton="false" />
   </div>
-
 </template>
 
 <script setup lang="ts">
-
 import { ref, computed } from 'vue';
 
 const props = defineProps<{
@@ -34,7 +32,7 @@ import SelectedTegs from './SelectedTegs.vue';
 
 import { useNotes } from '../composables/useNotes.js';
 
-import { useVisible } from '../composables/useVisible.ts'
+import { useVisible } from '../composables/useVisible.ts';
 
 import { useFilter } from '../composables/useFilter.ts';
 
@@ -44,31 +42,31 @@ const { notes, removeNote } = useNotes();
 
 const { notesFilter, viewMode, notesFilterByTag } = useFilter();
 
-const formatedNoteDate = new Date(props.note.date).toLocaleDateString()
+const formatedNoteDate = new Date(props.note.date).toLocaleDateString();
 
-const formatedNoteDateBegin = new Date(props.note.beginDate).toLocaleDateString()
+const formatedNoteDateBegin = computed(() =>
+  new Date(props.note.beginDate).toLocaleDateString()
+);
 
 const importanceColors = ref({
   'Очень важно': '#ee9191',
-  'Важно': '#ffd261',
+  Важно: '#ffd261',
   'Не важно': '#a7be8e',
 });
 
 const importanceColor = computed(() => {
   return importanceColors.value[props.note.impr];
 });
-
 </script>
 
 <style lang="scss">
-
 .impr {
   padding: 2px 6px 2px 8px;
-    line-height: #eaf1ff;
-    border-radius: 15px;
-    color: rgb(0, 0, 0);
-    max-width: 140px;
-    text-align: center;
+  line-height: #eaf1ff;
+  border-radius: 15px;
+  color: rgb(0, 0, 0);
+  max-width: 140px;
+  text-align: center;
 }
 .note-header .Grid {
   display: flex;
@@ -134,5 +132,4 @@ const importanceColor = computed(() => {
     }
   }
 }
-
 </style>

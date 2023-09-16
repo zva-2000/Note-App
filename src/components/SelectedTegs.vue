@@ -4,8 +4,14 @@
       v-for="(item, index) in items"
       :key="index"
       @click="ChooseTag(item)"
-      :class="['tags-li', {'seleted-tag': item === SelectedTeg, 'seleted-impr': item === Importance}]"
-      :style="{ backgroundColor: importanceColor }"
+      :class="[
+        'tags-li',
+        {
+          'seleted-tag': item === SelectedTeg,
+          'seleted-impr': item === Importance,
+        },
+      ]"
+      :style="{ backgroundColor: importanceColors[item] }"
     >
       {{ item }}
       <ButtonForDeleteTeg v-if="showButton" @click="deleteTag(index)" />
@@ -40,7 +46,7 @@ const deleteTag = (index: number) => {
 
 const importanceColors = ref({
   'Очень важно': '#ee9191',
-  'Важно': '#ffd261',
+  Важно: '#ffd261',
   'Не важно': '#a7be8e',
 });
 
@@ -83,5 +89,4 @@ const importanceColor = computed(() => {
   background-color: #494ce8;
   color: white;
 }
-
 </style>

@@ -20,22 +20,16 @@ import { useNotes } from '../composables/useNotes.js';
 
 import { useFilter } from '../composables/useFilter.ts';
 
-const { notesFilter, viewMode, notesFilterByTag, notesFilterByTagandDate } = useFilter();
+const { notesFilter, viewMode, notesFilterByTag, notesFilterByTagandDate } =
+  useFilter();
 
-const {
-  notes,
-  removeNote,
-  visibleModal,
-  openModal,
-  closeModal,
-  note
-} = useNotes();
+const { notes, removeNote, visibleModal, openModal, closeModal, note } =
+  useNotes();
 
 const { tags } = useTags();
 </script>
 
 <style lang="scss">
-
 .notes {
   display: flex;
   align-items: center;
@@ -55,6 +49,4 @@ const { tags } = useTags();
 .note-teg {
   margin-top: 0px;
 }
-
-
 </style>

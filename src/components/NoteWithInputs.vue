@@ -1,20 +1,21 @@
 <template>
   <div class="note" :class="viewMode">
-
     <div class="note-btns">
-      
-      <ChangeNoteButton @click="editor" class="change-btn" v-show="edit"/>
+      <ChangeNoteButton @click="editor" class="change-btn" v-show="edit" />
 
-      <SaveButton @click="editor" class="change-btn" v-show="!edit"/>
-      
-      <BaseDeleteButton class="delete-button" @click="removeNote(index)"/>
+      <SaveButton @click="editor" class="change-btn" v-show="!edit" />
 
-    </div>  
-    
-      <BaseNote :note="note" :index="index" v-if="edit"/>
+      <BaseDeleteButton class="delete-button" @click="removeNote(index)" />
+    </div>
 
-      <InputsForNote :note="note" v-if="!edit" :index="index" @editNote="editor"/>
+    <BaseNote :note="note" :index="index" v-if="edit" />
 
+    <InputsForNote
+      :note="note"
+      v-if="!edit"
+      :index="index"
+      @editNote="editor"
+    />
   </div>
 </template>
 
@@ -54,7 +55,6 @@ const { notes, removeNote } = useNotes();
 import { useFilter } from '../composables/useFilter.ts';
 
 const { notesFilter, viewMode, notesFilterByTag } = useFilter();
-
 </script>
 
 <style lang="scss">
@@ -80,9 +80,9 @@ const { notesFilter, viewMode, notesFilterByTag } = useFilter();
 }
 
 .delete-button {
-    color: #999999;
-    float: right;
-    position: relative;
+  color: #999999;
+  float: right;
+  position: relative;
 }
 
 .note-teg {

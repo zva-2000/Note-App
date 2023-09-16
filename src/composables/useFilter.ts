@@ -23,17 +23,20 @@ const filterDateOne = ref('');
 const filterDateTwo = ref('');
 
 const timestampDateOne = computed(() => {
-  return new Date(filterDateOne.value).getTime();
+  return filterDateOne.value
+    ? new Date(filterDateOne.value).getTime()
+    : undefined;
 });
 
 const timestampDateTwo = computed(() => {
-  return new Date(filterDateTwo.value).getTime();
+  return filterDateTwo.value
+    ? new Date(filterDateTwo.value).getTime()
+    : undefined;
 });
 
 // const timestampNoteDate = computed((note: any) => {
 //   return new Date(note.date.value).getTime();
 // });
-
 
 export function useFilter() {
   function setTag(tag: string) {
@@ -47,6 +50,8 @@ export function useFilter() {
   }
 
   const notesFilter = computed(() => {
+    console.log(0);
+
     let array = notes.value;
 
     if (!search.value) return array;
@@ -62,8 +67,6 @@ export function useFilter() {
       return (
         note.title.toLowerCase().includes(valueOfSearch) ||
         note.descr.toLowerCase().includes(valueOfSearch) ||
-        note.date.toLowerCase().includes(valueOfSearch) ||
-        note.beginDate.toLowerCase().includes(valueOfSearch) ||        
         note.teg.some((teg: string) =>
           teg.toLowerCase().includes(valueOfSearch)
         )
@@ -73,7 +76,7 @@ export function useFilter() {
     return array;
   });
 
-  function takeOffFilter() {  
+  function takeOffFilter() {
     SelectedTeg.value = '';
     Importance.value = '';
     filterDateOne.value = '';
@@ -81,30 +84,43 @@ export function useFilter() {
   }
 
   const notesFilterByTagandDate = computed(() => {
-    return notesFilter.value.filter((note: any) => {
-        let tagAndImportanceCheck = true;
-        let dateCheck = true;
+    console.log(1);
+    return notesFilter.value.filter((note: any, index) => {
+      let tagAndImportanceCheck = true;
+      let dateCheck = true;
 
-        if (SelectedTeg.value || Importance.value) {
-            const tagMatch = SelectedTeg.value ? note.teg.includes(SelectedTeg.value) : true;
-            const importanceMatch = Importance.value ? note.impr.includes(Importance.value) : true;
-            tagAndImportanceCheck = tagMatch && importanceMatch;
-        }
+      if (SelectedTeg.value || Importance.value) {
+        const tagMatch = SelectedTeg.value
+          ? note.teg.includes(SelectedTeg.value)
+          : true;
+        console.log(tagMatch);
+        const importanceMatch = Importance.value
+          ? note.impr.includes(Importance.value)
+          : true;
+        console.log(importanceMatch);
+        tagAndImportanceCheck = tagMatch && importanceMatch;
+      }
 
-        if (filterDateOne.value || filterDateTwo.value) {
-            if (timestampDateOne.value && timestampDateTwo.value) {
-                dateCheck = (timestampDateOne <= note.beginDate && timestampDateTwo >= note.beginDate);
-            } else if (timestampDateOne.value) {
-                dateCheck = timestampDateOne.value <= note.beginDate;
-            } else if (timestampDateTwo.value) {
-                dateCheck = timestampDateTwo.value >= note.beginDate;
-            }
+      if (filterDateOne.value || filterDateTwo.value) {
+        if (timestampDateOne.value && timestampDateTwo.value) {
+          dateCheck =
+            timestampDateOne.value <= note.beginDate &&
+            timestampDateTwo.value >= note.beginDate;
+        } else if (timestampDateOne.value) {
+          dateCheck = timestampDateOne.value <= note.beginDate;
+        } else if (timestampDateTwo.value) {
+          dateCheck = timestampDateTwo.value >= note.beginDate;
         }
-        
-        return tagAndImportanceCheck && dateCheck;
+      }
+      console.group(dateCheck);
+      console.log(note);
+      console.log(filterDateOne.value, timestampDateOne.value);
+      console.log(filterDateTwo.value, timestampDateTwo.value);
+      console.groupEnd();
+
+      return tagAndImportanceCheck && dateCheck;
     });
-});
-
+  });
 
   function changeGrid(newMode: keyof typeof GridMode) {
     console.log(newMode);
@@ -123,6 +139,6 @@ export function useFilter() {
     Importance,
     filterDateOne,
     filterDateTwo,
-    notesFilterByTagandDate
+    notesFilterByTagandDate,
   };
 }

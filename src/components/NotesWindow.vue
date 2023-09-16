@@ -1,18 +1,15 @@
 <template>
-  <h1 class="title main-title">Мои заметки</h1>
+  <!-- <h1 class="title main-title">Мои заметки</h1> -->
 
   <div class="notes-window-header">
     <SearchInput v-model:value="search" />
 
     <ModalWindow />
-
   </div>
 
   <a class="take-of-filter" @click="takeOffFilter">Сбросить фильтры</a>
 
-
   <div class="notes-window-main-content">
-
     <SelectedTegs
       :items="tagsForMainWindow"
       @choose-tag="setTag"
@@ -26,28 +23,28 @@
       :showButton="false"
       class="tags-in-main-wndw"
     />
+  </div>
 
-    </div>
+  <p class="take-of-filter">Дата создания:</p>
 
-    <p class="take-of-filter">Дата создания:</p>  
+  <div class="inputs-window-main-content">
+    <BaseInput
+      placeholder=""
+      v-model:value="filterDateOne"
+      type="date"
+      :isReadonly="false"
+      class="date-main-input"
+    />
 
-  <div class="inputs-window-main-content">   
-  
-   <BaseInput
-            placeholder=""
-            v-model:value="filterDateOne"
-            type="date"
-            :isReadonly="false"
-            class="date-main-input"
-          />
+    До:
 
-      До: <BaseInput
-            placeholder=""
-            v-model:value="filterDateTwo"
-            type="date"
-            :isReadonly="false"
-            class="date-main-input"
-        /> 
+    <BaseInput
+      placeholder=""
+      v-model:value="filterDateTwo"
+      type="date"
+      :isReadonly="false"
+      class="date-main-input"
+    />
 
     <MovedButtons class="position-moved-buttons" />
   </div>
@@ -56,7 +53,6 @@
 </template>
 
 <script setup lang="ts">
-
 import { ref, computed } from 'vue';
 
 import ModalWindow from './ModalWindow.vue';
@@ -77,16 +73,23 @@ import { useNotes } from '../composables/useNotes.js';
 
 import { useFilter } from '../composables/useFilter.ts';
 
-const { notesFilter, setTag, SelectedTeg, search, setImpr, takeOffFilter, filterDateOne, filterDateTwo } = useFilter();
+const {
+  notesFilter,
+  setTag,
+  SelectedTeg,
+  search,
+  setImpr,
+  takeOffFilter,
+  filterDateOne,
+  filterDateTwo,
+} = useFilter();
 
 const { tagsForMainWindow, options } = useTags();
 
 const { notes, visibleModal } = useNotes();
-
 </script>
 
 <style>
-
 .date-main-input {
   width: 20.5rem;
 }
@@ -158,7 +161,6 @@ const { notes, visibleModal } = useNotes();
   margin-top: 10px;
   margin-bottom: 10px;
 }
-
 
 /* .search {
   margin-top: 15px;
