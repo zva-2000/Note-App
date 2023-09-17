@@ -38,12 +38,6 @@ const emit = defineEmits<{
   display: inline-block;
   width: 85%;
 }
-
-/* .dropdown-input {
-  position: relative;
-  display: inline-block;
-} */
-
 .input-class {
   margin-right: 10px;
 }

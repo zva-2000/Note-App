@@ -1,9 +1,6 @@
 <template>
-  <base-button @click="openModal" class="open-modal-btn">
-    <span>Добавить</span>
-  </base-button>
 
-  <div class="modal" v-if="visibleModal">
+  <div class="modal">
 
     <div class="modal-content">
 
@@ -11,7 +8,7 @@
 
       <div class="input-container">
 
-        <p class="error">{{ noneTitleMistake }}</p>
+        <p class="error">{{ emptyTitleError }}</p>
 
 
         <p style="color: rgb(78, 78, 78)">Заголовок:</p>
@@ -33,11 +30,12 @@
         />
 
         <p class="modal-p">Сделать до:</p>
+
         <BaseInput
-          class="date-input"
+          placeholder=""
           v-model:value="note.date"
           type="date"
-          placeholder=""
+          class="base-input"
           :isReadonly="false"
         />
 
@@ -45,24 +43,24 @@
         <ComponentWithDropdown
           class="impr-input"
           v-model:value="note.impr"
-          v-model:options="options"
+          v-model:options="chooseImportance"
           :isReadonly="true"
         />
 
-        <p class="error">{{ error }}</p>
-
+        <p class="error">{{ emptyTagError }}</p>
+        
         <p class="modal-p">Теги:</p>
         <addTegComponent
           class="teg-input"
-          @chooseTeg="chooseTeg"
-          @update:error="error = $event"
-          :selectedTegs="note.teg"
+          @chooseTeg="chooseTegTwo"
+          :selectedTegs="props.note.teg"
+          @update:error = "emitSameTagError"
           @deleteTag="deleteTagInModalWindow"
         />
         
       </div>
 
-      <base-button @click="AddNote" class="save-button">
+      <base-button @click="addNote" class="save-button">
         <span>Сохранить</span>
       </base-button>
 
@@ -72,6 +70,8 @@
 </template>
 
 <script setup lang="ts">
+
+import { ref, computed } from 'vue';
 
 import BaseCanselButton from './buttons/BaseCanselButton.vue';
 
@@ -85,18 +85,54 @@ import ComponentWithDropdown from './ComponentWithDropdown.vue';
 
 import addTegComponent from './addTegComponent.vue';
 
-import { useNotes } from '../composables/useNotes.js';
+const props = defineProps<{
+  note: {
+    title: string;
+    descr: string;
+    impr: string;
+    date: number;
+    teg: string[];
+  };
+  chooseImportanceTags: string[];
+  emptyTitleError: string;
+  emptyTagError: string;
+}>();
 
-import { useTags } from '../composables/useTags.js';
+const emit = defineEmits<{
+  (e: 'closeModal', visibleModal: boolean): void;
+  (e: 'update:error', sameTagError: string): void;
+  (e: 'addNote', emitedNote: string): void;
+  (e: 'chooseTegTwo', emitedTag: string): void;
+  (e: 'update:impr', impr: string[]): void; 
+  (e: 'deleteTag', index: number): void;   
+}>();
 
-const { note, AddNote, visibleModal, openModal, closeModal, noneTitleMistake } =
-  useNotes();
-
-const { chooseTeg, options, error } = useTags();
-
-const deleteTagInModalWindow = (index: any) => {
-  note.value.teg.splice(index, 1);
+const closeModal = (visibleModal: boolean) => {
+  emit('closeModal', visibleModal);
 };
+
+const addNote = (emitedNote: string) => {
+  emit('addNote', emitedNote);
+};
+
+const chooseTegTwo = (emitedTag: string) => {
+  emit('chooseTegTwo', emitedTag);
+};
+
+const deleteTagInModalWindow = (index: number) => {
+  emit('deleteTag', index);
+};
+
+const chooseImportance = computed({
+  get() {
+    return props.chooseImportanceTags ?? '';
+  },
+  set(impr: string[]) {
+    emit('update:impr', impr);
+  },
+});
+
+const emitSameTagError = (errorMessage:string) => {emit('update:error', errorMessage)};
 
 </script>
 
@@ -150,10 +186,6 @@ const deleteTagInModalWindow = (index: any) => {
     position: relative;
     margin: auto;
     flex-wrap: wrap;
-}
-
-.open-modal-btn {
-  margin-top: 15px;
 }
 
 .modal {

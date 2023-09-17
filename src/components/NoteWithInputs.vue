@@ -1,5 +1,5 @@
 <template>
-  <div class="note" :class="viewMode">
+  <div class="note">
     <div class="note-btns">
       <ChangeNoteButton @click="editor" class="change-btn" v-show="edit" />
 
@@ -15,12 +15,18 @@
       v-if="!edit"
       :index="index"
       @editNote="editor"
+      :emptyTagError="emptyTagError"
+      @update:error = "emitSameTagErrorAgain"
+      @addTagToNote = "addTagToNoteAgain"
+      @delete-tag = "handleDeleteTag"
+      @update:impr="chooseImportanceAgain"
+      :chooseImportanceTags="chooseImportanceTags"
     />
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 
 const props = defineProps<{
   note: {
@@ -32,6 +38,8 @@ const props = defineProps<{
     teg: string[];
   };
   index: number;
+  emptyTagError: string;
+  chooseImportanceTags: string;
 }>();
 
 const edit = ref(true);
@@ -50,11 +58,36 @@ import BaseDeleteButton from './BaseDeleteButton.vue';
 
 import { useNotes } from '../composables/useNotes.js';
 
-const { notes, removeNote } = useNotes();
+const { removeNote } = useNotes();
 
-import { useFilter } from '../composables/useFilter.ts';
+const emit = defineEmits<{
+  [x: string]: any;
+  (e: 'update:error', sameTagError: string): void;
+  (e: 'addTagToNoteAgain', newTag: string): void;  
+  (e: 'delete-tag-double', index: number): void;  
+  (e: 'chooseImportanceAgain', impr: string): void;     
+}>();
 
-const { notesFilter, viewMode, notesFilterByTag } = useFilter();
+const emitSameTagErrorAgain = (errorMessage:string) => {emit('update:error', errorMessage)};
+
+const addTagToNoteAgain = (newTag: string) => {
+  emit('addTagToNoteAgain', newTag);
+  console.log(props.note.teg)
+};
+
+const handleDeleteTag = (index: number) => {
+  emit('delete-tag-double', index);
+}
+
+const chooseImportanceAgain = computed({
+  get() {
+    return props.chooseImportanceTags ?? '';
+  },
+  set(impr: string) {
+    emit('chooseImportanceAgain', impr);
+  },
+});
+
 </script>
 
 <style lang="scss">
@@ -99,7 +132,4 @@ const { notesFilter, viewMode, notesFilterByTag } = useFilter();
   margin-left: auto;
 }
 
-// .display-none {
-//   display: none;
-// }
 </style>

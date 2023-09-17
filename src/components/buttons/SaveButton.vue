@@ -1,5 +1,4 @@
 <template>
-  <div class="icons">
     <BaseButtonForSVG class="teg-button">
             <svg version="1.1" id="Layer_2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
         width="25px" height="25px" viewBox="-249 151 100 100" style="enable-background:new -249 151 100 100;" xml:space="preserve">
@@ -17,7 +16,6 @@
     </g>
     </svg>
     </BaseButtonForSVG>
-  </div>
 </template>
 
 <script setup lang="ts">

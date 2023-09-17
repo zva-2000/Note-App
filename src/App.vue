@@ -1,67 +1,6 @@
 <script setup>
 
-import { ref, computed } from 'vue';
-
-import BaseInput from './components/BaseInput.vue';
-
-import BaseTextarea from './components/BaseTextarea.vue';
-
-import BaseButton from './components/BaseButton.vue';
-
-// import MovedButtons from './components/MovedButtons.vue';
-
-// import BaseDeleteButton from './components/BaseDeleteButton.vue';
-
-import SearchInput from './components/SearchInput.vue';
-
-import ComponentWithDropdown from './components/ComponentWithDropdown.vue';
-
-import AddTegComponent from './components/AddTegComponent.vue';
-
-import AllNotes from './components/AllNotes.vue';
-
-// import ModalWindow from './components/ModalWindow.vue'
-
-import { useTags } from './composables/useTags.js';
-
-import { useNotes } from './composables/useNotes.js';
-
-import { useFilter } from './composables/useFilter.ts';
-
 import NotesWindow from './components/NotesWindow.vue';
-
-// const options = ref(['Очень важно', 'Важно', 'Не важно']);
-
-const { addTegFunctionForCompose, newTag, choosenTegs } = useTags();
-
-const { notes, note, isVisible } = useNotes();
-
-// const { search } = useFilter();
-
-// const listOpen = ref(false);
-
-// let showModal = ref(false);
-
-// let isOpen = ref(true);
-
-// let NewMessege = ref('');
-
-// let NewImr = ref('');
-
-// let grid = ref(true);
-
-// function handleClick() {
-//   console.log('Button clicked!');
-// }
-
-// function showModalFunc() {
-//   showModal.value = !showModal.value;
-// }
-
-// function OpenDrop() {
-//   isOpen.value = !isOpen.value;
-//   console.log('Button clicked!');
-// }
 
 </script>
 
@@ -95,18 +34,5 @@ const { notes, note, isVisible } = useNotes();
 .logo.vue:hover {
   filter: drop-shadow(0 0 2em #42b883aa);
 }
-
-
-/* @media (min-width: 1400px) {
-  .aside {
-    flex: 0 0 25%;
-    max-width: 25%;
-   }
-  .main {
-    flex: 0 0 75%;
-    max-width: 75%;
-  }
-} */
-
 
 </style>

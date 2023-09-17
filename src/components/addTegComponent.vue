@@ -1,5 +1,6 @@
 <template>
   <div class="dropdown">
+
     <InputForDropdown
       class="input-teg"
       v-model:value="newTag"
@@ -24,6 +25,8 @@
       :items="selectedTegs"
       :show-button="true"
       @delete-tag="deleteTag"
+      :selectedTeg="''"
+      :importance="''"
     />
   </div>
 </template>
@@ -32,8 +35,6 @@
 import { computed, ref } from 'vue';
 
 import { useTags } from '../composables/useTags.js';
-
-import { useNotes } from '../composables/useNotes.js';
 
 import BaseButtonForSVG from './BaseButtonForSVG.vue';
 
@@ -45,9 +46,7 @@ import BaseList from './BaseList.vue';
 
 import SelectedTegs from './SelectedTegs.vue';
 
-const { addTegFunctionForCompose, newTag, tags, choosenTegs } = useTags();
-
-const { note } = useNotes();
+const { addTegFunctionForCompose, newTag, tags } = useTags();
 
 const props = defineProps<{
   selectedTegs: string[];

@@ -15,6 +15,19 @@ const props = defineProps<{
   isReadonly: boolean; 
 }>();
 
+// const model = computed({
+//   get() {
+//   return {
+//     stringValue: props.value ?? '',
+//     numberValue: props.numberValue ?? 0
+//   };
+// },
+// set({ stringValue, numberValue }) {
+//   emit('update:value', stringValue);
+//   emit('update:numberValue', numberValue);
+// }
+// });
+
 const model = computed({
   get() {
     return props.value ?? '';
@@ -24,7 +37,7 @@ const model = computed({
   },
 });
 
-const emit = defineEmits(['update:value']);
+const emit = defineEmits(['update:value', 'update:numberValue']);
 </script>
 
 <style scoped></style>

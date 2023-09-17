@@ -1,9 +1,7 @@
 <template>
-  <div class="icons">
     <BaseButtonForSVG class="teg-button">
       <SvgForButtons :name="'svg-delete-teg'"></SvgForButtons>
     </BaseButtonForSVG>
-  </div>
 </template>
 
 <script setup lang="ts">

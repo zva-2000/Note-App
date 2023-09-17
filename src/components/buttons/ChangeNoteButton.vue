@@ -1,9 +1,7 @@
 <template>
-    <div class="icons">
       <BaseButtonForSVG class="change-button">
         <SvgForButtons :name="'svg-change'"></SvgForButtons>
       </BaseButtonForSVG>
-    </div>
   </template>
   
   <script setup lang="ts">

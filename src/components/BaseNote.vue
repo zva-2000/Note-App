@@ -1,5 +1,5 @@
 <template>
-  <div class="note-header" :class="viewMode">
+  <div class="note-header">
     <h1>{{ note.title }}</h1>
   </div>
   <div class="note-body">
@@ -9,7 +9,7 @@
     <p class="impr" :style="{ backgroundColor: importanceColor }">
       {{ note.impr }}
     </p>
-    <SelectedTegs class="note-teg" :items="note.teg" :showButton="false" />
+    <SelectedTegs class="note-teg" :items="note.teg" :showButton="false" :selectedTeg="''" :importance="''"/>
   </div>
 </template>
 
@@ -30,19 +30,7 @@ const props = defineProps<{
 
 import SelectedTegs from './SelectedTegs.vue';
 
-import { useNotes } from '../composables/useNotes.js';
-
-import { useVisible } from '../composables/useVisible.ts';
-
-import { useFilter } from '../composables/useFilter.ts';
-
-const { editor } = useVisible();
-
-const { notes, removeNote } = useNotes();
-
-const { notesFilter, viewMode, notesFilterByTag } = useFilter();
-
-const formatedNoteDate = new Date(props.note.date).toLocaleDateString();
+const formatedNoteDate = computed(() => {new Date(props.note.date).toLocaleDateString()});
 
 const formatedNoteDateBegin = computed(() =>
   new Date(props.note.beginDate).toLocaleDateString()
@@ -50,7 +38,7 @@ const formatedNoteDateBegin = computed(() =>
 
 const importanceColors = ref({
   'Очень важно': '#ee9191',
-  Важно: '#ffd261',
+  'Важно': '#ffd261',
   'Не важно': '#a7be8e',
 });
 
@@ -125,7 +113,6 @@ const importanceColor = computed(() => {
     font-size: 32px;
   }
   p {
-    // justify-content: center;
     margin-right: 16px;
     &:last-child {
       margin-right: 0;

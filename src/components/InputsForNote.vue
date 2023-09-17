@@ -7,6 +7,7 @@
     v-model:value="note.title"
     type="text"
     class="header-input"
+    :isReadonly="false"
   />
 
   <p class="modal-p">Содержимое:</p>
@@ -25,6 +26,7 @@
       v-model:value="note.date"
       type="date"
       placeholder="Введите дату"
+      :isReadonly="false"
     />
   </div>
 
@@ -33,10 +35,10 @@
   <ComponentWithDropdown
     class="impr-input-note"
     v-model:value="note.impr"
-    v-model:options="options"
+    v-model:options="chooseImportance"
   />
 
-  <!-- <p class="error">{{ error }}</p> -->
+  <p class="error">{{ emptyTagError }}</p>
 
   <p class="modal-p">Теги:</p>
   <addTegComponent
@@ -44,6 +46,7 @@
     @chooseTeg="addTagToNote"
     :selectedTegs="note.teg"
     @deleteTag="deleteTagInChangeNote"
+    @update:error = "emitSameTagError"
   />
 
   <!-- <SaveButton @click="editNote" class="save-btn"/> -->
@@ -51,24 +54,8 @@
 </template>
 
 <script setup lang="ts">
-const props = defineProps<{
-  note: {
-    title: string;
-    descr: string;
-    impr: string;
-    date: string;
-    teg: string[];
-  };
-  index: number;
-}>();
 
-import { useNotes } from '../composables/useNotes.js';
-
-import { useVisible } from '../composables/useVisible.ts'
-
-const { notes, removeNote, visibleModal, openModal, closeModal } = useNotes();
-
-const { editor } = useVisible();
+import { ref, computed } from 'vue';
 
 import BaseInput from './BaseInput.vue';
 
@@ -78,28 +65,51 @@ import ComponentWithDropdown from './ComponentWithDropdown.vue';
 
 import addTegComponent from './addTegComponent.vue';
 
-import SaveButton from './buttons/SaveButton.vue';
-
-import { useTags } from '../composables/useTags.js';
-
-const { chooseTeg, options } = useTags();
-
-const addTagToNote = (newTag: string) => {
-  props.note.teg.push(newTag);
-};
-
-const deleteTagInChangeNote = (index: number) => {
-  props.note.teg.splice(index, 1);
-};
+const props = defineProps<{
+  note: {
+    title: string;
+    descr: string;
+    impr: string;
+    date: string;
+    teg: string[];
+  };
+  index: number;
+  emptyTagError: string;
+  chooseImportanceTags: string;
+}>();
 
 const emit = defineEmits<{
   [x: string]: any;
   (e: 'editNote', editOne: boolean): void;
+  (e: 'update:error', sameTagError: string): void;
+  (e: 'addTagToNote', newTag: string): void; 
+  (e: 'update:impr', impr: string): void; 
+  (e: 'delete-tag', index: number): void;   
 }>();
+
+const addTagToNote = (newTag: string) => {
+  emit('addTagToNote', newTag);
+  console.log(props.note.teg)
+};
+
+const deleteTagInChangeNote = (index: number) => {
+  emit('delete-tag', index);
+};
 
 const editNote = (editOne: boolean) => {
   emit('editNote', editOne);
 };
+
+const chooseImportance = computed({
+  get() {
+    return props.chooseImportanceTags ?? '';
+  },
+  set(impr: string) {
+    emit('update:impr', impr);
+  },
+});
+
+const emitSameTagError = (errorMessage:string) => {emit('update:error', errorMessage)};
 
 
 </script>

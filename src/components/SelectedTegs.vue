@@ -7,8 +7,8 @@
       :class="[
         'tags-li',
         {
-          'seleted-tag': item === SelectedTeg,
-          'seleted-impr': item === Importance,
+          'seleted-tag': item === props.selectedTeg,
+          'seleted-impr': item === props.importance,
         },
       ]"
       :style="{ backgroundColor: importanceColors[item] }"
@@ -20,15 +20,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
-import { useFilter } from '../composables/useFilter';
+import { ref } from 'vue';
 import ButtonForDeleteTeg from './buttons/ButtonForDeleteTeg.vue';
-
-const { SelectedTeg, Importance } = useFilter();
 
 const props = defineProps<{
   items: string[];
   showButton: boolean;
+  selectedTeg: string;
+  importance: string;
 }>();
 
 const emit = defineEmits<{
@@ -46,13 +45,10 @@ const deleteTag = (index: number) => {
 
 const importanceColors = ref({
   'Очень важно': '#ee9191',
-  Важно: '#ffd261',
+  'Важно': '#ffd261',
   'Не важно': '#a7be8e',
 });
 
-const importanceColor = computed(() => {
-  return importanceColors.value[props.items];
-});
 </script>
 
 <style>

@@ -1,32 +1,51 @@
 <template>
-  <div class="notes">
+  <div class="notes" :class="viewMode">
     <NoteWithInputs
-      v-for="(note, index) in notesFilterByTagandDate"
+      v-for="(note, index) in filteredNotesList"
       :key="index"
       :note="note"
       :index="index"
+      :empty-tag-error="emptyTagError"
+      @update:error="emptyTagError = $event" 
+      @addTagToNoteAgain="chooseTeginNote"
+      @handleDeleteTag="deleteTagInChangeNote"
+      @chooseImportanceAgain="chooseImportanceMain"
+      :choose-importance-tags="chooseImportanceTags"
     />
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue';
 
 import NoteWithInputs from './NoteWithInputs.vue';
 
 import { useTags } from '../composables/useTags.js';
 
-import { useNotes } from '../composables/useNotes.js';
+import { useNotes } from '../composables/useNotes';
+
+const { note, filteredNotesList } =
+  useNotes();
+
+const chooseTeginNote = (newTag: string) => {
+  // if (!note.value.teg) note.value.teg = [];
+  note.value.teg.push(newTag);
+  console.log(newTag, note.value.teg)
+};
+
+const deleteTagInChangeNote = (index: number) => {
+  note.value.teg.splice(index, 1);
+};
+
+const chooseImportanceMain = (impr: string) => {
+  note.value.impr = impr
+}
+
+const { emptyTagError, chooseImportanceTags } = useTags();
 
 import { useFilter } from '../composables/useFilter.ts';
 
-const { notesFilter, viewMode, notesFilterByTag, notesFilterByTagandDate } =
-  useFilter();
+const { viewMode } = useFilter();
 
-const { notes, removeNote, visibleModal, openModal, closeModal, note } =
-  useNotes();
-
-const { tags } = useTags();
 </script>
 
 <style lang="scss">

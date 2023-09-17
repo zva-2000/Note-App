@@ -1,8 +1,7 @@
 <template>
-  <span>
+  <span v-if="name == 'svg-mesh'">
     <svg
       class="svg-mesh"
-      v-if="name == 'svg-mesh'"
       xmlns="http://www.w3.org/2000/svg"
       width="45"
       height="45"
@@ -20,10 +19,9 @@
     </svg>
   </span>
 
-  <span>
+  <span v-if="name == 'svg-list'">
     <svg
       class="svg-list"
-      v-if="name == 'svg-list'"
       xmlns="http://www.w3.org/2000/svg"
       width="45"
       height="45"
@@ -42,10 +40,9 @@
     </svg>
   </span>
 
-  <span>
+  <span v-if="name == 'svg-plus'">
     <svg
       class="svg-plus"
-      v-if="name == 'svg-plus'"
       xmlns="http://www.w3.org/2000/svg"
       width="35"
       height="35"
@@ -59,9 +56,8 @@
     </svg>
   </span>
 
-  <span>
+  <span v-if="name == 'svg-delete'">
     <svg
-      v-if="name == 'svg-delete'"
       xmlns="http://www.w3.org/2000/svg"
       width="24"
       height="24"
@@ -75,9 +71,8 @@
     </svg>
   </span>
 
-  <span>
+  <span v-if="name == 'svg-change'">
   <svg
-  v-if="name == 'svg-change'"
   width="24"
   height="24"
   viewBox="0 0 24 24"
@@ -91,9 +86,8 @@
 </svg>
 </span>
 
-  <span>
-  <svg 
-  v-if="name == 'svg-delete-teg'"
+  <span v-if="name == 'svg-delete-teg'">
+  <svg
   width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <circle cx="12" cy="12" r="10" stroke="black" stroke-width="1.5"/>
     <path d="M15 9L9 15" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>

@@ -30,6 +30,11 @@ const props = defineProps<{
   options: string[];
 }>();
 
+const emit = defineEmits<{
+  (e: 'update:option', option: string): void;
+  (e: 'update:value', value: string): void;  
+}>();
+
 const model = computed({
   get() {
     return props.value ?? '';
@@ -41,14 +46,18 @@ const model = computed({
 
 let isVisible = ref(true);
 
-const emit = defineEmits<{
-  (e: 'update:value', option: string): void;
-}>();
-
 const chooseImportance = (option: string) => {
-  emit('update:value', option);
+  emit('update:option', option);
   isVisible.value = true;
 };
+
+// const chooseTeg = (newTag: string) => {
+//   if (!note.value.teg.includes(newTag)) {
+//     choosenTegs.value.push(newTag);
+//     note.value.teg.push(newTag);
+//     console.log(note.value.teg)
+//   }
+//   };
 
 const toggleVisibility = () => {
   isVisible.value = !isVisible.value;

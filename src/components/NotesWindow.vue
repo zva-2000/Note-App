@@ -4,7 +4,23 @@
   <div class="notes-window-header">
     <SearchInput v-model:value="search" />
 
-    <ModalWindow />
+    <base-button @click="openModal" class="open-modal-btn">
+        <span>Добавить</span>
+    </base-button>
+
+    <ModalWindow v-if="!visibleModal" 
+    @close-modal="closeModal" 
+    @update:error="emptyTagError = $event" 
+    :empty-tag-error="emptyTagError"
+    :empty-title-error="emptyTitleError"
+    :note="note"
+    @add-note="addNoteMainFunc"
+    @choose-teg-two="chooseTeg"
+    :choose-importance-tags="chooseImportanceTags"
+    @chooseImportance="chooseImportanceTags"
+    @delete-tag="deleteTag"
+    />
+
   </div>
 
   <a class="take-of-filter" @click="takeOffFilter">Сбросить фильтры</a>
@@ -15,13 +31,17 @@
       @choose-tag="setTag"
       :showButton="false"
       class="tags-in-main-wndw"
+      :selectedTeg="selectedTeg"
+      :importance="importance"
     />
 
     <SelectedTegs
-      :items="options"
+      :items="chooseImportanceTags"
       @choose-tag="setImpr"
       :showButton="false"
       class="tags-in-main-wndw"
+      :selectedTeg="selectedTeg"
+      :importance="importance"
     />
   </div>
 
@@ -49,11 +69,11 @@
     <MovedButtons class="position-moved-buttons" />
   </div>
 
-  <AllNotes class="all-notes" />
+  <AllNotes class="all-notes"/>
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref } from 'vue';
 
 import ModalWindow from './ModalWindow.vue';
 
@@ -61,7 +81,7 @@ import MovedButtons from './MovedButtons.vue';
 
 import SearchInput from './SearchInput.vue';
 
-import { useTags } from '../composables/useTags.js';
+import BaseButton from './BaseButton.vue';
 
 import SelectedTegs from './SelectedTegs.vue';
 
@@ -69,14 +89,21 @@ import AllNotes from './AllNotes.vue';
 
 import BaseInput from './BaseInput.vue';
 
-import { useNotes } from '../composables/useNotes.js';
+import { useTags } from '../composables/useTags';
 
-import { useFilter } from '../composables/useFilter.ts';
+import { useFilter } from '../composables/useFilter';
+
+import { useNotes } from '../composables/useNotes';
+
+const { chooseTeg, emptyTagError, tagsForMainWindow, chooseImportanceTags } = useTags();
+
+const { note, emptyTitleError, addNote } =
+  useNotes();  
 
 const {
-  notesFilter,
+  selectedTeg,
+  importance,
   setTag,
-  SelectedTeg,
   search,
   setImpr,
   takeOffFilter,
@@ -84,9 +111,25 @@ const {
   filterDateTwo,
 } = useFilter();
 
-const { tagsForMainWindow, options } = useTags();
+let visibleModal = ref(true);
 
-const { notes, visibleModal } = useNotes();
+const openModal = () => {
+  visibleModal.value = false;
+};
+
+const closeModal = () => {
+  visibleModal.value = true;
+};
+
+const addNoteMainFunc = () => {
+  addNote();
+  closeModal();
+}
+
+const deleteTag = (index: any) => {
+  note.value.teg.splice(index, 1);
+};
+
 </script>
 
 <style>
@@ -108,6 +151,10 @@ const { notes, visibleModal } = useNotes();
   margin: auto;
 }
 
+.open-modal-btn {
+  margin-top: 17px;
+}
+
 .notes-window-main-content {
   display: flex;
   gap: 3rem;
@@ -126,16 +173,15 @@ const { notes, visibleModal } = useNotes();
 
 .tags-in-main-wndw {
   cursor: pointer;
-  display: flex;
-  /* flex-direction: column; */
-  gap: 5px;
-  font-size: 20px;
-  text-align: center;
-  margin-left: 10px;
-  max-width: 35rem;
-  width: 21.6rem;
-  float: left;
-  margin-right: 4rem;
+    display: flex;
+    /* flex-direction: column; */
+    gap: 5px;
+    font-size: 20px;
+    text-align: center;
+    /* margin-left: 10px; */
+    max-width: 35rem;
+    /* width: 21.6rem; */
+    float: left;
 }
 
 .tags-in-main-wndw:focus {
