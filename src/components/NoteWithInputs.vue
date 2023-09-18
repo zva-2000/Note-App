@@ -1,25 +1,24 @@
 <template>
   <div class="note">
     <div class="note-btns">
-      <ChangeNoteButton @click="editor" class="change-btn" v-show="edit" />
-
-      <SaveButton @click="editor" class="change-btn" v-show="!edit" />
+      <ChangeNoteButton @click="funcEdition" class="change-btn" v-show="!edit" />
 
       <BaseDeleteButton class="delete-button" @click="removeNote(index)" />
     </div>
 
-    <BaseNote :note="note" :index="index" v-if="edit" />
+    <BaseNote :note="note" :index="index" v-if="!edit" />
 
     <InputsForNote
       :note="note"
-      v-if="!edit"
+      :edit="edit"
+      v-if="edit"
       :index="index"
-      @editNote="editor"
+      @editNote="editNote"
       :emptyTagError="emptyTagError"
       @update:error="emitSameTagErrorAgain"
       @addTagToNote="addTagToNoteAgain"
       @delete-tag="handleDeleteTag"
-      @update:impr="chooseImportanceAgain"
+      @update:impr="(value) => $emit('update:impr', value)"
       :chooseImportanceTags="chooseImportanceTags"
     />
   </div>
@@ -33,20 +32,16 @@ const props = defineProps<{
     title: string;
     descr: string;
     impr: string;
-    date: string;
-    beginDate: string;
+    date: number;
+    beginDate: number;
     teg: string[];
   };
   index: number;
   emptyTagError: string;
-  chooseImportanceTags: string;
+  chooseImportanceTags: string[];
 }>();
 
-const edit = ref(true);
-
-const editor = () => (edit.value = !edit.value);
-
-import SaveButton from './buttons/SaveButton.vue';
+const edit = ref(false);
 
 import BaseNote from './BaseNote.vue';
 
@@ -66,6 +61,7 @@ const emit = defineEmits<{
   (e: 'addTagToNoteAgain', newTag: string): void;
   (e: 'delete-tag-double', index: number): void;
   (e: 'chooseImportanceAgain', impr: string): void;
+  (e: 'editNote', editOne: string): void;
 }>();
 
 const emitSameTagErrorAgain = (errorMessage: string) => {
@@ -80,6 +76,14 @@ const addTagToNoteAgain = (newTag: string) => {
 const handleDeleteTag = (index: number) => {
   emit('delete-tag-double', index);
 };
+
+const funcEdition = () => (edit.value = !edit.value)
+
+const editNote = (editOne: any) => {
+  funcEdition();
+  emit('editNote', editOne);
+};
+
 
 const chooseImportanceAgain = computed({
   get() {

@@ -22,7 +22,7 @@ const props = defineProps<{
     descr: string;
     impr: string;
     date: number;
-    beginDate: string;
+    beginDate: number;
     teg: string[];
   };
   index: number;
@@ -30,7 +30,7 @@ const props = defineProps<{
 
 import SelectedTegs from './SelectedTegs.vue';
 
-const formatedNoteDate = computed(() => {new Date(props.note.date).toLocaleDateString()});
+const formatedNoteDate = computed(() => new Date(props.note.date).toLocaleDateString());
 
 const formatedNoteDateBegin = computed(() =>
   new Date(props.note.beginDate).toLocaleDateString()

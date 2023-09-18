@@ -5,11 +5,12 @@
       :key="index"
       :note="note"
       :index="index"
+      @editNote="updateNote"
       :empty-tag-error="emptyTagError"
       @update:error="emptyTagError = $event"
       @addTagToNoteAgain="chooseTeginNote"
       @handleDeleteTag="deleteTagInChangeNote"
-      @chooseImportanceAgain="chooseImportanceMain"
+      @update:impr="chooseImportanceMain"
       :choose-importance-tags="chooseImportanceTags"
     />
   </div>
@@ -22,16 +23,24 @@ import { useTags } from '../composables/useTags.js';
 
 import { useNotes } from '../composables/useNotes';
 
-const { note, filteredNotesList } = useNotes();
+const { notes, note, filteredNotesList } = useNotes();
 
 const chooseTeginNote = (newTag: string) => {
-  // if (!note.value.teg) note.value.teg = [];
-  note.value.teg.push(newTag);
+
+  notes.value.map((note) => note.teg.push(newTag))
+
   console.log(444, newTag, note.value.teg);
 };
 
+function updateNote (updatedNote: any) {
+  console.log(updatedNote)
+  notes.value = notes.value.map((note) => {if (note.id !== updatedNote.id) 
+    return note
+  else return updatedNote})
+}
+
 const deleteTagInChangeNote = (index: number) => {
-  note.value.teg.splice(index, 1);
+  notes.value.map((note) =>  note.teg.splice(index, 1))
 };
 
 const chooseImportanceMain = (impr: string) => {
@@ -40,7 +49,7 @@ const chooseImportanceMain = (impr: string) => {
 
 const { emptyTagError, chooseImportanceTags } = useTags();
 
-import { useFilter } from '../composables/useFilter.ts';
+import { useFilter } from '../composables/useFilter';
 
 const { viewMode } = useFilter();
 </script>

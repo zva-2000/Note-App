@@ -6,6 +6,7 @@ const { selectedTeg, importance, filterDateOne, filterDateTwo, search, timestamp
 
 const notes = ref([
     {
+      id: 1,
       title: 'Сделать все задачи',
       descr: 'На отлично!',
       impr: 'Очень важно',
@@ -14,6 +15,7 @@ const notes = ref([
       teg: ['Работа'],
     },
     {
+      id: 2,
       title: 'Выучить Composbles',
       descr: 'Описан в документации Vue',
       impr: 'Важно',
@@ -22,6 +24,7 @@ const notes = ref([
       teg: ['Учеба'],
     },
     {
+      id: 3,
       title: 'Вычесать кота',
       descr: 'А то опять разбросает шерсть',
       impr: 'Не важно',
@@ -30,6 +33,7 @@ const notes = ref([
       teg: ['Семья'],
     },
     {
+      id: 4,
       title: 'Основы Node.js',
       descr: 'Посмотреть видео на ютубе',
       impr: 'Важно',
@@ -41,6 +45,7 @@ const notes = ref([
 )
 
 let note = ref({
+  id: 0,
   title: '',
   descr: '',
   impr: '',
@@ -59,7 +64,7 @@ export function useNotes() {
 
   function addNote() {
 
-    let { title, descr, impr, teg, date } = note.value;
+    let { title, descr, impr, teg, date, id } = note.value;
 
     if (title === '' && descr === '') {
         emptyTitleError.value = 'Введите заголовок или описание';
@@ -71,6 +76,7 @@ export function useNotes() {
     let timestampNoteDateBegin = new Date().getTime();
 
     let newNote = {
+        id,
         title,
         descr,
         impr,
@@ -140,5 +146,5 @@ export function useNotes() {
     });
   });
 
-  return { note, removeNote, addNote, emptyTitleError, filteredNotesList};
+  return { notes, note, removeNote, addNote, emptyTitleError, filteredNotesList};
 }
