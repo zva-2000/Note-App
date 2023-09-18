@@ -1,7 +1,6 @@
 <template>
-
   <p style="color: rgb(78, 78, 78)">Заголовок:</p>
-        
+
   <BaseInput
     placeholder="Введите текст"
     v-model:value="note.title"
@@ -18,7 +17,6 @@
     class="note-textarea"
   />
   <div class="date-note">
-
     <p class="modal-p">Сделать до:</p>
 
     <BaseInput
@@ -46,15 +44,13 @@
     @chooseTeg="addTagToNote"
     :selectedTegs="note.teg"
     @deleteTag="deleteTagInChangeNote"
-    @update:error = "emitSameTagError"
+    @update:error="emitSameTagError"
   />
 
   <!-- <SaveButton @click="editNote" class="save-btn"/> -->
-
 </template>
 
 <script setup lang="ts">
-
 import { ref, computed } from 'vue';
 
 import BaseInput from './BaseInput.vue';
@@ -82,14 +78,14 @@ const emit = defineEmits<{
   [x: string]: any;
   (e: 'editNote', editOne: boolean): void;
   (e: 'update:error', sameTagError: string): void;
-  (e: 'addTagToNote', newTag: string): void; 
-  (e: 'update:impr', impr: string): void; 
-  (e: 'delete-tag', index: number): void;   
+  (e: 'addTagToNote', newTag: string): void;
+  (e: 'update:impr', impr: string): void;
+  (e: 'delete-tag', index: number): void;
 }>();
 
 const addTagToNote = (newTag: string) => {
   emit('addTagToNote', newTag);
-  console.log(props.note.teg)
+  console.log(2222, newTag);
 };
 
 const deleteTagInChangeNote = (index: number) => {
@@ -109,13 +105,12 @@ const chooseImportance = computed({
   },
 });
 
-const emitSameTagError = (errorMessage:string) => {emit('update:error', errorMessage)};
-
-
+const emitSameTagError = (errorMessage: string) => {
+  emit('update:error', errorMessage);
+};
 </script>
 
 <style>
-
 .teg-input-note,
 .impr-input-note,
 .note-textarea,

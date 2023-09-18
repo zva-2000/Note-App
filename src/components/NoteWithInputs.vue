@@ -16,9 +16,9 @@
       :index="index"
       @editNote="editor"
       :emptyTagError="emptyTagError"
-      @update:error = "emitSameTagErrorAgain"
-      @addTagToNote = "addTagToNoteAgain"
-      @delete-tag = "handleDeleteTag"
+      @update:error="emitSameTagErrorAgain"
+      @addTagToNote="addTagToNoteAgain"
+      @delete-tag="handleDeleteTag"
       @update:impr="chooseImportanceAgain"
       :chooseImportanceTags="chooseImportanceTags"
     />
@@ -63,21 +63,23 @@ const { removeNote } = useNotes();
 const emit = defineEmits<{
   [x: string]: any;
   (e: 'update:error', sameTagError: string): void;
-  (e: 'addTagToNoteAgain', newTag: string): void;  
-  (e: 'delete-tag-double', index: number): void;  
-  (e: 'chooseImportanceAgain', impr: string): void;     
+  (e: 'addTagToNoteAgain', newTag: string): void;
+  (e: 'delete-tag-double', index: number): void;
+  (e: 'chooseImportanceAgain', impr: string): void;
 }>();
 
-const emitSameTagErrorAgain = (errorMessage:string) => {emit('update:error', errorMessage)};
+const emitSameTagErrorAgain = (errorMessage: string) => {
+  emit('update:error', errorMessage);
+};
 
 const addTagToNoteAgain = (newTag: string) => {
   emit('addTagToNoteAgain', newTag);
-  console.log(props.note.teg)
+  console.log(333, newTag);
 };
 
 const handleDeleteTag = (index: number) => {
   emit('delete-tag-double', index);
-}
+};
 
 const chooseImportanceAgain = computed({
   get() {
@@ -87,7 +89,6 @@ const chooseImportanceAgain = computed({
     emit('chooseImportanceAgain', impr);
   },
 });
-
 </script>
 
 <style lang="scss">
@@ -131,5 +132,4 @@ const chooseImportanceAgain = computed({
 .change-btn {
   margin-left: auto;
 }
-
 </style>

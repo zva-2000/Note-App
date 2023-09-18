@@ -1,6 +1,5 @@
 <template>
   <div class="dropdown">
-
     <InputForDropdown
       class="input-teg"
       v-model:value="newTag"
@@ -69,7 +68,7 @@ const emit = defineEmits<{
 const chooseTeg = (tegOne: string) => {
   emit('chooseTeg', tegOne);
   isVisible.value = true;
-  console.log(typeof tegOne);
+  console.log(111, tegOne);
 };
 
 const deleteTag = (index: number) => {

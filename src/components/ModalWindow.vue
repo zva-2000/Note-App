@@ -1,18 +1,13 @@
 <template>
-
   <div class="modal">
-
     <div class="modal-content">
-
       <BaseCanselButton class="delete-button" @click="closeModal" />
 
       <div class="input-container">
-
         <p class="error">{{ emptyTitleError }}</p>
 
-
         <p style="color: rgb(78, 78, 78)">Заголовок:</p>
-        
+
         <BaseInput
           placeholder=""
           v-model:value="note.title"
@@ -42,35 +37,32 @@
         <p class="modal-p">Важность:</p>
         <ComponentWithDropdown
           class="impr-input"
-          v-model:value="note.impr"
-          v-model:options="chooseImportance"
+          :value="note.impr"
+          @update:value="(v) => $emit('update:impr', v)"
+          :options="props.chooseImportanceTags"
           :isReadonly="true"
         />
 
         <p class="error">{{ emptyTagError }}</p>
-        
+
         <p class="modal-p">Теги:</p>
         <addTegComponent
           class="teg-input"
           @chooseTeg="chooseTegTwo"
           :selectedTegs="props.note.teg"
-          @update:error = "emitSameTagError"
+          @update:error="emitSameTagError"
           @deleteTag="deleteTagInModalWindow"
         />
-        
       </div>
 
       <base-button @click="addNote" class="save-button">
         <span>Сохранить</span>
       </base-button>
-
-      </div>
     </div>
-
+  </div>
 </template>
 
 <script setup lang="ts">
-
 import { ref, computed } from 'vue';
 
 import BaseCanselButton from './buttons/BaseCanselButton.vue';
@@ -103,8 +95,8 @@ const emit = defineEmits<{
   (e: 'update:error', sameTagError: string): void;
   (e: 'addNote', emitedNote: string): void;
   (e: 'chooseTegTwo', emitedTag: string): void;
-  (e: 'update:impr', impr: string[]): void; 
-  (e: 'deleteTag', index: number): void;   
+  (e: 'update:impr', impr: string): void;
+  (e: 'deleteTag', index: number): void;
 }>();
 
 const closeModal = (visibleModal: boolean) => {
@@ -127,17 +119,22 @@ const chooseImportance = computed({
   get() {
     return props.chooseImportanceTags ?? '';
   },
-  set(impr: string[]) {
+  set(impr: string) {
     emit('update:impr', impr);
+    console.log(impr);
   },
 });
 
-const emitSameTagError = (errorMessage:string) => {emit('update:error', errorMessage)};
+const emitSameTagError = (errorMessage: string) => {
+  emit('update:error', errorMessage);
+};
 
+const fn = (v) => {
+  emit('update:impr', v);
+};
 </script>
 
 <style>
-
 .container {
   flex-grow: 1;
   /* display: flex; */
@@ -149,19 +146,19 @@ const emitSameTagError = (errorMessage:string) => {emit('update:error', errorMes
 
 .input-container {
   display: flex;
-    width: 85%;
-    margin-left: 48px;
-    /* gap: 100px; */
-    margin-bottom: 1.5rem;
-    /* align-items: center; */
-    flex-direction: column;
+  width: 85%;
+  margin-left: 48px;
+  /* gap: 100px; */
+  margin-bottom: 1.5rem;
+  /* align-items: center; */
+  flex-direction: column;
 }
 
 .title-input {
   margin-top: 105px;
 }
 
-.teg-input{
+.teg-input {
   width: 106%;
 }
 .impr-input,
@@ -171,7 +168,7 @@ const emitSameTagError = (errorMessage:string) => {emit('update:error', errorMes
   margin-top: 5px;
   margin-bottom: 10px;
   /* width: 95%; */
-} 
+}
 
 .modal-p {
   margin-top: 10px;
@@ -179,13 +176,13 @@ const emitSameTagError = (errorMessage:string) => {emit('update:error', errorMes
 }
 
 .save-button {
-    font-size: 85%;
-    display: flex;
-    justify-content: center;
-    align-content: center;
-    position: relative;
-    margin: auto;
-    flex-wrap: wrap;
+  font-size: 85%;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  position: relative;
+  margin: auto;
+  flex-wrap: wrap;
 }
 
 .modal {

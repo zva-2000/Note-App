@@ -5,22 +5,23 @@
     <SearchInput v-model:value="search" />
 
     <base-button @click="openModal" class="open-modal-btn">
-        <span>Добавить</span>
+      <span>Добавить</span>
     </base-button>
 
-    <ModalWindow v-if="!visibleModal" 
-    @close-modal="closeModal" 
-    @update:error="emptyTagError = $event" 
-    :empty-tag-error="emptyTagError"
-    :empty-title-error="emptyTitleError"
-    :note="note"
-    @add-note="addNoteMainFunc"
-    @choose-teg-two="chooseTeg"
-    :choose-importance-tags="chooseImportanceTags"
-    @chooseImportance="chooseImportanceTags"
-    @delete-tag="deleteTag"
+    <ModalWindow
+      v-if="!visibleModal"
+      @close-modal="closeModal"
+      @update:error="emptyTagError = $event"
+      @update:impr="updateImpr"
+      :empty-tag-error="emptyTagError"
+      :empty-title-error="emptyTitleError"
+      :note="note"
+      @add-note="addNoteMainFunc"
+      @choose-teg-two="chooseTeg"
+      :choose-importance-tags="chooseImportanceTags"
+      @chooseImportance="chooseImportanceTags"
+      @delete-tag="deleteTag"
     />
-
   </div>
 
   <a class="take-of-filter" @click="takeOffFilter">Сбросить фильтры</a>
@@ -69,7 +70,7 @@
     <MovedButtons class="position-moved-buttons" />
   </div>
 
-  <AllNotes class="all-notes"/>
+  <AllNotes class="all-notes" />
 </template>
 
 <script setup lang="ts">
@@ -95,10 +96,10 @@ import { useFilter } from '../composables/useFilter';
 
 import { useNotes } from '../composables/useNotes';
 
-const { chooseTeg, emptyTagError, tagsForMainWindow, chooseImportanceTags } = useTags();
+const { chooseTeg, emptyTagError, tagsForMainWindow, chooseImportanceTags } =
+  useTags();
 
-const { note, emptyTitleError, addNote } =
-  useNotes();  
+const { note, emptyTitleError, addNote } = useNotes();
 
 const {
   selectedTeg,
@@ -124,12 +125,15 @@ const closeModal = () => {
 const addNoteMainFunc = () => {
   addNote();
   closeModal();
-}
+};
 
 const deleteTag = (index: any) => {
   note.value.teg.splice(index, 1);
 };
 
+const updateImpr = (v) => {
+  note.value.impr = v;
+};
 </script>
 
 <style>
@@ -173,15 +177,15 @@ const deleteTag = (index: any) => {
 
 .tags-in-main-wndw {
   cursor: pointer;
-    display: flex;
-    /* flex-direction: column; */
-    gap: 5px;
-    font-size: 20px;
-    text-align: center;
-    /* margin-left: 10px; */
-    max-width: 35rem;
-    /* width: 21.6rem; */
-    float: left;
+  display: flex;
+  /* flex-direction: column; */
+  gap: 5px;
+  font-size: 20px;
+  text-align: center;
+  /* margin-left: 10px; */
+  max-width: 35rem;
+  /* width: 21.6rem; */
+  float: left;
 }
 
 .tags-in-main-wndw:focus {
