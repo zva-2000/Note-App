@@ -1,12 +1,7 @@
 <template>
   <div class="note">
-    <div class="note-btns">
-      <ChangeNoteButton @click="funcEdition" class="change-btn" v-show="!edit" />
 
-      <BaseDeleteButton class="delete-button" @click="removeNote(index)" />
-    </div>
-
-    <BaseNote :note="note" :index="index" v-if="!edit" />
+    <BaseNote :note="note" :index="index" v-if="!edit" :edit="edit" @funcEdition="funcEdition" @removeNote="removeNote"/>
 
     <InputsForNote
       :note="note"
@@ -16,7 +11,7 @@
       @editNote="editNote"
       :emptyTagError="emptyTagError"
       @update:error="emitSameTagErrorAgain"
-      @addTagToNote="addTagToNoteAgain"
+      @addTagToNote="addTagToNote"
       @delete-tag="handleDeleteTag"
       @update:impr="(value) => $emit('update:impr', value)"
       :chooseImportanceTags="chooseImportanceTags"
@@ -29,6 +24,7 @@ import { ref, computed } from 'vue';
 
 const props = defineProps<{
   note: {
+    id:number;
     title: string;
     descr: string;
     impr: string;
@@ -45,11 +41,7 @@ const edit = ref(false);
 
 import BaseNote from './BaseNote.vue';
 
-import ChangeNoteButton from './buttons/ChangeNoteButton.vue';
-
 import InputsForNote from './InputsForNote.vue';
-
-import BaseDeleteButton from './BaseDeleteButton.vue';
 
 import { useNotes } from '../composables/useNotes.js';
 
@@ -58,7 +50,7 @@ const { removeNote } = useNotes();
 const emit = defineEmits<{
   [x: string]: any;
   (e: 'update:error', sameTagError: string): void;
-  (e: 'addTagToNoteAgain', newTag: string): void;
+  (e: 'addTagToNote', id: number, teg: string): void;
   (e: 'delete-tag-double', index: number): void;
   (e: 'chooseImportanceAgain', impr: string): void;
   (e: 'editNote', editOne: string): void;
@@ -68,10 +60,11 @@ const emitSameTagErrorAgain = (errorMessage: string) => {
   emit('update:error', errorMessage);
 };
 
-const addTagToNoteAgain = (newTag: string) => {
-  emit('addTagToNoteAgain', newTag);
-  console.log(333, newTag);
+const addTagToNote = (id: number, teg: string) => {
+  emit('addTagToNote', id, teg);
+  console.log(3333, teg);
 };
+
 
 const handleDeleteTag = (index: number) => {
   emit('delete-tag-double', index);
@@ -97,24 +90,10 @@ const chooseImportanceAgain = computed({
 
 <style lang="scss">
 .note {
-  border-radius: 20px;
-  width: 50%;
-  padding: 0px 14px 34px 32px;
-  margin-bottom: 20px;
-  background-color: #ffffff;
-  height: 100%;
-  &.List {
-    width: 100%;
+    border-radius: 20px;
+    padding: 25px 25px 34px 34px;
+    background-color: #ffffff;
     margin-bottom: 15px;
-  }
-}
-
-.Grid {
-  width: 48%;
-}
-
-.List {
-  width: 100%;
 }
 
 .delete-button {
@@ -125,12 +104,6 @@ const chooseImportanceAgain = computed({
 
 .note-teg {
   margin-top: 0px;
-}
-
-.note-btns {
-  display: flex;
-  position: relative;
-  top: 12px;
 }
 
 .change-btn {

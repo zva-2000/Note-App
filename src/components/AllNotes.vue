@@ -8,7 +8,7 @@
       @editNote="updateNote"
       :empty-tag-error="emptyTagError"
       @update:error="emptyTagError = $event"
-      @addTagToNoteAgain="chooseTeginNote"
+      @addTagToNote="updateNoteTeg"
       @handleDeleteTag="deleteTagInChangeNote"
       @update:impr="chooseImportanceMain"
       :choose-importance-tags="chooseImportanceTags"
@@ -32,6 +32,11 @@ const chooseTeginNote = (newTag: string) => {
   console.log(444, newTag, note.value.teg);
 };
 
+function updateNoteTeg (noteId: number, updatedNoteTeg: string) {
+  notes.value.map((note) => {if (note.id !== noteId) return note.teg
+  else if (!note.teg.includes(updatedNoteTeg)) {note.teg.push(updatedNoteTeg)}
+  console.log(444, updateNoteTeg, note.teg);})}
+
 function updateNote (updatedNote: any) {
   console.log(updatedNote)
   notes.value = notes.value.map((note) => {if (note.id !== updatedNote.id) 
@@ -40,7 +45,7 @@ function updateNote (updatedNote: any) {
 }
 
 const deleteTagInChangeNote = (index: number) => {
-  notes.value.map((note) =>  note.teg.splice(index, 1))
+  notes.value.map((note) => note.teg.splice(index, 1))
 };
 
 const chooseImportanceMain = (impr: string) => {
@@ -52,15 +57,26 @@ const { emptyTagError, chooseImportanceTags } = useTags();
 import { useFilter } from '../composables/useFilter';
 
 const { viewMode } = useFilter();
+
 </script>
 
 <style lang="scss">
 .notes {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  display: grid;
   padding: 13px 0;
+}
+
+.Grid {
+  align-items: center;
+  flex-wrap: wrap;
+  grid-template-columns: repeat(2, 1fr);
+  row-gap: 10px;
+  column-gap: 25px;
+}
+
+.List {
+  padding: 15px 0;
+  grid-template-columns: repeat(1, 1fr);
 }
 
 .delete-button {

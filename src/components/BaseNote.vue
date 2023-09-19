@@ -1,7 +1,14 @@
 <template>
-  <div class="note-header">
-    <h1>{{ note.title }}</h1>
-  </div>
+
+    <div class="note-btns">
+
+      <h1 class="note-header">{{ note.title }}</h1>
+
+      <ChangeNoteButton @click="funcEdition" class="change-btn" v-show="!edit" />
+
+      <BaseDeleteButton class="delete-button" @click="removeNote(index)" />
+    </div>
+
   <div class="note-body">
     <p>{{ note.descr }}</p>
     <p class="note-date">Дата создания: {{ formatedNoteDateBegin }}</p>
@@ -18,6 +25,7 @@ import { ref, computed } from 'vue';
 
 const props = defineProps<{
   note: {
+    id: number;
     title: string;
     descr: string;
     impr: string;
@@ -26,15 +34,26 @@ const props = defineProps<{
     teg: string[];
   };
   index: number;
+  edit: boolean;
 }>();
 
 import SelectedTegs from './SelectedTegs.vue';
+
+import ChangeNoteButton from './buttons/ChangeNoteButton.vue';
+
+import BaseDeleteButton from './BaseDeleteButton.vue';
 
 const formatedNoteDate = computed(() => new Date(props.note.date).toLocaleDateString());
 
 const formatedNoteDateBegin = computed(() =>
   new Date(props.note.beginDate).toLocaleDateString()
 );
+
+const emit = defineEmits<{
+  [x: string]: any;
+  (e: 'funcEdition', edit: boolean): void;
+  (e: 'removeNote', index: number): void;
+}>();
 
 const importanceColors = ref({
   'Очень важно': '#ee9191',
@@ -45,6 +64,14 @@ const importanceColors = ref({
 const importanceColor = computed(() => {
   return importanceColors.value[props.note.impr];
 });
+
+const removeNote = (index: number) => {
+  emit('removeNote', index);
+};
+
+const funcEdition = (edit: boolean) => {
+  emit('funcEdition', edit);
+};
 </script>
 
 <style lang="scss">
@@ -56,25 +83,20 @@ const importanceColor = computed(() => {
   max-width: 140px;
   text-align: center;
 }
-.note-header .Grid {
+.note-header {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  h1 {
-    font-size: 32px;
-  }
   p {
     font-size: 22px;
     color: #af2c2c;
   }
 }
-.note-header .List {
+.note-header {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  h1 {
-    font-size: 32px;
-  }
+  font-size: 32px;
   p {
     margin-right: 16px;
     &:last-child {
@@ -93,30 +115,12 @@ const importanceColor = computed(() => {
   }
 }
 
-.note-header {
+
+.note-btns {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
-  h1 {
-    font-size: 32px;
-  }
-  p {
-    font-size: 22px;
-    color: #402caf;
-  }
 }
-.note-header .List {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  h1 {
-    font-size: 32px;
-  }
-  p {
-    margin-right: 16px;
-    &:last-child {
-      margin-right: 0;
-    }
-  }
-}
+
+
 </style>

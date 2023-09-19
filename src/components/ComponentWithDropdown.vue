@@ -67,5 +67,6 @@ const toggleVisibility = () => {
 <style>
 .dropdown {
   position: relative;
+  margin-bottom: 10px;
 }
 </style>

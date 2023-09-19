@@ -70,7 +70,7 @@ svg {
   margin-left: 5px;
 }
 .search-input {
-  padding: 16px 16px 16px 56px !important;
+  padding: 16px 16px 16px 56px;
     margin-top: 16px;
     border-radius: 30px;
     color: #000000;

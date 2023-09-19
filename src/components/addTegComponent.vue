@@ -19,6 +19,8 @@
       @choose-item="chooseTeg"
     />
 
+  </div>
+
     <SelectedTegs
       class="select-tags"
       :items="selectedTegs"
@@ -27,7 +29,7 @@
       :selectedTeg="''"
       :importance="''"
     />
-  </div>
+
 </template>
 
 <script setup lang="ts">
@@ -99,9 +101,6 @@ const filteredTegs = computed(() => {
 </script>
 
 <style>
-.input-teg {
-  width: 40%;
-}
 
 .plusButton {
   width: 35px;
@@ -114,9 +113,6 @@ const filteredTegs = computed(() => {
 .select-tags {
   display: flex;
   flex-direction: initial;
-  float: left;
   gap: 4px;
-  position: relative;
-  top: 10px;
 }
 </style>

@@ -50,8 +50,6 @@
     @deleteTag="deleteTagInChangeNote"
     @update:error="emitSameTagError"
   />
-
-  <!-- <SaveButton @click="editNote" class="save-btn"/> -->
 </template>
 
 <script setup lang="ts">
@@ -88,14 +86,14 @@ const emit = defineEmits<{
   [x: string]: any;
   (e: 'editNote', state: any): void;
   (e: 'update:error', sameTagError: string): void;
-  (e: 'addTagToNote', state:string): void;
+  (e: 'addTagToNote', id: number, teg: string): void;
   (e: 'update:impr', impr: string): void;
   (e: 'delete-tag', index: number): void;
 }>();
 
-const addTagToNote = (state:string) => {
-  emit('addTagToNote', state);
-  console.log(2222, state);
+const addTagToNote = (teg: string) => {
+  emit('addTagToNote', props.note.id, teg);
+  console.log(2222, teg);
 };
 
 const deleteTagInChangeNote = (index: number) => {
@@ -133,7 +131,8 @@ const emitSameTagError = (errorMessage: string) => {
 .note-textarea,
 .date-note,
 .header-input {
-  width: 92%;
+  box-sizing: border-box;
+  padding: 0px 38px 0px 0px;
 }
 
 .date-note-input {
@@ -146,5 +145,10 @@ const emitSameTagError = (errorMessage: string) => {
 
 .change {
   float: right;
+}
+
+.teg-input-note {
+  box-sizing: border-box;
+  padding: 0px 38px 0px 0px;
 }
 </style>
