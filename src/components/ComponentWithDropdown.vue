@@ -7,11 +7,12 @@
       placeholder=""
       type="text"
       :isReadonly="true"
+      :label="label"
     />
     <BaseList
+      v-if="!isVisible"
       :items="options"
       v-click-outside="toggleVisibility"
-      :is-visible="isVisible"
       @choose-item="chooseImportance"
     />
   </div>
@@ -27,6 +28,7 @@ import { ref, computed } from 'vue';
 const props = defineProps<{
   value: string;
   options: string[];
+  label?: string;
 }>();
 
 const emit = defineEmits<{

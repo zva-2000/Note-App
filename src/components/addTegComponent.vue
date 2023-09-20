@@ -1,12 +1,19 @@
 <template>
   <div class="teg-dropdown">
-    <InputForDropdown
+    <!-- <InputForDropdown
       class="input-teg"
       v-model:value="newTag"
       @click="toggleVisibility"
       placeholder=""
       type="text"
-    />
+    /> -->
+
+    <BaseInput 
+      class="input-for-add-teg"
+      v-model:value="newTag"
+      @click="toggleVisibility"
+      type="text"
+      label="Теги:"></BaseInput>
 
     <BaseButtonForSVG @click="addTegFunction" class="plusButton">
       <SvgForButtons :name="'svg-plus'"></SvgForButtons>
@@ -15,8 +22,8 @@
     <BaseList
       v-click-outside="toggleVisibility"
       :items="filteredTegs"
-      :is-visible="isVisible"
       @choose-item="chooseTeg"
+      v-if="!isVisible"
     />
   </div>
 
@@ -35,11 +42,11 @@ import { computed, ref } from 'vue';
 
 import { useTags } from '../composables/useTags.js';
 
+import BaseInput from './BaseInput.vue';
+
 import BaseButtonForSVG from './BaseButtonForSVG.vue';
 
 import SvgForButtons from './SvgForButtons.vue';
-
-import InputForDropdown from './InputForDropdown.vue';
 
 import BaseList from './BaseList.vue';
 
@@ -118,5 +125,11 @@ const filteredTegs = computed(() => {
   position: relative;
   margin-bottom: 10px;
   display: flex;
+}
+
+.input-for-add-teg{
+  display: flex;
+  position: relative;
+  display: inline-block;
 }
 </style>

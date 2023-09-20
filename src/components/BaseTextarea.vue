@@ -1,15 +1,21 @@
 <template>
   <div class="input-wrapper">
-    <textarea v-model="model" :placeholder="placeholder"></textarea>
+    <FieldBase :label="label" :errors="errors">
+      <textarea v-model="model" :placeholder="placeholder"></textarea>
+    </FieldBase>
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue';
 
+import FieldBase from './FieldBase.vue';
+
 const props = defineProps<{
+  errors?: string[];
+  label?: string;
   value: string;
-  placeholder: string;
+  placeholder?: string;
 }>();
 
 const model = computed({

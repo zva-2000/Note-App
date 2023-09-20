@@ -2,7 +2,6 @@
   <div class="note">
     <BaseNote
       :note="note"
-      :index="index"
       v-if="!edit"
       :edit="edit"
       @funcEdition="funcEdition"
@@ -13,7 +12,6 @@
       :note="note"
       :edit="edit"
       v-if="edit"
-      :index="index"
       @editNote="editNote"
       :emptyTagError="emptyTagError"
       @update:error="emitSameTagErrorAgain"
@@ -38,7 +36,6 @@ const props = defineProps<{
     beginDate: number;
     teg: string[];
   };
-  index: number;
   emptyTagError: string;
   chooseImportanceTags: string[];
 }>();
@@ -73,8 +70,8 @@ const handleDeleteTag = (id: number, index: number) => {
   console.log(3333, index);
 };
 
-const removeNote = (index: number) => {
-  emit('removeNote', index);
+const removeNote = (id: number) => {
+  emit('removeNote', id);
 };
 
 const funcEdition = () => (edit.value = !edit.value);
@@ -91,12 +88,6 @@ const editNote = (editOne: any) => {
   padding: 25px 25px 34px 34px;
   background-color: #ffffff;
   margin-bottom: 15px;
-}
-
-.delete-button {
-  color: #999999;
-  float: right;
-  position: relative;
 }
 
 .note-teg {

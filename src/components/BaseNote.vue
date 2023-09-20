@@ -2,13 +2,12 @@
 
     <div class="note-btns">
 
-      <h1 class="note-header">{{ note.title }}</h1>
-
       <ChangeNoteButton @click="funcEdition" class="change-btn" v-show="!edit" />
 
-      <BaseDeleteButton class="delete-button" @click="removeNote(index)" />
+      <BaseDeleteButton class="delete-button" @click="removeNote" />
     </div>
-
+  
+  <h1 class="note-header">{{ note.title }}</h1>
   <div class="note-body">
     <p>{{ note.descr }}</p>
     <p class="note-date">Дата создания: {{ formatedNoteDateBegin }}</p>
@@ -33,7 +32,6 @@ const props = defineProps<{
     beginDate: number;
     teg: string[];
   };
-  index: number;
   edit: boolean;
 }>();
 
@@ -52,7 +50,7 @@ const formatedNoteDateBegin = computed(() =>
 const emit = defineEmits<{
   [x: string]: any;
   (e: 'funcEdition', edit: boolean): void;
-  (e: 'removeNote', index: number): void;
+  (e: 'removeNote', id: number): void;
 }>();
 
 const importanceColors = ref({
@@ -65,8 +63,8 @@ const importanceColor = computed(() => {
   return importanceColors.value[props.note.impr];
 });
 
-const removeNote = (index: number) => {
-  emit('removeNote', index);
+const removeNote = (id: number) => {
+  emit('removeNote', props.note.id);
 };
 
 const funcEdition = (edit: boolean) => {
@@ -82,15 +80,6 @@ const funcEdition = (edit: boolean) => {
   color: rgb(0, 0, 0);
   max-width: 140px;
   text-align: center;
-}
-.note-header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  p {
-    font-size: 22px;
-    color: #af2c2c;
-  }
 }
 .note-header {
   display: flex;
@@ -115,11 +104,22 @@ const funcEdition = (edit: boolean) => {
   }
 }
 
+.delete-button,
+.change-btn {
+  position: absolute;
+  right: 0;
+  left: auto;
+}
+
+.change-btn {
+  left: calc(100% - 100px);
+}
 
 .note-btns {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  // display: flex;
+  // align-items: center;
+  // justify-content: space-between;
+  position: relative;
 }
 
 

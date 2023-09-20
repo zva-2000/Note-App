@@ -1,5 +1,5 @@
 <template>
-  <ul v-if="!isVisible" class="dropdown-content">
+  <ul class="dropdown-content">
     <li v-for="(item, index) in items" :key="index" @click="chooseItem(item)">
       {{ item }}
     </li>
@@ -8,7 +8,6 @@
 
 <script setup lang="ts">
 const props = defineProps<{
-  isVisible: boolean;
   items: string[];
 }>();
 

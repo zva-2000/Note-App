@@ -44,60 +44,41 @@ const notes = ref([
   ]
 )
 
-let note = ref({
-  id: 0,
-  title: '',
-  descr: '',
-  impr: '',
-  beginDate: '',
-  date: 0,
-  teg: [] as string[],
-});
-
 const emptyTitleError = ref('')
 
 export function useNotes() {
 
-  const removeNote = (index: number) => {
-    notes.value.splice(index, 1);
+  const removeNote = (id: number) => {
+    notes.value = notes.value.filter(note => note.id !== id);
   };
 
-  function addNote() {
-
-    let { title, descr, impr, teg, date, id } = note.value;
-
-    if (title === '' && descr === '') {
-        emptyTitleError.value = 'Введите заголовок или описание';
-        return false;
-    }
-
-    let timestampNoteDate = new Date(date).getTime();
-
+  function addNote(newNote: { id: number; title: string; descr: string; impr: string; beginDate: number; date: number; teg: string[]; }) {
+    console.log(newNote)
+    let timestampNoteDate = new Date(newNote.date).getTime();
     let timestampNoteDateBegin = new Date().getTime();
 
-    let newNote = {
-        id,
-        title,
-        descr,
-        impr,
-        date: timestampNoteDate,                
-        teg,
-        beginDate: timestampNoteDateBegin
-    };
+    if (newNote.title === '' && newNote.descr === '') {
+        emptyTitleError.value = 'Введите заголовок или описание';
+        return false;
+    } 
+
+    newNote.date = timestampNoteDate;
+    newNote.beginDate = timestampNoteDateBegin;
 
     notes.value.push(newNote);
 
-    localStorage.setItem("notes", JSON.stringify(notes.value));
+    // emptyTitleError.value = '';
+    // newNote.date = 0;
+    // newNote.title = '';
+    // newNote.descr = '';
+    // newNote.impr = '';
+    // newNote.teg = [];
 
-    emptyTitleError.value = '';
-    note.value.date = 0;
-    note.value.title = '';
-    note.value.descr = '';
-    note.value.impr = '';
-    note.value.teg = [];
+    localStorage.setItem("notes", JSON.stringify(notes.value));
 
     return notes.value;
   }
+
 
   const filteredNotesList = computed(() => {
     console.log(0);
@@ -146,5 +127,31 @@ export function useNotes() {
     });
   });
 
-  return { notes, note, removeNote, addNote, emptyTitleError, filteredNotesList};
+  function updateNoteTeg(noteId: number, updatedNoteTeg: string) {
+    notes.value.map((note) => {
+      if (note.id !== noteId) return note.teg;
+      else if (!note.teg.includes(updatedNoteTeg)) {
+        note.teg.push(updatedNoteTeg);
+      }
+      console.log(444, updateNoteTeg, note.teg);
+    });
+  }
+  
+  function updateNote(updatedNote: any) {
+    console.log(updatedNote);
+    notes.value = notes.value.map((note) => {
+      if (note.id !== updatedNote.id) return note;
+      else return updatedNote;
+    });
+  }
+  
+  function deleteTag(noteId: number, index: number) {
+    notes.value.map((note) => {
+      if (note.id !== noteId) return note.teg;
+      else note.teg.splice(index, 1);
+      console.log(444, index);
+    });
+  }
+
+  return { notes, removeNote, addNote, emptyTitleError, filteredNotesList, updateNoteTeg, updateNote, deleteTag};
 }

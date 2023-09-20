@@ -6,56 +6,46 @@
       <div class="input-container">
         <p class="error">{{ emptyTitleError }}</p>
 
-        <p style="color: rgb(78, 78, 78)">Заголовок:</p>
-
         <BaseInput
-          placeholder=""
+          label="Заголовок:"
           v-model:value="note.title"
           type="text"
           class="base-input"
-          :isReadonly="false"
         />
-
-        <p class="modal-p">Содержимое:</p>
 
         <BaseTextarea
-          placeholder=""
           v-model:value="note.descr"
           class="base-textarea"
+          label="Содержимое:"
         />
-
-        <p class="modal-p">Сделать до:</p>
 
         <BaseInput
-          placeholder=""
-          v-model:value="note.date"
+          v-model:numberValue="note.date"
           type="date"
           class="base-input"
-          :isReadonly="false"
+          label="Сделать до:"
         />
 
-        <p class="modal-p">Важность:</p>
         <ComponentWithDropdown
           class="impr-input"
           :value="note.impr"
-          @update:value="(v) => $emit('update:impr', v)"
+          @update:value="updateImpr"
           :options="props.chooseImportanceTags"
-          :isReadonly="true"
+          label="Важность:"
         />
 
         <p class="error">{{ emptyTagError }}</p>
 
-        <p class="modal-p">Теги:</p>
         <addTegComponent
           class="teg-input"
-          @chooseTeg="chooseTegTwo"
-          :selectedTegs="props.note.teg"
+          @chooseTeg="chooseTeg"
+          :selectedTegs="note.teg"
           @update:error="emitSameTagError"
-          @deleteTag="deleteTagInModalWindow"
+          @deleteTag="deleteTag"
         />
       </div>
 
-      <base-button @click="addNote" class="save-button">
+      <base-button @click="() => emit('add-note', note)" class="save-button">
         <span>Сохранить</span>
       </base-button>
     </div>
@@ -63,7 +53,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref } from 'vue';
 
 import BaseCanselButton from './buttons/BaseCanselButton.vue';
 
@@ -78,60 +68,48 @@ import ComponentWithDropdown from './ComponentWithDropdown.vue';
 import addTegComponent from './addTegComponent.vue';
 
 const props = defineProps<{
-  note: {
-    title: string;
-    descr: string;
-    impr: string;
-    date: number;
-    teg: string[];
-  };
   chooseImportanceTags: string[];
   emptyTitleError: string;
   emptyTagError: string;
 }>();
 
+let note = ref({
+  id: 0,
+  title: '',
+  descr: '',
+  impr: '',
+  beginDate: 0,
+  date: 0,
+  teg: [] as string[],
+});
+
 const emit = defineEmits<{
   (e: 'closeModal', visibleModal: boolean): void;
   (e: 'update:error', sameTagError: string): void;
-  (e: 'addNote', emitedNote: string): void;
-  (e: 'chooseTegTwo', emitedTag: string): void;
+  (e: 'add-note', note: any): void;
   (e: 'update:impr', impr: string): void;
-  (e: 'deleteTag', index: number): void;
 }>();
 
 const closeModal = (visibleModal: boolean) => {
   emit('closeModal', visibleModal);
 };
 
-const addNote = () => {
-  emit('addNote', emitedNote);
+const chooseTeg = (teg: string) => {
+  note.value.teg.push(teg);
 };
 
-const chooseTegTwo = (emitedTag: string) => {
-  emit('chooseTegTwo', emitedTag);
+const deleteTag = (index: any) => {
+  note.value.teg.splice(index, 1);
 };
 
-const deleteTagInModalWindow = (index: number) => {
-  emit('deleteTag', index);
+const updateImpr = (value: string) => {
+  note.value.impr = value;
 };
-
-const chooseImportance = computed({
-  get() {
-    return props.chooseImportanceTags ?? '';
-  },
-  set(impr: string) {
-    emit('update:impr', impr);
-    console.log(impr);
-  },
-});
 
 const emitSameTagError = (errorMessage: string) => {
   emit('update:error', errorMessage);
 };
 
-const fn = (v) => {
-  emit('update:impr', v);
-};
 </script>
 
 <style>
@@ -170,11 +148,6 @@ const fn = (v) => {
   /* width: 95%; */
 }
 
-.modal-p {
-  margin-top: 10px;
-  color: rgb(78, 78, 78);
-}
-
 .save-button {
   font-size: 85%;
   display: flex;
@@ -209,8 +182,4 @@ const fn = (v) => {
   border-radius: 5px;
 }
 
-.error {
-  text-align: center;
-  color: red;
-}
 </style>

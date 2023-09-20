@@ -1,9 +1,7 @@
 <template>
-  <div class="icons">
     <BaseButtonForSVG class="x-button">
       <SvgForButtons :name="'svg-trash-can'"></SvgForButtons>   
     </BaseButtonForSVG>
-  </div>
 </template>
 
 <script setup lang="ts">

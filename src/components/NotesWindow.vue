@@ -1,81 +1,80 @@
 <template>
-  <div class="notes-window-header all-notes">
-    <SearchInput v-model:value="search" />
+  <div class="all-notes">
+    <div class="notes-window-header">
+      <SearchInput v-model:value="search" />
 
-    <base-button @click="openModal" class="open-modal-btn">
-      <span>Добавить</span>
-    </base-button>
+      <base-button @click="openModal" class="open-modal-btn">
+        <span>Добавить</span>
+      </base-button>
 
-    <ModalWindow
-      v-if="!visibleModal"
-      @close-modal="closeModal"
-      @update:error="emptyTagError = $event"
-      @update:impr="updateImpr"
-      :empty-tag-error="emptyTagError"
-      :empty-title-error="emptyTitleError"
-      :note="note"
-      @add-note="addNoteMainFunc"
-      @choose-teg-two="chooseTeg"
-      :choose-importance-tags="chooseImportanceTags"
-      @chooseImportance="chooseImportanceTags"
-      @delete-tag="deleteTag"
-    />
-  </div>
+      <ModalWindow
+        v-if="!visibleModal"
+        @close-modal="closeModal"
+        @update:error="emptyTagError = $event"
+        :empty-tag-error="emptyTagError"
+        :empty-title-error="emptyTitleError"
+        @add-note="addNoteMainFunc"
+        @choose-teg-two="chooseTeg"
+        :choose-importance-tags="chooseImportanceTags"
+        @chooseImportance="chooseImportanceTags"
+      />
+    </div>
 
-  <base-button
-    class="take-of-filter all-notes"
+    <base-button
+      class="take-of-filter"
     @click="takeOffFilter"
-    v-show="
-      selectedTeg || importance || filterDateOne || filterDateTwo || search
-    "
-    >Сбросить фильтры</base-button
-  >
+      v-show="
+        selectedTeg || importance || filterDateOne || filterDateTwo || search
+      "
+      >Сбросить фильтры</base-button
+    >
 
-  <p class="take-of-filter all-notes">Дата создания:</p>
+    <p class="take-of-filter">Дата создания:</p>
 
-  <div class="inputs-window-main-content all-notes">
-    <BaseInput
-      placeholder=""
-      v-model:value="filterDateOne"
-      type="date"
-      :isReadonly="false"
-      class="date-main-input"
-    />
+    <div class="inputs-window-main-content">
+      <BaseInput
+        placeholder=""
+        v-model:value="filterDateOne"
+        type="date"
+        :isReadonly="false"
+        class="date-main-input"
+      />
 
-    До:
+      До:
 
-    <BaseInput
-      placeholder=""
-      v-model:value="filterDateTwo"
-      type="date"
-      :isReadonly="false"
-      class="date-main-input"
-    />
+      <BaseInput
+        placeholder=""
+        v-model:value="filterDateTwo"
+        type="date"
+        :isReadonly="false"
+        class="date-main-input"
+      />
 
-    <MovedButtons class="position-moved-buttons" />
-  </div>
+      <MovedButtons class="position-moved-buttons" />
+    </div>
 
-  <div class="notes-window-main-content all-notes">
-    <SelectedTegs
-      :items="tagsForMainWindow"
-      @choose-tag="setTag"
-      :showButton="false"
-      class="tags-in-main-wndw"
-      :selectedTeg="selectedTeg"
-      :importance="importance"
-    />
+    <div class="notes-window-main-content">
+      <SelectedTegs
+        :items="tagsForMainWindow"
+        @choose-tag="setTag"
+        :showButton="false"
+        class="tags-in-main-wndw"
+        :selectedTeg="selectedTeg"
+        :importance="importance"
+      />
 
-    <SelectedTegs
-      :items="chooseImportanceTags"
-      @choose-tag="setImpr"
-      :showButton="false"
-      class="tags-in-main-wndw"
-      :selectedTeg="selectedTeg"
-      :importance="importance"
-    />
-  </div>
+      <SelectedTegs
+        :items="chooseImportanceTags"
+        @choose-tag="setImpr"
+        :showButton="false"
+        class="tags-in-main-wndw"
+        :selectedTeg="selectedTeg"
+        :importance="importance"
+      />
+    </div>
 
-  <AllNotes class="all-notes" />
+    <AllNotes/>
+  </div>  
 </template>
 
 <script setup lang="ts">
@@ -104,7 +103,7 @@ import { useNotes } from '../composables/useNotes';
 const { chooseTeg, emptyTagError, tagsForMainWindow, chooseImportanceTags } =
   useTags();
 
-const { note, emptyTitleError, addNote } = useNotes();
+const { emptyTitleError, addNote } = useNotes();
 
 const {
   selectedTeg,
@@ -127,18 +126,11 @@ const closeModal = () => {
   visibleModal.value = true;
 };
 
-const addNoteMainFunc = () => {
-  addNote();
+const addNoteMainFunc = (newNote: any) => {
+  addNote(newNote);
   closeModal();
 };
 
-const deleteTag = (index: any) => {
-  note.value.teg.splice(index, 1);
-};
-
-const updateImpr = (value: string) => {
-  note.value.impr = value;
-};
 </script>
 
 <style>

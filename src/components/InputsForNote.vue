@@ -1,47 +1,36 @@
 <template>
   <SaveButton @click="editNote" class="change" />
 
-  <p style="color: rgb(78, 78, 78)">Заголовок:</p>
-
   <BaseInput
-    placeholder="Введите текст"
     v-model:value="copiedNote.title"
     type="text"
     class="header-input"
-    :isReadonly="false"
+    label="Заголовок:"
   />
-
-  <p class="modal-p">Содержимое:</p>
 
   <BaseTextarea
-    placeholder="Введите текст"
     v-model:value="copiedNote.descr"
     class="note-textarea"
+    label="Содержимое:"
   />
   <div class="date-note">
-    <p class="modal-p">Сделать до:</p>
-
     <BaseInput
       class="date-note-input"
-      v-model:value="copiedNote.date"
+      v-model:numberValue="copiedNote.date"
       type="date"
-      placeholder="Введите дату"
-      :isReadonly="false"
+      label="Сделать до:"
     />
   </div>
-
-  <p class="modal-p">Важность:</p>
 
   <ComponentWithDropdown
     class="impr-input-note"
     v-model:value="copiedNote.impr"
     :options="props.chooseImportanceTags"
-    :isReadonly="true"
+    label="Важность:"
   />
 
   <p class="error">{{ emptyTagError }}</p>
 
-  <p class="modal-p">Теги:</p>
   <addTegComponent
     :class-name="'teg-input-note'"
     @chooseTeg="addTagToNote"
@@ -74,7 +63,6 @@ const props = defineProps<{
     beginDate: number;
     teg: string[];
   };
-  index: number;
   emptyTagError: string;
   chooseImportanceTags: string[];
   edit: boolean;
@@ -101,7 +89,7 @@ const deleteTagInChangeNote = (index: number) => {
   console.log(222, index);
 };
 
-const editNote = (state: any) => {
+const editNote = () => {
   console.log(1, copiedNote.value.teg);
   emit('editNote', {
     id: props.note.id,
@@ -113,15 +101,6 @@ const editNote = (state: any) => {
     beginDate: copiedNote.value.beginDate,
   });
 };
-
-// const chooseImportance = computed({
-//   get() {
-//     return props.chooseImportanceTags ?? '';
-//   },
-//   set(impr: string) {
-//     emit('update:impr', impr);
-//   },
-// });
 
 const emitSameTagError = (errorMessage: string) => {
   emit('update:error', errorMessage);
