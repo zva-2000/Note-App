@@ -1,7 +1,5 @@
 <template>
-  <!-- <h1 class="title main-title">Мои заметки</h1> -->
-
-  <div class="notes-window-header">
+  <div class="notes-window-header all-notes">
     <SearchInput v-model:value="search" />
 
     <base-button @click="openModal" class="open-modal-btn">
@@ -24,31 +22,18 @@
     />
   </div>
 
-  <a class="take-of-filter" @click="takeOffFilter">Сбросить фильтры</a>
+  <base-button
+    class="take-of-filter all-notes"
+    @click="takeOffFilter"
+    v-show="
+      selectedTeg || importance || filterDateOne || filterDateTwo || search
+    "
+    >Сбросить фильтры</base-button
+  >
 
-  <div class="notes-window-main-content">
-    <SelectedTegs
-      :items="tagsForMainWindow"
-      @choose-tag="setTag"
-      :showButton="false"
-      class="tags-in-main-wndw"
-      :selectedTeg="selectedTeg"
-      :importance="importance"
-    />
+  <p class="take-of-filter all-notes">Дата создания:</p>
 
-    <SelectedTegs
-      :items="chooseImportanceTags"
-      @choose-tag="setImpr"
-      :showButton="false"
-      class="tags-in-main-wndw"
-      :selectedTeg="selectedTeg"
-      :importance="importance"
-    />
-  </div>
-
-  <p class="take-of-filter">Дата создания:</p>
-
-  <div class="inputs-window-main-content">
+  <div class="inputs-window-main-content all-notes">
     <BaseInput
       placeholder=""
       v-model:value="filterDateOne"
@@ -68,6 +53,26 @@
     />
 
     <MovedButtons class="position-moved-buttons" />
+  </div>
+
+  <div class="notes-window-main-content all-notes">
+    <SelectedTegs
+      :items="tagsForMainWindow"
+      @choose-tag="setTag"
+      :showButton="false"
+      class="tags-in-main-wndw"
+      :selectedTeg="selectedTeg"
+      :importance="importance"
+    />
+
+    <SelectedTegs
+      :items="chooseImportanceTags"
+      @choose-tag="setImpr"
+      :showButton="false"
+      class="tags-in-main-wndw"
+      :selectedTeg="selectedTeg"
+      :importance="importance"
+    />
   </div>
 
   <AllNotes class="all-notes" />
@@ -131,8 +136,8 @@ const deleteTag = (index: any) => {
   note.value.teg.splice(index, 1);
 };
 
-const updateImpr = (v) => {
-  note.value.impr = v;
+const updateImpr = (value: string) => {
+  note.value.impr = value;
 };
 </script>
 
@@ -160,19 +165,17 @@ const updateImpr = (v) => {
 }
 
 .notes-window-main-content {
-  display: flex;
-  gap: 3rem;
-  justify-content: center;
-  margin: auto;
   align-items: flex-end;
+  display: flex;
 }
 
 .inputs-window-main-content {
-  display: flex;
-  gap: 2rem;
-  justify-content: center;
-  margin: auto;
   align-items: flex-end;
+  display: flex;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+  padding: 0px 0px 13px 0px;
+  gap: 15px;
 }
 
 .tags-in-main-wndw {
@@ -182,7 +185,7 @@ const updateImpr = (v) => {
   gap: 5px;
   font-size: 20px;
   text-align: center;
-  /* margin-left: 10px; */
+  margin-left: 5px;
   max-width: 35rem;
   /* width: 21.6rem; */
   float: left;
@@ -202,7 +205,6 @@ const updateImpr = (v) => {
 }
 
 .take-of-filter {
-  display: flex;
   gap: 3rem;
   justify-content: center;
   margin: auto;
@@ -210,6 +212,7 @@ const updateImpr = (v) => {
   cursor: pointer;
   margin-top: 10px;
   margin-bottom: 10px;
+  display: flow;
 }
 
 /* .search {

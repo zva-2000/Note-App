@@ -1,5 +1,5 @@
 <template>
-  <div class="dropdown">
+  <div class="teg-dropdown">
     <InputForDropdown
       class="input-teg"
       v-model:value="newTag"
@@ -18,18 +18,16 @@
       :is-visible="isVisible"
       @choose-item="chooseTeg"
     />
-
   </div>
 
-    <SelectedTegs
-      class="select-tags"
-      :items="selectedTegs"
-      :show-button="true"
-      @delete-tag="deleteTag"
-      :selectedTeg="''"
-      :importance="''"
-    />
-
+  <SelectedTegs
+    class="select-tags"
+    :items="selectedTegs"
+    :show-button="true"
+    @delete-tag="deleteTag"
+    :selectedTeg="''"
+    :importance="''"
+  />
 </template>
 
 <script setup lang="ts">
@@ -75,6 +73,7 @@ const chooseTeg = (tegOne: string) => {
 
 const deleteTag = (index: number) => {
   emit('deleteTag', index);
+  console.log(111, index);
 };
 
 const addTegFunction = () => {
@@ -101,7 +100,6 @@ const filteredTegs = computed(() => {
 </script>
 
 <style>
-
 .plusButton {
   width: 35px;
   height: 35px;
@@ -114,5 +112,11 @@ const filteredTegs = computed(() => {
   display: flex;
   flex-direction: initial;
   gap: 4px;
+}
+
+.teg-dropdown {
+  position: relative;
+  margin-bottom: 10px;
+  display: flex;
 }
 </style>

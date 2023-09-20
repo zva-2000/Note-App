@@ -103,7 +103,7 @@ const closeModal = (visibleModal: boolean) => {
   emit('closeModal', visibleModal);
 };
 
-const addNote = (emitedNote: string) => {
+const addNote = () => {
   emit('addNote', emitedNote);
 };
 

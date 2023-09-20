@@ -1,6 +1,5 @@
 <template>
-  
-  <SaveButton @click="editNote" class="change"/>
+  <SaveButton @click="editNote" class="change" />
 
   <p style="color: rgb(78, 78, 78)">Заголовок:</p>
 
@@ -67,11 +66,12 @@ import addTegComponent from './addTegComponent.vue';
 
 const props = defineProps<{
   note: {
-    id: number,
+    id: number;
     title: string;
     descr: string;
     impr: string;
     date: number;
+    beginDate: number;
     teg: string[];
   };
   index: number;
@@ -80,7 +80,7 @@ const props = defineProps<{
   edit: boolean;
 }>();
 
-const copiedNote = ref(props.note)
+const copiedNote = ref(props.note);
 
 const emit = defineEmits<{
   [x: string]: any;
@@ -88,7 +88,7 @@ const emit = defineEmits<{
   (e: 'update:error', sameTagError: string): void;
   (e: 'addTagToNote', id: number, teg: string): void;
   (e: 'update:impr', impr: string): void;
-  (e: 'delete-tag', index: number): void;
+  (e: 'delete-tag', id: number, index: number): void;
 }>();
 
 const addTagToNote = (teg: string) => {
@@ -97,19 +97,22 @@ const addTagToNote = (teg: string) => {
 };
 
 const deleteTagInChangeNote = (index: number) => {
-  emit('delete-tag', index);
+  emit('delete-tag', props.note.id, index);
+  console.log(222, index);
 };
 
-const editNote = (state:any) => {
-console.log(1, copiedNote.value.teg)
-emit('editNote', {
-id: props.note.id,
-teg: copiedNote.value.teg,
-impr: copiedNote.value.impr,
-title: copiedNote.value.title,
-descr: copiedNote.value.descr,
-date: copiedNote.value.date,
-})};
+const editNote = (state: any) => {
+  console.log(1, copiedNote.value.teg);
+  emit('editNote', {
+    id: props.note.id,
+    teg: copiedNote.value.teg,
+    impr: copiedNote.value.impr,
+    title: copiedNote.value.title,
+    descr: copiedNote.value.descr,
+    date: copiedNote.value.date,
+    beginDate: copiedNote.value.beginDate,
+  });
+};
 
 // const chooseImportance = computed({
 //   get() {

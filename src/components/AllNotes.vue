@@ -9,9 +9,10 @@
       :empty-tag-error="emptyTagError"
       @update:error="emptyTagError = $event"
       @addTagToNote="updateNoteTeg"
-      @handleDeleteTag="deleteTagInChangeNote"
+      @delete-tag-double="deleteTag"
       @update:impr="chooseImportanceMain"
       :choose-importance-tags="chooseImportanceTags"
+      @removeNote="removeNote"
     />
   </div>
 </template>
@@ -23,34 +24,7 @@ import { useTags } from '../composables/useTags.js';
 
 import { useNotes } from '../composables/useNotes';
 
-const { notes, note, filteredNotesList } = useNotes();
-
-const chooseTeginNote = (newTag: string) => {
-
-  notes.value.map((note) => note.teg.push(newTag))
-
-  console.log(444, newTag, note.value.teg);
-};
-
-function updateNoteTeg (noteId: number, updatedNoteTeg: string) {
-  notes.value.map((note) => {if (note.id !== noteId) return note.teg
-  else if (!note.teg.includes(updatedNoteTeg)) {note.teg.push(updatedNoteTeg)}
-  console.log(444, updateNoteTeg, note.teg);})}
-
-function updateNote (updatedNote: any) {
-  console.log(updatedNote)
-  notes.value = notes.value.map((note) => {if (note.id !== updatedNote.id) 
-    return note
-  else return updatedNote})
-}
-
-const deleteTagInChangeNote = (index: number) => {
-  notes.value.map((note) => note.teg.splice(index, 1))
-};
-
-const chooseImportanceMain = (impr: string) => {
-  note.value.impr = impr;
-};
+const { notes, note, filteredNotesList, removeNote } = useNotes();
 
 const { emptyTagError, chooseImportanceTags } = useTags();
 
@@ -58,6 +32,35 @@ import { useFilter } from '../composables/useFilter';
 
 const { viewMode } = useFilter();
 
+function updateNoteTeg(noteId: number, updatedNoteTeg: string) {
+  notes.value.map((note) => {
+    if (note.id !== noteId) return note.teg;
+    else if (!note.teg.includes(updatedNoteTeg)) {
+      note.teg.push(updatedNoteTeg);
+    }
+    console.log(444, updateNoteTeg, note.teg);
+  });
+}
+
+function updateNote(updatedNote: any) {
+  console.log(updatedNote);
+  notes.value = notes.value.map((note) => {
+    if (note.id !== updatedNote.id) return note;
+    else return updatedNote;
+  });
+}
+
+function deleteTag(noteId: number, index: number) {
+  notes.value.map((note) => {
+    if (note.id !== noteId) return note.teg;
+    else note.teg.splice(index, 1);
+    console.log(444, index);
+  });
+}
+
+const chooseImportanceMain = (impr: string) => {
+  note.value.impr = impr;
+};
 </script>
 
 <style lang="scss">
