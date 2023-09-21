@@ -45,7 +45,7 @@ const deleteTag = (index: number) => {
 
 const importanceColors = ref({
   'Очень важно': '#ee9191',
-  Важно: '#ffd261',
+  'Важно': '#ffd261',
   'Не важно': '#a7be8e',
 });
 </script>

@@ -4,7 +4,7 @@
 <slot></slot>
 
 <div class="error">
-    <ul v-for="error in errors">{{ error }}</ul>
+    <p>{{ error }}</p>
 </div>
 
 </template>
@@ -13,7 +13,7 @@
 
 const props = defineProps<{
   label?: string;
-  errors?: string[];
+  error?: string;
 }>();
 
 </script>

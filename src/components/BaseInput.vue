@@ -1,6 +1,6 @@
 <template>
   <div class="input-wrapper">
-    <FieldBase :label="label" :errors="errors">
+    <FieldBase :label="label" :errors="error">
       <input
         :type="type"
         :value="value"
@@ -20,7 +20,7 @@ import { ref, computed } from 'vue';
 import FieldBase from './FieldBase.vue';
 
 const props = defineProps<{
-  errors?: string[];
+  error?: string;
   label?: string;
   value?: string;
   numberValue?: number;

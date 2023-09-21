@@ -1,19 +1,13 @@
 <template>
   <div class="teg-dropdown">
-    <!-- <InputForDropdown
-      class="input-teg"
-      v-model:value="newTag"
-      @click="toggleVisibility"
-      placeholder=""
-      type="text"
-    /> -->
 
     <BaseInput 
       class="input-for-add-teg"
       v-model:value="newTag"
       @click="toggleVisibility"
       type="text"
-      label="Теги:"></BaseInput>
+      label="Теги:"
+      :error="emptyTagError"></BaseInput>
 
     <BaseButtonForSVG @click="addTegFunction" class="plusButton">
       <SvgForButtons :name="'svg-plus'"></SvgForButtons>
@@ -27,20 +21,24 @@
     />
   </div>
 
-  <SelectedTegs
+  <ul><DeletableTag v-for="teg in selectedTegs" @delete-tag="deleteTag" :tagsText="teg" tagsStyle="tags-style"/></ul>
+
+  <!-- <SelectedTegs
     class="select-tags"
     :items="selectedTegs"
     :show-button="true"
     @delete-tag="deleteTag"
     :selectedTeg="''"
     :importance="''"
-  />
+  /> -->
 </template>
 
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 
 import { useTags } from '../composables/useTags.js';
+
+import DeletableTag from './DeletableTag.vue';
 
 import BaseInput from './BaseInput.vue';
 
@@ -59,6 +57,8 @@ const props = defineProps<{
 }>();
 
 let isVisible = ref(true);
+
+let emptyTagError = ref('');
 
 const toggleVisibility: any = () => {
   isVisible.value = !isVisible.value;
@@ -84,12 +84,10 @@ const deleteTag = (index: number) => {
 };
 
 const addTegFunction = () => {
-  const tegsLowerCase = tags.value.map((tag: string) => tag.toLowerCase());
-  const inputLowerCase = newTag.value.toLowerCase();
-  if (tegsLowerCase.includes(inputLowerCase)) {
-    emit('update:error', 'Такой тег уже есть');
-    return false;
-  } else {
+  if (tags.value.some((tag: string) => tag.toLowerCase() === newTag.value.toLowerCase())) {
+    emptyTagError.value = "Такой тег уже есть"
+  return false;
+ } else {
     addTegFunctionForCompose();
   }
 };

@@ -15,7 +15,8 @@
     <p class="impr" :style="{ backgroundColor: importanceColor }">
       {{ note.impr }}
     </p>
-    <SelectedTegs class="note-teg" :items="note.teg" :showButton="false" :selectedTeg="''" :importance="''"/>
+    <BaseTag :tagsText="note.impr" tagsStyle="importance-style"></BaseTag>
+    <ul class="selected-tags"><BaseTag v-for="teg in note.teg" :tagsText="teg" tagsStyle="tags-style"></BaseTag></ul>
   </div>
 </template>
 
@@ -35,11 +36,11 @@ const props = defineProps<{
   edit: boolean;
 }>();
 
-import SelectedTegs from './SelectedTegs.vue';
-
 import ChangeNoteButton from './buttons/ChangeNoteButton.vue';
 
 import BaseDeleteButton from './BaseDeleteButton.vue';
+
+import BaseTag from './BaseTag.vue';
 
 const formatedNoteDate = computed(() => new Date(props.note.date).toLocaleDateString());
 
