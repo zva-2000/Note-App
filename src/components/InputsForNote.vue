@@ -2,7 +2,7 @@
   <SaveButton @click="editNote" class="change" />
 
   <BaseInput
-    v-model:value="copiedNote.title"
+    :value="copiedNote.title"
     type="text"
     class="header-input"
     label="Заголовок:"

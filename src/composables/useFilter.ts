@@ -29,7 +29,6 @@ const timestampDateTwo = computed(() => {
 });
 
 export function useFilter() {
-
   function setTag(tag: string) {
     selectedTeg.value = tag;
     console.log(timestampDateOne.value);
@@ -41,7 +40,6 @@ export function useFilter() {
   }
 
   function changeGrid(newMode: keyof typeof GridMode) {
-    console.log(newMode);
     viewMode.value = newMode;
   }
 
