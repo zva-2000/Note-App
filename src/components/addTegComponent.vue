@@ -84,7 +84,6 @@ const deleteTag = (index: number) => {
 };
 
 const addTegFunction = () => {
-  if (tags.value.some((tag: string) => tag.toLowerCase() === newTag.value.toLowerCase())) {
     emptyTagError.value = "Такой тег уже есть"
   return false;
  } else {
