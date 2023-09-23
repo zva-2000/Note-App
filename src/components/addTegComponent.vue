@@ -1,13 +1,13 @@
 <template>
   <div class="teg-dropdown">
-
-    <BaseInput 
+    <BaseInput
       class="input-for-add-teg"
       v-model:value="newTag"
       @click="toggleVisibility"
       type="text"
       label="Теги:"
-      :error="emptyTagError"></BaseInput>
+      :error="sameTagError"
+    ></BaseInput>
 
     <BaseButtonForSVG @click="addTegFunction" class="plusButton">
       <SvgForButtons :name="'svg-plus'"></SvgForButtons>
@@ -21,22 +21,22 @@
     />
   </div>
 
-  <ul><DeletableTag v-for="teg in selectedTegs" @delete-tag="deleteTag" :tagsText="teg" tagsStyle="tags-style"/></ul>
-
-  <!-- <SelectedTegs
-    class="select-tags"
-    :items="selectedTegs"
-    :show-button="true"
-    @delete-tag="deleteTag"
-    :selectedTeg="''"
-    :importance="''"
-  /> -->
+  <ul class="select-tags">
+    <DeletableTag
+      v-for="teg in selectedTegs"
+      @delete-tag="deleteTag"
+      :tagsText="teg"
+      :tagsStyle="TagStyledMode.Tag"
+    />
+  </ul>
 </template>
 
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 
 import { useTags } from '../composables/useTags.js';
+
+import { TagStyledMode } from '@/types.ts';
 
 import DeletableTag from './DeletableTag.vue';
 
@@ -48,8 +48,6 @@ import SvgForButtons from './SvgForButtons.vue';
 
 import BaseList from './BaseList.vue';
 
-import SelectedTegs from './SelectedTegs.vue';
-
 const { addTegFunctionForCompose, newTag, tags } = useTags();
 
 const props = defineProps<{
@@ -58,7 +56,7 @@ const props = defineProps<{
 
 let isVisible = ref(true);
 
-let emptyTagError = ref('');
+let sameTagError = ref('');
 
 const toggleVisibility: any = () => {
   isVisible.value = !isVisible.value;
@@ -84,9 +82,18 @@ const deleteTag = (index: number) => {
 };
 
 const addTegFunction = () => {
-    emptyTagError.value = "Такой тег уже есть"
-  return false;
- } else {
+  let tagExists = false;
+  tags.value.forEach((tag) => {
+    if (tag.toLowerCase() === newTag.value.toLowerCase()) {
+      tagExists = true;
+    }
+  });
+  if (tagExists) {
+    sameTagError.value = 'Такой тег уже есть';
+    console.log(sameTagError.value);
+
+    return false;
+  } else {
     addTegFunctionForCompose();
   }
 };
@@ -109,24 +116,26 @@ const filteredTegs = computed(() => {
   height: 35px;
   background: transparent;
   border: none;
-  margin-top: 9px;
+  margin-top: 24px;
 }
 
 .select-tags {
   display: flex;
-  flex-direction: initial;
-  gap: 4px;
+  gap: 5px;
 }
 
 .teg-dropdown {
   position: relative;
   margin-bottom: 10px;
   display: flex;
+  /* padding-right: 38px; */
+  align-items: center;
 }
 
-.input-for-add-teg{
-  display: flex;
+.input-for-add-teg {
+  /* display: flex; */
   position: relative;
-  display: inline-block;
+  /* display: inline-block; */
+  flex-grow: 1;
 }
 </style>

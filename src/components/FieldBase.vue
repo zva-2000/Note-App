@@ -1,25 +1,20 @@
 <template>
+  <p class="p-for-input">{{ label }}</p>
+  <slot></slot>
 
-<p class="p-for-input">{{ label }}</p>
-<slot></slot>
-
-<div class="error">
+  <div class="error">
     <p>{{ error }}</p>
-</div>
-
+  </div>
 </template>
 
 <script setup lang="ts">
-
 const props = defineProps<{
   label?: string;
   error?: string;
 }>();
-
 </script>
 
 <style>
-
 .p-for-input {
   margin-top: 10px;
   color: rgb(78, 78, 78);
@@ -29,5 +24,4 @@ const props = defineProps<{
   text-align: center;
   color: red;
 }
-
 </style>

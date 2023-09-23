@@ -12,20 +12,21 @@
       @delete-tag-double="deleteTag"
       :choose-importance-tags="chooseImportanceTags"
       @removeNote="removeNote"
+      :importanceStyle="TagStyledMode.Importance"
+      :tags-style="TagStyledMode.Tag"
     />
   </div>
 </template>
 
 <script setup lang="ts">
-
-// @update:impr=""
 import NoteWithInputs from './NoteWithInputs.vue';
 
 import { useTags } from '../composables/useTags.js';
 
 import { useNotes } from '../composables/useNotes';
 
-const { updateNoteTeg, updateNote, deleteTag, filteredNotesList, removeNote } = useNotes();
+const { updateNoteTeg, updateNote, deleteTag, filteredNotesList, removeNote } =
+  useNotes();
 
 const { emptyTagError, chooseImportanceTags } = useTags();
 
@@ -33,9 +34,7 @@ import { useFilter } from '../composables/useFilter';
 
 const { viewMode } = useFilter();
 
-// const chooseImportanceMain = (impr: string) => {
-//   note.value.impr = impr;
-// };
+import { TagStyledMode } from '@/types.ts';
 </script>
 
 <style lang="scss">

@@ -1,22 +1,23 @@
 <template>
+  <div class="note-btns">
+    <ChangeNoteButton @click="funcEdition" class="change-btn" v-show="!edit" />
 
-    <div class="note-btns">
+    <BaseDeleteButton class="delete-button" @click="removeNote" />
+  </div>
 
-      <ChangeNoteButton @click="funcEdition" class="change-btn" v-show="!edit" />
-
-      <BaseDeleteButton class="delete-button" @click="removeNote" />
-    </div>
-  
   <h1 class="note-header">{{ note.title }}</h1>
   <div class="note-body">
     <p>{{ note.descr }}</p>
     <p class="note-date">Дата создания: {{ formatedNoteDateBegin }}</p>
     <p class="note-date">Сделать до: {{ formatedNoteDate }}</p>
-    <p class="impr" :style="{ backgroundColor: importanceColor }">
-      {{ note.impr }}
-    </p>
-    <BaseTag :tagsText="note.impr" tagsStyle="importance-style"></BaseTag>
-    <ul class="selected-tags"><BaseTag v-for="teg in note.teg" :tagsText="teg" tagsStyle="tags-style"></BaseTag></ul>
+    <BaseTag :tagsText="note.impr" :tagsStyle="importanceStyle"></BaseTag>
+    <ul class="selected-tags">
+      <BaseTag
+        v-for="teg in note.teg"
+        :tagsText="teg"
+        :tagsStyle="tagsStyle"
+      ></BaseTag>
+    </ul>
   </div>
 </template>
 
@@ -34,6 +35,8 @@ const props = defineProps<{
     teg: string[];
   };
   edit: boolean;
+  importanceStyle?: string;
+  tagsStyle?: string;
 }>();
 
 import ChangeNoteButton from './buttons/ChangeNoteButton.vue';
@@ -42,7 +45,9 @@ import BaseDeleteButton from './BaseDeleteButton.vue';
 
 import BaseTag from './BaseTag.vue';
 
-const formatedNoteDate = computed(() => new Date(props.note.date).toLocaleDateString());
+const formatedNoteDate = computed(() =>
+  new Date(props.note.date).toLocaleDateString()
+);
 
 const formatedNoteDateBegin = computed(() =>
   new Date(props.note.beginDate).toLocaleDateString()
@@ -53,16 +58,6 @@ const emit = defineEmits<{
   (e: 'funcEdition', edit: boolean): void;
   (e: 'removeNote', id: number): void;
 }>();
-
-const importanceColors = ref({
-  'Очень важно': '#ee9191',
-  'Важно': '#ffd261',
-  'Не важно': '#a7be8e',
-});
-
-const importanceColor = computed(() => {
-  return importanceColors.value[props.note.impr];
-});
 
 const removeNote = (id: number) => {
   emit('removeNote', props.note.id);
@@ -95,6 +90,10 @@ const funcEdition = (edit: boolean) => {
   }
 }
 
+.selected-tags {
+  display: flex;
+  gap: 4px;
+}
 .note-body {
   p {
     margin: 20px 0;
@@ -117,11 +116,6 @@ const funcEdition = (edit: boolean) => {
 }
 
 .note-btns {
-  // display: flex;
-  // align-items: center;
-  // justify-content: space-between;
   position: relative;
 }
-
-
 </style>

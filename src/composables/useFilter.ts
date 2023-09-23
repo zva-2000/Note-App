@@ -31,7 +31,7 @@ const timestampDateTwo = computed(() => {
 export function useFilter() {
   function setTag(tag: string) {
     selectedTeg.value = tag;
-    console.log(timestampDateOne.value);
+    console.log(tag);
   }
 
   function setImpr(impr: string) {

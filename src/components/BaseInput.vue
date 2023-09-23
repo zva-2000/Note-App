@@ -1,21 +1,18 @@
 <template>
   <div class="input-wrapper">
-    <FieldBase :label="label" :errors="error">
+    <FieldBase :label="label" :error="error">
       <input
         :type="type"
-        :value="value"
-        :numberValue="numberValue"
-        @update:value="localValue = $event"
-        @update:numberValue="localNumberValue = $event"
         :placeholder="placeholder"
         :readonly="isReadonly"
+        v-model="model"
       />
     </FieldBase>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { computed } from 'vue';
 
 import FieldBase from './FieldBase.vue';
 
@@ -29,15 +26,20 @@ const props = defineProps<{
   isReadonly?: boolean;
 }>();
 
-const localNumberValue = ref(props.numberValue);
-
-const localValue = ref(props.value);
-
 const emit = defineEmits<{
   [x: string]: any;
   (e: 'update:value', value: string): void;
   (e: 'update:numberValue', numberValue: number): void;
 }>();
+
+const model = computed({
+  get() {
+    return props.value ?? '';
+  },
+  set(value: string) {
+    emit('update:value', value);
+  },
+});
 
 // const model = computed({
 //   get() {

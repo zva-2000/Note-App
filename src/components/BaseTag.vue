@@ -1,31 +1,44 @@
 <template>
-<!-- <ul> -->
-    <li class="base-tag" :class="props.tagsStyle">{{ props.tagsText }}</li>
-          <slot></slot>
-<!-- </ul> -->
+  <div class="base-tag-list">
+    <li class="base-tag Вфтп" :class="computedClass" @click="chooseTag">
+      {{ props.tagsText }}
+      <slot></slot>
+    </li>
+  </div>
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
 
-import { ref, computed } from 'vue';
-
-import { TagStyledMode } from '@/types'
+import { TagStyledMode } from '@/types.ts';
 
 const props = defineProps<{
-  tagsText?: string;
-  tagsStyle?: any;
+  tagsText: string;
+  tagsStyle?: string;
 }>();
 
-const importanceColors = ref({
-  'Очень важно': '#ee9191',
-  'Важно': '#ffd261',
-  'Не важно': '#a7be8e',
+const emit = defineEmits<{
+  (e: 'chooseTag', tags: string): void;
+}>();
+
+const chooseTag = (event: MouseEvent) => {
+  emit('chooseTag', props.tagsText);
+};
+
+const computedClass = computed(() => {
+  if (props.tagsStyle === TagStyledMode.Importance) {
+    return importanceClass.value[props.tagsText] || '';
+  }
+  return 'tags-style';
 });
 
-const importanceColor = computed(() => {
-  return importanceColors.value[props.tagsText];
+const importanceClass = computed(() => {
+  return {
+    'Очень важно': 'very-important',
+    Важно: 'important',
+    'Не важно': 'not-important',
+  };
 });
-
 </script>
 
 <style>
@@ -34,7 +47,8 @@ const importanceColor = computed(() => {
   padding: 4px 8px 4px 8px;
   line-height: #eaf1ff;
   border-radius: 20px;
-} 
+  text-align: center;
+}
 
 .base-tag-list {
   align-items: center;
@@ -45,8 +59,8 @@ const importanceColor = computed(() => {
   flex-wrap: wrap;
   justify-content: flex-start;
   align-items: flex-end;
+  margin-bottom: 5px;
 }
-
 
 .importance-style {
   background-color: bisque;
@@ -54,5 +68,37 @@ const importanceColor = computed(() => {
 
 .tags-style {
   background-color: #a2c9ff;
+}
+
+.very-important {
+  background-color: #ee9191;
+}
+
+.important {
+  background-color: #ffd261;
+}
+
+.not-important {
+  background-color: #a7be8e;
+}
+
+.not-important:active {
+  background-color: #7da256;
+}
+
+.not-important:hover {
+  background-color: #7da256;
+}
+
+.tags-style:hover {
+  background-color: #3f8bf5;
+}
+
+.very-important:hover {
+  background-color: #e73e3e;
+}
+
+.important:hover {
+  background-color: #ffc021;
 }
 </style>

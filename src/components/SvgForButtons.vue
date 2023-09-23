@@ -72,39 +72,63 @@
   </span>
 
   <span v-if="name == 'svg-change'">
-  <svg
-  width="24"
-  height="24"
-  viewBox="0 0 24 24"
-  fill="currentColor"
-  xmlns="http://www.w3.org/2000/svg"
->
-  <path
-    d="M3 17.25V21H6.75L17.81 9.94L14.06 6.19L3 17.25ZM20.71 7.04C21.1 6.65 21.1 6.02 20.71 5.63L18.37 3.29C17.98 2.9 17.35 2.9 16.96 3.29L15.13 5.12L18.88 8.87L20.71 7.04Z"
-    fill="#000000"
-  />
-</svg>
-</span>
-
-  <span v-if="name == 'svg-delete-teg'">
-  <svg
-  width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="12" cy="12" r="10" stroke="black" stroke-width="1.5"/>
-    <path d="M15 9L9 15" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M9 9L15 15" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-  </svg>
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M3 17.25V21H6.75L17.81 9.94L14.06 6.19L3 17.25ZM20.71 7.04C21.1 6.65 21.1 6.02 20.71 5.63L18.37 3.29C17.98 2.9 17.35 2.9 16.96 3.29L15.13 5.12L18.88 8.87L20.71 7.04Z"
+        fill="#000000"
+      />
+    </svg>
   </span>
 
-<span>
-    <svg v-if="name == 'svg-trash-can'" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
-      <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+  <span v-if="name == 'svg-delete-teg'">
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="#a2c9ff"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <circle cx="12" cy="12" r="10" stroke="black" stroke-width="1.5" />
+      <path
+        d="M15 9L9 15"
+        stroke="black"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M9 9L15 15"
+        stroke="black"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
     </svg>
-</span>
+  </span>
 
-<span>
+  <span>
+    <svg
+      v-if="name == 'svg-trash-can'"
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      fill="currentColor"
+      class="bi bi-trash3"
+      viewBox="0 0 16 16"
+    >
+      <path
+        d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"
+      />
+    </svg>
+  </span>
 
-</span>
-
+  <span> </span>
 </template>
 
 <script setup lang="ts">

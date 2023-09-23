@@ -14,7 +14,6 @@
         :empty-tag-error="emptyTagError"
         :empty-title-error="emptyTitleError"
         @add-note="addNoteMainFunc"
-        @choose-teg-two="chooseTeg"
         :choose-importance-tags="chooseImportanceTags"
         @chooseImportance="chooseImportanceTags"
       />
@@ -22,7 +21,7 @@
 
     <base-button
       class="take-of-filter"
-    @click="takeOffFilter"
+      @click="takeOffFilter"
       v-show="
         selectedTeg || importance || filterDateOne || filterDateTwo || search
       "
@@ -54,27 +53,25 @@
     </div>
 
     <div class="notes-window-main-content">
-      <SelectedTegs
-        :items="tagsForMainWindow"
+      <BaseTag
+        v-for="teg in tagsForMainWindow"
+        :tagsText="teg"
+        :tagsStyle="TagStyledMode.Tag"
+        class="tags-in-main-wndw"
         @choose-tag="setTag"
-        :showButton="false"
-        class="tags-in-main-wndw"
-        :selectedTeg="selectedTeg"
-        :importance="importance"
-      />
+      ></BaseTag>
 
-      <SelectedTegs
-        :items="chooseImportanceTags"
-        @choose-tag="setImpr"
-        :showButton="false"
+      <BaseTag
+        v-for="teg in chooseImportanceTags"
+        :tagsText="teg"
+        :tagsStyle="TagStyledMode.Importance"
         class="tags-in-main-wndw"
-        :selectedTeg="selectedTeg"
-        :importance="importance"
-      />
+        @choose-tag="setImpr"
+      ></BaseTag>
     </div>
 
-    <AllNotes/>
-  </div>  
+    <AllNotes />
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -88,11 +85,11 @@ import SearchInput from './SearchInput.vue';
 
 import BaseButton from './BaseButton.vue';
 
-import SelectedTegs from './SelectedTegs.vue';
-
 import AllNotes from './AllNotes.vue';
 
 import BaseInput from './BaseInput.vue';
+
+import BaseTag from './BaseTag.vue';
 
 import { useTags } from '../composables/useTags';
 
@@ -100,10 +97,11 @@ import { useFilter } from '../composables/useFilter';
 
 import { useNotes } from '../composables/useNotes';
 
-const { chooseTeg, emptyTagError, tagsForMainWindow, chooseImportanceTags } =
-  useTags();
+const { emptyTagError, tagsForMainWindow, chooseImportanceTags } = useTags();
 
 const { emptyTitleError, addNote } = useNotes();
+
+import { TagStyledMode } from '@/types.ts';
 
 const {
   selectedTeg,
@@ -128,9 +126,10 @@ const closeModal = () => {
 
 const addNoteMainFunc = (newNote: any) => {
   addNote(newNote);
-  closeModal();
+  if (emptyTitleError.value !== 'Введите заголовок') {
+    closeModal();
+  }
 };
-
 </script>
 
 <style>

@@ -6,6 +6,8 @@
       :edit="edit"
       @funcEdition="funcEdition"
       @removeNote="removeNote"
+      :importance-style="importanceStyle"
+      :tags-style="tagsStyle"
     />
 
     <InputsForNote
@@ -36,6 +38,8 @@ const props = defineProps<{
     beginDate: number;
     teg: string[];
   };
+  importanceStyle?: string;
+  tagsStyle?: string;
   emptyTagError: string;
   chooseImportanceTags: string[];
 }>();

@@ -4,13 +4,12 @@
       <BaseCanselButton class="delete-button" @click="closeModal" />
 
       <div class="input-container">
-        <p class="error">{{ emptyTitleError }}</p>
-
         <BaseInput
           label="Заголовок:"
           v-model:value="note.title"
           type="text"
           class="base-input"
+          :error="emptyTitleError"
         />
 
         <BaseTextarea
@@ -33,8 +32,6 @@
           :options="props.chooseImportanceTags"
           label="Важность:"
         />
-
-        <p class="error">{{ emptyTagError }}</p>
 
         <addTegComponent
           class="teg-input"
@@ -109,7 +106,6 @@ const updateImpr = (value: string) => {
 const emitSameTagError = (errorMessage: string) => {
   emit('update:error', errorMessage);
 };
-
 </script>
 
 <style>
@@ -181,5 +177,4 @@ const emitSameTagError = (errorMessage: string) => {
   width: 40%;
   border-radius: 5px;
 }
-
 </style>

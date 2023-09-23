@@ -2,7 +2,7 @@
   <SaveButton @click="editNote" class="change" />
 
   <BaseInput
-    :value="copiedNote.title"
+    v-model:value="copiedNote.title"
     type="text"
     class="header-input"
     label="Заголовок:"
@@ -16,7 +16,7 @@
   <div class="date-note">
     <BaseInput
       class="date-note-input"
-      v-model:numberValue="copiedNote.date"
+      v-model:value="copiedNote.date"
       type="date"
       label="Сделать до:"
     />
@@ -29,10 +29,10 @@
     label="Важность:"
   />
 
-  <p class="error">{{ emptyTagError }}</p>
+  <!-- <p class="error">{{ emptyTagError }}</p> -->
 
   <addTegComponent
-    :class-name="'teg-input-note'"
+    class="teg-note"
     @chooseTeg="addTagToNote"
     :selectedTegs="copiedNote.teg"
     @deleteTag="deleteTagInChangeNote"
@@ -108,7 +108,6 @@ const emitSameTagError = (errorMessage: string) => {
 </script>
 
 <style>
-.teg-input-note,
 .impr-input-note,
 .note-textarea,
 .date-note,
@@ -117,6 +116,9 @@ const emitSameTagError = (errorMessage: string) => {
   padding: 0px 38px 0px 0px;
 }
 
+.teg-input-note {
+  padding-right: 38px;
+}
 .date-note-input {
   width: 100%;
 }
