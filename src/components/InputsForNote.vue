@@ -1,43 +1,39 @@
 <template>
   <SaveButton @click="editNote" class="change" />
 
-  <BaseInput
-    v-model:value="copiedNote.title"
-    type="text"
-    class="header-input"
-    label="Заголовок:"
-  />
+  <div class="inputs-in-changed-note">
 
-  <BaseTextarea
-    v-model:value="copiedNote.descr"
-    class="note-textarea"
-    label="Содержимое:"
-  />
-  <div class="date-note">
     <BaseInput
-      class="date-note-input"
-      v-model:value="copiedNote.date"
-      type="date"
-      label="Сделать до:"
+      v-model:value="copiedNote.title"
+      type="text"
+      label="Заголовок:"
     />
-  </div>
 
-  <ComponentWithDropdown
-    class="impr-input-note"
-    v-model:value="copiedNote.impr"
-    :options="props.chooseImportanceTags"
-    label="Важность:"
-  />
+    <BaseTextarea
+      v-model:value="copiedNote.descr"
+      label="Содержимое:"
+    />
+    <div class="date-note">
+      <BaseInput
+        v-model:value="formatedNoteDate"
+        type="date"
+        label="Сделать до:"
+      />
+    </div>
 
-  <!-- <p class="error">{{ emptyTagError }}</p> -->
+    <ComponentWithDropdown
+      v-model:value="copiedNote.impr"
+      :options="props.chooseImportanceTags"
+      label="Важность:"
+    />
 
-  <addTegComponent
-    class="teg-note"
-    @chooseTeg="addTagToNote"
-    :selectedTegs="copiedNote.teg"
-    @deleteTag="deleteTagInChangeNote"
-    @update:error="emitSameTagError"
-  />
+    <addTegComponent
+      class="teg-note"
+      @chooseTeg="addTagToNote"
+      :selectedTegs="copiedNote.teg"
+      @deleteTag="deleteTagInChangeNote"
+    />
+  </div>    
 </template>
 
 <script setup lang="ts">
@@ -63,17 +59,25 @@ const props = defineProps<{
     beginDate: number;
     teg: string[];
   };
-  emptyTagError: string;
   chooseImportanceTags: string[];
   edit: boolean;
 }>();
 
 const copiedNote = ref(props.note);
 
+const formatedNoteDate = computed({
+  get: () => {
+    const date = new Date(copiedNote.value.date);
+    return date.toISOString().split('T')[0];
+  },
+  set: (newValue) => {
+    copiedNote.value.date = new Date(newValue).getTime();
+  }
+});
+
 const emit = defineEmits<{
   [x: string]: any;
   (e: 'editNote', state: any): void;
-  (e: 'update:error', sameTagError: string): void;
   (e: 'addTagToNote', id: number, teg: string): void;
   (e: 'update:impr', impr: string): void;
   (e: 'delete-tag', id: number, index: number): void;
@@ -81,37 +85,29 @@ const emit = defineEmits<{
 
 const addTagToNote = (teg: string) => {
   emit('addTagToNote', props.note.id, teg);
-  console.log(2222, teg);
 };
 
 const deleteTagInChangeNote = (index: number) => {
   emit('delete-tag', props.note.id, index);
-  console.log(222, index);
 };
 
 const editNote = () => {
-  console.log(1, copiedNote.value.teg);
   emit('editNote', {
     id: props.note.id,
     teg: copiedNote.value.teg,
     impr: copiedNote.value.impr,
     title: copiedNote.value.title,
     descr: copiedNote.value.descr,
-    date: copiedNote.value.date,
+    date: formatedNoteDate.value,
     beginDate: copiedNote.value.beginDate,
   });
 };
 
-const emitSameTagError = (errorMessage: string) => {
-  emit('update:error', errorMessage);
-};
 </script>
 
 <style>
-.impr-input-note,
-.note-textarea,
-.date-note,
-.header-input {
+
+.inputs-in-changed-note {
   box-sizing: border-box;
   padding: 0px 38px 0px 0px;
 }
@@ -119,20 +115,10 @@ const emitSameTagError = (errorMessage: string) => {
 .teg-input-note {
   padding-right: 38px;
 }
-.date-note-input {
-  width: 100%;
-}
-
-.save-btn {
-  margin-left: 93%;
-}
-
 .change {
-  float: right;
+  position: absolute;
+    right: 17px;
+    left: auto;
 }
 
-.teg-input-note {
-  box-sizing: border-box;
-  padding: 0px 38px 0px 0px;
-}
 </style>

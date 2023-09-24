@@ -7,16 +7,18 @@ label {
 input {
   padding: 16px 26px;
   border-radius: 20px;
+  font-family: 'Arial';
 }
 input:focus {
-  border: 2px solid #494ce8; 
+  border: 1px solid #494ce8; 
 }
 textarea {
   padding: 30px 27px;
   border-radius: 20px;
+  font-family: 'Arial';
 }
 textarea:focus {
-  border: 2px solid #494ce8; 
+  border: 1px solid #494ce8; 
 }
 input,
 textarea {

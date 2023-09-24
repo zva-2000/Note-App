@@ -6,6 +6,7 @@
         :placeholder="placeholder"
         :readonly="isReadonly"
         v-model="model"
+        :anotherError="anotherError"
       />
     </FieldBase>
   </div>
@@ -20,16 +21,15 @@ const props = defineProps<{
   error?: string;
   label?: string;
   value?: string;
-  numberValue?: number;
   type: string;
   placeholder?: string;
   isReadonly?: boolean;
+  anotherError?: string;  
 }>();
 
 const emit = defineEmits<{
   [x: string]: any;
   (e: 'update:value', value: string): void;
-  (e: 'update:numberValue', numberValue: number): void;
 }>();
 
 const model = computed({
@@ -40,23 +40,6 @@ const model = computed({
     emit('update:value', value);
   },
 });
-
-// const model = computed({
-//   get() {
-//     return {
-//       value: props.value ?? '',
-//       numberValue: props.numberValue ?? 0
-//     };
-//   },
-//   set({ value, numberValue }) {
-//     if (value !== undefined) {
-//       emit('update:value', value);
-//     }
-//     if (numberValue !== undefined) {
-//       emit('update:numberValue', numberValue);
-//     }
-//   }
-// });
 </script>
 
 <style scoped></style>

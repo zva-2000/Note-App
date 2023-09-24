@@ -67,7 +67,6 @@ export function useNotes() {
     date: number;
     teg: string[];
   }) {
-    console.log(newNote);
     let timestampNoteDate = new Date(newNote.date).getTime();
     let timestampNoteDateBegin = new Date().getTime();
 
@@ -88,7 +87,6 @@ export function useNotes() {
   }
 
   const filteredNotesList = computed(() => {
-    console.log(0);
 
     let valueOfSearch = search.value.trim().toLowerCase();
 
@@ -111,11 +109,9 @@ export function useNotes() {
         const tagMatch = selectedTeg.value
           ? note.teg.includes(selectedTeg.value)
           : true;
-        console.log(tagMatch);
         const importanceMatch = importance.value
           ? note.impr.includes(importance.value)
           : true;
-        console.log(importanceMatch);
         tagAndImportanceCheck = tagMatch && importanceMatch;
       }
 
@@ -140,12 +136,10 @@ export function useNotes() {
       else if (!note.teg.includes(updatedNoteTeg)) {
         note.teg.push(updatedNoteTeg);
       }
-      console.log(444, updateNoteTeg, note.teg);
     });
   }
 
   function updateNote(updatedNote: any) {
-    console.log(updatedNote);
     notes.value = notes.value.map((note) => {
       if (note.id !== updatedNote.id) return note;
       else return updatedNote;
@@ -156,7 +150,6 @@ export function useNotes() {
     notes.value.map((note) => {
       if (note.id !== noteId) return note.teg;
       else note.teg.splice(index, 1);
-      console.log(444, index);
     });
   }
 

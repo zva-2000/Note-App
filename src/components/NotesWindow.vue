@@ -10,8 +10,6 @@
       <ModalWindow
         v-if="!visibleModal"
         @close-modal="closeModal"
-        @update:error="emptyTagError = $event"
-        :empty-tag-error="emptyTagError"
         :empty-title-error="emptyTitleError"
         @add-note="addNoteMainFunc"
         :choose-importance-tags="chooseImportanceTags"
@@ -56,7 +54,7 @@
       <BaseTag
         v-for="teg in tagsForMainWindow"
         :tagsText="teg"
-        :tagsStyle="TagStyledMode.Tag"
+        :tagsStyle="TagStyledMode.base"
         class="tags-in-main-wndw"
         @choose-tag="setTag"
       ></BaseTag>
@@ -64,7 +62,7 @@
       <BaseTag
         v-for="teg in chooseImportanceTags"
         :tagsText="teg"
-        :tagsStyle="TagStyledMode.Importance"
+        :tagsStyle="{[TagStyledMode.danger]: teg === 'Очень важно', [TagStyledMode.success]: teg === 'Не важно', [TagStyledMode.warning]: teg === 'Важно'}"
         class="tags-in-main-wndw"
         @choose-tag="setImpr"
       ></BaseTag>
@@ -97,7 +95,7 @@ import { useFilter } from '../composables/useFilter';
 
 import { useNotes } from '../composables/useNotes';
 
-const { emptyTagError, tagsForMainWindow, chooseImportanceTags } = useTags();
+const { tagsForMainWindow, chooseImportanceTags } = useTags();
 
 const { emptyTitleError, addNote } = useNotes();
 
@@ -134,7 +132,7 @@ const addNoteMainFunc = (newNote: any) => {
 
 <style>
 .date-main-input {
-  width: 20.5rem;
+  width: 406px;
 }
 .main-title {
   text-align: center;
@@ -145,23 +143,22 @@ const addNoteMainFunc = (newNote: any) => {
 
 .notes-window-header {
   display: flex;
-  justify-content: center;
-  gap: 1rem;
-  height: 80px;
+  gap: 15px;
   margin: auto;
-}
-
-.open-modal-btn {
-  margin-top: 17px;
+  box-sizing: border-box;
+  padding: 10px 0px 11px 0px;
+  align-items: center;
 }
 
 .notes-window-main-content {
   align-items: flex-end;
   display: flex;
+  gap: 5px;
+  margin-bottom: 10px;
 }
 
 .inputs-window-main-content {
-  align-items: flex-end;
+  align-items: center;
   display: flex;
   margin-bottom: 10px;
   box-sizing: border-box;
@@ -172,18 +169,10 @@ const addNoteMainFunc = (newNote: any) => {
 .tags-in-main-wndw {
   cursor: pointer;
   display: flex;
-  /* flex-direction: column; */
   gap: 5px;
   font-size: 20px;
   text-align: center;
-  margin-left: 5px;
-  max-width: 35rem;
-  /* width: 21.6rem; */
   float: left;
-}
-
-.tags-in-main-wndw:focus {
-  background-color: aquamarine;
 }
 
 .all-notes {
@@ -201,12 +190,7 @@ const addNoteMainFunc = (newNote: any) => {
   margin: auto;
   align-items: flex-end;
   cursor: pointer;
-  margin-top: 10px;
   margin-bottom: 10px;
   display: flow;
 }
-
-/* .search {
-  margin-top: 15px;
-} */
 </style>

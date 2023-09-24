@@ -1,7 +1,5 @@
 import { ref, computed } from 'vue';
 
-import { useNotes } from './useNotes.js';
-
 import { GridMode } from '@/types.ts';
 
 let viewMode = ref<keyof typeof GridMode>(GridMode.Grid);
@@ -31,12 +29,10 @@ const timestampDateTwo = computed(() => {
 export function useFilter() {
   function setTag(tag: string) {
     selectedTeg.value = tag;
-    console.log(tag);
   }
 
   function setImpr(impr: string) {
     importance.value = impr;
-    console.log(importance.value);
   }
 
   function changeGrid(newMode: keyof typeof GridMode) {
@@ -48,6 +44,7 @@ export function useFilter() {
     importance.value = '';
     filterDateOne.value = '';
     filterDateTwo.value = '';
+    search.value = '';
   }
 
   return {

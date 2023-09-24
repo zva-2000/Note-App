@@ -6,14 +6,10 @@
       :note="note"
       :index="index"
       @editNote="updateNote"
-      :empty-tag-error="emptyTagError"
-      @update:error="emptyTagError = $event"
       @addTagToNote="updateNoteTeg"
       @delete-tag-double="deleteTag"
       :choose-importance-tags="chooseImportanceTags"
       @removeNote="removeNote"
-      :importanceStyle="TagStyledMode.Importance"
-      :tags-style="TagStyledMode.Tag"
     />
   </div>
 </template>
@@ -28,27 +24,26 @@ import { useNotes } from '../composables/useNotes';
 const { updateNoteTeg, updateNote, deleteTag, filteredNotesList, removeNote } =
   useNotes();
 
-const { emptyTagError, chooseImportanceTags } = useTags();
+const { chooseImportanceTags } = useTags();
 
 import { useFilter } from '../composables/useFilter';
 
 const { viewMode } = useFilter();
-
-import { TagStyledMode } from '@/types.ts';
 </script>
 
 <style lang="scss">
 .notes {
   display: grid;
   padding: 13px 0;
+  gap: 15px;
 }
 
 .Grid {
   align-items: center;
   flex-wrap: wrap;
   grid-template-columns: repeat(2, 1fr);
-  row-gap: 10px;
-  column-gap: 25px;
+  row-gap: 15px;
+  column-gap: 15px;
 }
 
 .List {

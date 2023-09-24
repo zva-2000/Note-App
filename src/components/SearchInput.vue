@@ -1,6 +1,5 @@
 <template>
   <div class="wrapper__search">
-    <div class="search">
       <div class="search-icon">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -17,7 +16,6 @@
           <circle cx="11" cy="11" r="8"></circle>
           <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
         </svg>
-      </div>
     </div>
 
     <input
@@ -55,28 +53,18 @@ svg {
 .wrapper__search {
   position: relative;
 }
-.search {
-  top: 0px;
-  bottom: 0px;
-  left: 0px;
-  position: absolute;
-}
 .search-icon {
-  height: 100%;
-  padding-left: 16px;
-  padding-right: 16px;
-  align-items: center;
-  display: flex;
-  margin-left: 5px;
+  top: 14px;
+    bottom: 0px;
+    left: 15px;
+    position: absolute;
+    z-index: 1;
 }
 .search-input {
   padding: 16px 16px 16px 56px;
-    margin-top: 16px;
-    border-radius: 30px;
-    color: #000000;
-    font-size: 15px;
-    min-width: 53em;
-    height: auto;
-    outline: none;
+  border-radius: 20px;
+  color: #000000;
+  position: relative;
+  width: 789px;
 }
 </style>

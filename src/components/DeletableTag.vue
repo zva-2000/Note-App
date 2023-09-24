@@ -5,7 +5,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
 
 import ButtonForDeleteTeg from './buttons/ButtonForDeleteTeg.vue';
 

@@ -1,7 +1,7 @@
 <template>
   <div class="modal">
     <div class="modal-content">
-      <BaseCanselButton class="delete-button" @click="closeModal" />
+      <BaseCanselButton class="close-modal-button" @click="closeModal" />
 
       <div class="input-container">
         <BaseInput
@@ -34,10 +34,8 @@
         />
 
         <addTegComponent
-          class="teg-input"
           @chooseTeg="chooseTeg"
           :selectedTegs="note.teg"
-          @update:error="emitSameTagError"
           @deleteTag="deleteTag"
         />
       </div>
@@ -67,7 +65,6 @@ import addTegComponent from './addTegComponent.vue';
 const props = defineProps<{
   chooseImportanceTags: string[];
   emptyTitleError: string;
-  emptyTagError: string;
 }>();
 
 let note = ref({
@@ -103,28 +100,14 @@ const updateImpr = (value: string) => {
   note.value.impr = value;
 };
 
-const emitSameTagError = (errorMessage: string) => {
-  emit('update:error', errorMessage);
-};
 </script>
 
 <style>
-.container {
-  flex-grow: 1;
-  /* display: flex; */
-  width: 70%;
-  gap: 11px;
-  max-width: 1000px;
-  margin-bottom: 50px;
-}
 
 .input-container {
   display: flex;
-  width: 85%;
-  margin-left: 48px;
-  /* gap: 100px; */
-  margin-bottom: 1.5rem;
-  /* align-items: center; */
+  box-sizing: border-box;
+  padding: 25px 25px 25px 25px;
   flex-direction: column;
 }
 
@@ -132,24 +115,16 @@ const emitSameTagError = (errorMessage: string) => {
   margin-top: 105px;
 }
 
-.teg-input {
-  width: 106%;
-}
 .impr-input,
 .date-input,
 .base-textarea,
 .base-input {
   margin-top: 5px;
   margin-bottom: 10px;
-  /* width: 95%; */
 }
 
 .save-button {
-  font-size: 85%;
   display: flex;
-  justify-content: center;
-  align-content: center;
-  position: relative;
   margin: auto;
   flex-wrap: wrap;
 }
@@ -174,7 +149,13 @@ const emitSameTagError = (errorMessage: string) => {
   margin: 20% auto;
   padding: 20px;
   border: 1px solid #888;
-  width: 40%;
+  width: 625px;
   border-radius: 5px;
+}
+
+.close-modal-button {
+  position: absolute;
+  top: 28px;
+  right: 20px;
 }
 </style>

@@ -7,7 +7,6 @@
       @funcEdition="funcEdition"
       @removeNote="removeNote"
       :importance-style="importanceStyle"
-      :tags-style="tagsStyle"
     />
 
     <InputsForNote
@@ -15,8 +14,6 @@
       :edit="edit"
       v-if="edit"
       @editNote="editNote"
-      :emptyTagError="emptyTagError"
-      @update:error="emitSameTagErrorAgain"
       @addTagToNote="addTagToNote"
       @delete-tag="handleDeleteTag"
       @update:impr="(value) => $emit('update:impr', value)"
@@ -39,8 +36,6 @@ const props = defineProps<{
     teg: string[];
   };
   importanceStyle?: string;
-  tagsStyle?: string;
-  emptyTagError: string;
   chooseImportanceTags: string[];
 }>();
 
@@ -52,7 +47,6 @@ import InputsForNote from './InputsForNote.vue';
 
 const emit = defineEmits<{
   [x: string]: any;
-  (e: 'update:error', sameTagError: string): void;
   (e: 'addTagToNote', id: number, teg: string): void;
   (e: 'delete-tag-double', id: number, index: number): void;
   (e: 'chooseImportanceAgain', impr: string): void;
@@ -60,18 +54,12 @@ const emit = defineEmits<{
   (e: 'removeNote', index: number): void;
 }>();
 
-const emitSameTagErrorAgain = (errorMessage: string) => {
-  emit('update:error', errorMessage);
-};
-
 const addTagToNote = (id: number, teg: string) => {
   emit('addTagToNote', id, teg);
-  console.log(3333, teg);
 };
 
 const handleDeleteTag = (id: number, index: number) => {
   emit('delete-tag-double', id, index);
-  console.log(3333, index);
 };
 
 const removeNote = (id: number) => {
@@ -91,7 +79,7 @@ const editNote = (editOne: any) => {
   border-radius: 20px;
   padding: 25px 25px 34px 34px;
   background-color: #ffffff;
-  margin-bottom: 15px;
+  position: relative;
 }
 
 .note-teg {

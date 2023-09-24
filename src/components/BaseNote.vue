@@ -10,19 +10,21 @@
     <p>{{ note.descr }}</p>
     <p class="note-date">Дата создания: {{ formatedNoteDateBegin }}</p>
     <p class="note-date">Сделать до: {{ formatedNoteDate }}</p>
-    <BaseTag :tagsText="note.impr" :tagsStyle="importanceStyle"></BaseTag>
+    <BaseTag :tagsText="note.impr" :tagsStyle="{[TagStyledMode.danger]: note.impr === 'Очень важно',
+    [TagStyledMode.success]: note.impr === 'Не важно', [TagStyledMode.warning]: note.impr === 'Важно'}"></BaseTag>
     <ul class="selected-tags">
       <BaseTag
         v-for="teg in note.teg"
         :tagsText="teg"
-        :tagsStyle="tagsStyle"
+        :tagsStyle="TagStyledMode.base"
+        class="tags-in-note"
       ></BaseTag>
     </ul>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { computed } from 'vue';
 
 const props = defineProps<{
   note: {
@@ -36,7 +38,6 @@ const props = defineProps<{
   };
   edit: boolean;
   importanceStyle?: string;
-  tagsStyle?: string;
 }>();
 
 import ChangeNoteButton from './buttons/ChangeNoteButton.vue';
@@ -44,6 +45,8 @@ import ChangeNoteButton from './buttons/ChangeNoteButton.vue';
 import BaseDeleteButton from './BaseDeleteButton.vue';
 
 import BaseTag from './BaseTag.vue';
+
+import { TagStyledMode } from '@/types.ts';
 
 const formatedNoteDate = computed(() =>
   new Date(props.note.date).toLocaleDateString()
@@ -98,10 +101,6 @@ const funcEdition = (edit: boolean) => {
   p {
     margin: 20px 0;
   }
-  span {
-    font-size: 14px;
-    color: #999999;
-  }
 }
 
 .delete-button,
@@ -111,11 +110,15 @@ const funcEdition = (edit: boolean) => {
   left: auto;
 }
 
-.change-btn {
-  left: calc(100% - 100px);
+.delete-button {
+  right: 34px;
 }
 
 .note-btns {
   position: relative;
+}
+
+.tags-in-note {
+  margin-top: 5px;
 }
 </style>

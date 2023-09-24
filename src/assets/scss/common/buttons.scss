@@ -5,7 +5,7 @@
   line-height: 1;
   text-transform: uppercase;
   cursor: pointer;
-  border-radius: 30px;
+  border-radius: 20px;
 
   // default btn
   &.btnDefaul {
@@ -20,6 +20,11 @@
     border: 1px solid #494ce8;
     background-color: #494ce8;
     height: 50px;
+  }
+
+  &.btnPrimary:hover {
+    background-color: #222475;
+    border: 1px solid #222475;
   }
 
   // danger btn

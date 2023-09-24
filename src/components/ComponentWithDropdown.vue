@@ -42,7 +42,6 @@ const model = computed({
   },
   set(value: string) {
     emit('update:value', value);
-    console.log(value);
   },
 });
 
@@ -52,14 +51,6 @@ const chooseImportance = (option: string) => {
   emit('update:value', option);
   isVisible.value = true;
 };
-
-// const chooseTeg = (newTag: string) => {
-//   if (!note.value.teg.includes(newTag)) {
-//     choosenTegs.value.push(newTag);
-//     note.value.teg.push(newTag);
-//     console.log(note.value.teg)
-//   }
-//   };
 
 const toggleVisibility = () => {
   isVisible.value = !isVisible.value;

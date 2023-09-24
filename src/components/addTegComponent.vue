@@ -7,6 +7,7 @@
       type="text"
       label="Теги:"
       :error="sameTagError"
+      :anotherError="emptyTagError"
     ></BaseInput>
 
     <BaseButtonForSVG @click="addTegFunction" class="plusButton">
@@ -26,7 +27,7 @@
       v-for="teg in selectedTegs"
       @delete-tag="deleteTag"
       :tagsText="teg"
-      :tagsStyle="TagStyledMode.Tag"
+      :tagsStyle="TagStyledMode.base"
     />
   </ul>
 </template>
@@ -48,7 +49,7 @@ import SvgForButtons from './SvgForButtons.vue';
 
 import BaseList from './BaseList.vue';
 
-const { addTegFunctionForCompose, newTag, tags } = useTags();
+const { newTag, tags, tagsForMainWindow } = useTags();
 
 const props = defineProps<{
   selectedTegs: string[];
@@ -57,6 +58,8 @@ const props = defineProps<{
 let isVisible = ref(true);
 
 let sameTagError = ref('');
+
+let emptyTagError = ref('');
 
 const toggleVisibility: any = () => {
   isVisible.value = !isVisible.value;
@@ -73,12 +76,21 @@ const emit = defineEmits<{
 const chooseTeg = (tegOne: string) => {
   emit('chooseTeg', tegOne);
   isVisible.value = true;
-  console.log(111, tegOne);
 };
 
 const deleteTag = (index: number) => {
   emit('deleteTag', index);
-  console.log(111, index);
+};
+
+const addTegFunctionForCompose = () => {
+    if (newTag.value === '') {
+      emptyTagError.value = 'Введите тег, если хотите его добавить';
+    } else {
+      tags.value.push(newTag.value);
+      tagsForMainWindow.value.push(newTag.value);
+      newTag.value = '';
+      emptyTagError.value = '';
+    }
 };
 
 const addTegFunction = () => {
@@ -90,8 +102,6 @@ const addTegFunction = () => {
   });
   if (tagExists) {
     sameTagError.value = 'Такой тег уже есть';
-    console.log(sameTagError.value);
-
     return false;
   } else {
     addTegFunctionForCompose();
@@ -117,6 +127,7 @@ const filteredTegs = computed(() => {
   background: transparent;
   border: none;
   margin-top: 24px;
+  cursor: pointer;
 }
 
 .select-tags {
@@ -128,14 +139,11 @@ const filteredTegs = computed(() => {
   position: relative;
   margin-bottom: 10px;
   display: flex;
-  /* padding-right: 38px; */
   align-items: center;
 }
 
 .input-for-add-teg {
-  /* display: flex; */
   position: relative;
-  /* display: inline-block; */
   flex-grow: 1;
 }
 </style>

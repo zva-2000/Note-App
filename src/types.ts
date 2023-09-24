@@ -4,6 +4,8 @@ export enum GridMode {
 }
 
 export enum TagStyledMode {
-  Importance = 'importance-style',
-  Tag = 'tags-style',
+  base = 'base-style',
+  danger = 'danger-style',
+  warning ='warning-style',
+  success = 'success-style',
 }

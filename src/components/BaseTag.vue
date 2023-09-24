@@ -1,50 +1,32 @@
 <template>
   <div class="base-tag-list">
-    <li class="base-tag Вфтп" :class="computedClass" @click="chooseTag">
+    <span class="base-tag" :class="tagsStyle" @click="chooseTag">
       {{ props.tagsText }}
       <slot></slot>
-    </li>
+    </span>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
-
-import { TagStyledMode } from '@/types.ts';
 
 const props = defineProps<{
   tagsText: string;
-  tagsStyle?: string;
+  tagsStyle: any;
 }>();
 
 const emit = defineEmits<{
   (e: 'chooseTag', tags: string): void;
 }>();
 
-const chooseTag = (event: MouseEvent) => {
+const chooseTag = () => {
   emit('chooseTag', props.tagsText);
 };
-
-const computedClass = computed(() => {
-  if (props.tagsStyle === TagStyledMode.Importance) {
-    return importanceClass.value[props.tagsText] || '';
-  }
-  return 'tags-style';
-});
-
-const importanceClass = computed(() => {
-  return {
-    'Очень важно': 'very-important',
-    Важно: 'important',
-    'Не важно': 'not-important',
-  };
-});
 </script>
 
 <style>
 .base-tag {
   display: flex;
-  padding: 4px 8px 4px 8px;
+  padding: 8px 10px 8px 10px;
   line-height: #eaf1ff;
   border-radius: 20px;
   text-align: center;
@@ -59,46 +41,56 @@ const importanceClass = computed(() => {
   flex-wrap: wrap;
   justify-content: flex-start;
   align-items: flex-end;
-  margin-bottom: 5px;
 }
 
 .importance-style {
   background-color: bisque;
 }
 
-.tags-style {
+.base-style {
   background-color: #a2c9ff;
 }
 
-.very-important {
+.danger-style {
   background-color: #ee9191;
 }
 
-.important {
+.warning-style {
   background-color: #ffd261;
 }
 
-.not-important {
+.success-style {
   background-color: #a7be8e;
 }
-
-.not-important:active {
+.success-style:hover {
   background-color: #7da256;
 }
 
-.not-important:hover {
+.success-style:focus {
   background-color: #7da256;
 }
 
-.tags-style:hover {
+.base-style:hover {
   background-color: #3f8bf5;
 }
 
-.very-important:hover {
+.base-style:focus {
+  background-color: #3f8bf5;
+}
+
+.danger-style:hover {
   background-color: #e73e3e;
 }
 
-.important:hover {
+.danger-style:focus {
+  background-color: #e73e3e;
+}
+
+.warning-style:hover {
   background-color: #ffc021;
+}
+
+.warning-style:focus {
+  background-color: #a17400;
 }
 </style>
