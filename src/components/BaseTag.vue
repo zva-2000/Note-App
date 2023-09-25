@@ -1,6 +1,11 @@
 <template>
   <div class="base-tag-list">
-    <span class="base-tag" :class="tagsStyle" @click="chooseTag">
+    <span
+      class="base-tag"
+      :class="[tagsStyle, { active: props.active === true }]"
+      @click="chooseTag"
+      tabindex="0"
+    >
       {{ props.tagsText }}
       <slot></slot>
     </span>
@@ -8,10 +13,10 @@
 </template>
 
 <script setup lang="ts">
-
 const props = defineProps<{
   tagsText: string;
   tagsStyle: any;
+  active?: boolean;
 }>();
 
 const emit = defineEmits<{
@@ -62,35 +67,26 @@ const chooseTag = () => {
 .success-style {
   background-color: #a7be8e;
 }
-.success-style:hover {
+.success-style:hover,
+.success-style:focus .active.success-style {
   background-color: #7da256;
 }
 
-.success-style:focus {
-  background-color: #7da256;
-}
-
+.base-style:focus,
+.active.base-style,
 .base-style:hover {
   background-color: #3f8bf5;
 }
 
-.base-style:focus {
-  background-color: #3f8bf5;
-}
-
-.danger-style:hover {
+.danger-style:hover,
+.danger-style:focus,
+.active.danger-style {
   background-color: #e73e3e;
 }
 
-.danger-style:focus {
-  background-color: #e73e3e;
-}
-
-.warning-style:hover {
+.warning-style:focus,
+.warning-style:hover,
+.active.warning-style {
   background-color: #ffc021;
-}
-
-.warning-style:focus {
-  background-color: #a17400;
 }
 </style>

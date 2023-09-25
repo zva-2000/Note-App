@@ -19,7 +19,7 @@ const notes = ref([
     descr: 'На отлично!',
     impr: 'Очень важно',
     beginDate: 1683849600000,
-    date: '2023-09-02',
+    date: 1692489600000,
     teg: ['Работа'],
   },
   {
@@ -87,7 +87,6 @@ export function useNotes() {
   }
 
   const filteredNotesList = computed(() => {
-
     let valueOfSearch = search.value.trim().toLowerCase();
 
     return notes.value.filter((note: any) => {

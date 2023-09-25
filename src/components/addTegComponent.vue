@@ -83,14 +83,15 @@ const deleteTag = (index: number) => {
 };
 
 const addTegFunctionForCompose = () => {
-    if (newTag.value === '') {
-      emptyTagError.value = 'Введите тег, если хотите его добавить';
-    } else {
-      tags.value.push(newTag.value);
-      tagsForMainWindow.value.push(newTag.value);
-      newTag.value = '';
-      emptyTagError.value = '';
-    }
+  if (newTag.value === '') {
+    emptyTagError.value = 'Введите тег, если хотите его добавить';
+    sameTagError.value = '';
+  } else {
+    tags.value.push(newTag.value);
+    tagsForMainWindow.value.push(newTag.value);
+    newTag.value = '';
+    emptyTagError.value = '';
+  }
 };
 
 const addTegFunction = () => {
@@ -102,9 +103,11 @@ const addTegFunction = () => {
   });
   if (tagExists) {
     sameTagError.value = 'Такой тег уже есть';
+    emptyTagError.value = '';
     return false;
   } else {
     addTegFunctionForCompose();
+    sameTagError.value = '';
   }
 };
 

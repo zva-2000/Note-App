@@ -57,14 +57,20 @@
         :tagsStyle="TagStyledMode.base"
         class="tags-in-main-wndw"
         @choose-tag="setTag"
+        :active="selectedTeg === teg"
       ></BaseTag>
 
       <BaseTag
         v-for="teg in chooseImportanceTags"
         :tagsText="teg"
-        :tagsStyle="{[TagStyledMode.danger]: teg === 'Очень важно', [TagStyledMode.success]: teg === 'Не важно', [TagStyledMode.warning]: teg === 'Важно'}"
+        :tagsStyle="{
+          [TagStyledMode.danger]: teg === 'Очень важно',
+          [TagStyledMode.success]: teg === 'Не важно',
+          [TagStyledMode.warning]: teg === 'Важно',
+        }"
         class="tags-in-main-wndw"
         @choose-tag="setImpr"
+        :active="importance === teg"
       ></BaseTag>
     </div>
 
@@ -95,11 +101,11 @@ import { useFilter } from '../composables/useFilter';
 
 import { useNotes } from '../composables/useNotes';
 
+import { TagStyledMode } from '@/types.ts';
+
 const { tagsForMainWindow, chooseImportanceTags } = useTags();
 
 const { emptyTitleError, addNote } = useNotes();
-
-import { TagStyledMode } from '@/types.ts';
 
 const {
   selectedTeg,

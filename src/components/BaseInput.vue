@@ -1,12 +1,11 @@
 <template>
   <div class="input-wrapper">
-    <FieldBase :label="label" :error="error">
+    <FieldBase :label="label" :error="error" :anotherError="anotherError">
       <input
         :type="type"
         :placeholder="placeholder"
         :readonly="isReadonly"
         v-model="model"
-        :anotherError="anotherError"
       />
     </FieldBase>
   </div>
@@ -24,7 +23,7 @@ const props = defineProps<{
   type: string;
   placeholder?: string;
   isReadonly?: boolean;
-  anotherError?: string;  
+  anotherError?: string;
 }>();
 
 const emit = defineEmits<{
