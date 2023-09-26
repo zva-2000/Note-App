@@ -68,25 +68,26 @@ const chooseTag = () => {
   background-color: #a7be8e;
 }
 .success-style:hover,
-.success-style:focus .active.success-style {
+.active.success-style {
   background-color: #7da256;
+  color: white;
 }
 
-.base-style:focus,
 .active.base-style,
 .base-style:hover {
   background-color: #3f8bf5;
+  color: white;
 }
 
 .danger-style:hover,
-.danger-style:focus,
 .active.danger-style {
   background-color: #e73e3e;
+  color: white;
 }
 
-.warning-style:focus,
 .warning-style:hover,
 .active.warning-style {
   background-color: #ffc021;
+  color: white;
 }
 </style>

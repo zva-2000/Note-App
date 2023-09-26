@@ -96,14 +96,17 @@ const addTegFunctionForCompose = () => {
 
 const addTegFunction = () => {
   let tagExists = false;
+
   tags.value.forEach((tag) => {
     if (tag.toLowerCase() === newTag.value.toLowerCase()) {
       tagExists = true;
     }
   });
+
   if (tagExists) {
     sameTagError.value = 'Такой тег уже есть';
     emptyTagError.value = '';
+    newTag.value = '';
     return false;
   } else {
     addTegFunctionForCompose();
