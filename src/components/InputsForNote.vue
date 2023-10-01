@@ -7,6 +7,7 @@
       v-model:value="copiedNote.title"
       type="text"
       label="Заголовок:"
+      :error="emptyTitleError"
     />
 
     <BaseTextarea
@@ -61,6 +62,7 @@ const props = defineProps<{
   };
   chooseImportanceTags: string[];
   edit: boolean;
+  emptyTitleError: string;
 }>();
 
 const copiedNote = ref(props.note);

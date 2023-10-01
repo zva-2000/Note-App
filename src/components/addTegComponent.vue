@@ -1,22 +1,23 @@
 <template>
   <div class="teg-dropdown">
-    <BaseInput
-      class="input-for-add-teg"
-      v-model:value="newTag"
-      @click="toggleVisibility"
-      type="text"
-      label="Теги:"
-      :error="sameTagError"
-      :anotherError="emptyTagError"
-    ></BaseInput>
+      <BaseInput
+        class="input-for-add-teg"
+        v-model:value="model"
+        @click="toggleVisibility"
+        type="text"
+        label="Теги:"
+        :error="sameTagError"
+        :anotherError="emptyTagError"
+      >
+    </BaseInput>
 
-    <BaseButtonForSVG @click="addTegFunction" class="plusButton">
-      <SvgForButtons :name="'svg-plus'"></SvgForButtons>
-    </BaseButtonForSVG>
+    <BaseButtonForSVG @click="add(props.valueTag)" class="plusButton">
+        <SvgForButtons :name="'svg-plus'"></SvgForButtons>
+      </BaseButtonForSVG>
 
     <BaseList
       v-click-outside="toggleVisibility"
-      :items="filteredTegs"
+      :items="filteredTegs(newTag)"
       @choose-item="chooseTeg"
       v-if="!isVisible"
     />
@@ -24,8 +25,8 @@
 
   <ul class="select-tags">
     <DeletableTag
-      v-for="teg in selectedTegs"
-      @delete-tag="deleteTag"
+      v-for="(teg, index) in selectedTegs"
+      @delete-tag="deleteTag(index)"
       :tagsText="teg"
       :tagsStyle="TagStyledMode.base"
     />
@@ -33,7 +34,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { ref, computed, Ref } from 'vue';
 
 import { useTags } from '../composables/useTags.js';
 
@@ -49,29 +50,41 @@ import SvgForButtons from './SvgForButtons.vue';
 
 import BaseList from './BaseList.vue';
 
-const { newTag, tags, tagsForMainWindow } = useTags();
+const {  addTegFunction, filteredTegs, sameTagError, emptyTagError} = useTags();
+
+const newTag = ref('');
 
 const props = defineProps<{
   selectedTegs: string[];
+  valueTag: string;
 }>();
 
 let isVisible = ref(true);
-
-let sameTagError = ref('');
-
-let emptyTagError = ref('');
 
 const toggleVisibility: any = () => {
   isVisible.value = !isVisible.value;
 };
 
+const add = (valueTag: Ref<string>) => {
+  addTegFunction(valueTag); 
+  newTag.value === '';
+}
+
 const emit = defineEmits<{
   [x: string]: any;
   (e: 'chooseTeg', tegOne: string): void;
-  (e: 'update:error', errorMessage: string): void;
-  (e: 'update:inputTeg', inputTeg: string): void;
   (e: 'deleteTag', index: number): void;
+  (e: 'update:value', valueTag: string): void;
 }>();
+
+const model = computed({
+  get() {
+    return props.valueTag ?? '';
+  },
+  set(valueTag: string) {
+    emit('update:value', valueTag);
+  },
+});
 
 const chooseTeg = (tegOne: string) => {
   emit('chooseTeg', tegOne);
@@ -82,70 +95,29 @@ const deleteTag = (index: number) => {
   emit('deleteTag', index);
 };
 
-const addTegFunctionForCompose = () => {
-  if (newTag.value === '') {
-    emptyTagError.value = 'Введите тег, если хотите его добавить';
-    sameTagError.value = '';
-  } else {
-    tags.value.push(newTag.value);
-    tagsForMainWindow.value.push(newTag.value);
-    newTag.value = '';
-    emptyTagError.value = '';
-  }
-};
-
-const addTegFunction = () => {
-  let tagExists = false;
-
-  tags.value.forEach((tag) => {
-    if (tag.toLowerCase() === newTag.value.toLowerCase()) {
-      tagExists = true;
-    }
-  });
-
-  if (tagExists) {
-    sameTagError.value = 'Такой тег уже есть';
-    emptyTagError.value = '';
-    newTag.value = '';
-    return false;
-  } else {
-    addTegFunctionForCompose();
-    sameTagError.value = '';
-  }
-};
-
-const filteredTegs = computed(() => {
-  if (newTag.value === '') {
-    return tags.value;
-  } else {
-    const inputLowerCase = newTag.value.toLowerCase();
-    return tags.value.filter((tag: string) =>
-      tag.toLowerCase().includes(inputLowerCase)
-    );
-  }
-});
 </script>
 
 <style>
+
 .plusButton {
   width: 35px;
   height: 35px;
   background: transparent;
   border: none;
-  margin-top: 24px;
+  margin-top: 43px;
   cursor: pointer;
 }
 
 .select-tags {
   display: flex;
   gap: 5px;
+  flex-wrap: wrap;
 }
 
 .teg-dropdown {
   position: relative;
   margin-bottom: 10px;
   display: flex;
-  align-items: center;
 }
 
 .input-for-add-teg {

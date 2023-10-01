@@ -53,10 +53,24 @@ const notes = ref([
 
 const emptyTitleError = ref('');
 
+const emptyTitleErrorInUpdatindNote = ref('');
+
 export function useNotes() {
   const removeNote = (id: number) => {
     notes.value = notes.value.filter((note) => note.id !== id);
   };
+
+  // const pushNote = (newNote: {
+  //   id: number;
+  //   title: string;
+  //   descr: string;
+  //   impr: string;
+  //   beginDate: number;
+  //   date: number;
+  //   teg: string[];
+  //   }) => {
+  //   notes.value.push(newNote);
+  // }
 
   function addNote(newNote: {
     id: number;
@@ -66,7 +80,7 @@ export function useNotes() {
     beginDate: number;
     date: number;
     teg: string[];
-  }) {
+    }) {
     let timestampNoteDate = new Date(newNote.date).getTime();
     let timestampNoteDateBegin = new Date().getTime();
 
@@ -77,6 +91,8 @@ export function useNotes() {
 
     newNote.date = timestampNoteDate;
     newNote.beginDate = timestampNoteDateBegin;
+
+    // pushNote(newNote);
 
     notes.value.push(newNote);
 
@@ -139,9 +155,10 @@ export function useNotes() {
   }
 
   function updateNote(updatedNote: any) {
+    if (updatedNote.title === '') {emptyTitleErrorInUpdatindNote.value = 'Введите заголовок'; return false};
     notes.value = notes.value.map((note) => {
       if (note.id !== updatedNote.id) return note;
-      else return updatedNote;
+      if (updatedNote.title !== '') {emptyTitleErrorInUpdatindNote.value = ''; return updatedNote};
     });
   }
 
@@ -161,5 +178,6 @@ export function useNotes() {
     updateNoteTeg,
     updateNote,
     deleteTag,
+    emptyTitleErrorInUpdatindNote
   };
 }

@@ -2,7 +2,7 @@
   <div class="base-tag-list">
     <span
       class="base-tag"
-      :class="[tagsStyle, { active: props.active === true }]"
+      :class="[tagsStyle, { active: props.active === true }, {hover: props.hover === true}]"
       @click="chooseTag"
       tabindex="0"
     >
@@ -17,6 +17,7 @@ const props = defineProps<{
   tagsText: string;
   tagsStyle: any;
   active?: boolean;
+  hover?: boolean;
 }>();
 
 const emit = defineEmits<{
@@ -67,25 +68,25 @@ const chooseTag = () => {
 .success-style {
   background-color: #a7be8e;
 }
-.success-style:hover,
+.hover.success-style:hover,
 .active.success-style {
   background-color: #7da256;
   color: white;
 }
 
 .active.base-style,
-.base-style:hover {
+.hover.base-style:hover {
   background-color: #3f8bf5;
   color: white;
 }
 
-.danger-style:hover,
+.hover.danger-style:hover,
 .active.danger-style {
   background-color: #e73e3e;
   color: white;
 }
 
-.warning-style:hover,
+.hover.warning-style:hover,
 .active.warning-style {
   background-color: #ffc021;
   color: white;

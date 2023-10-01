@@ -10,6 +10,7 @@
     />
 
     <InputsForNote
+      :emptyTitleError="emptyTitleError"
       :note="note"
       :edit="edit"
       v-if="edit"
@@ -37,6 +38,7 @@ const props = defineProps<{
   };
   importanceStyle?: string;
   chooseImportanceTags: string[];
+  emptyTitleError: string;
 }>();
 
 const edit = ref(false);
@@ -69,8 +71,10 @@ const removeNote = (id: number) => {
 const funcEdition = () => (edit.value = !edit.value);
 
 const editNote = (editOne: any) => {
-  funcEdition();
   emit('editNote', editOne);
+  if (editOne.title !== '') {
+    funcEdition();
+  }
 };
 </script>
 

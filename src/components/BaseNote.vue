@@ -96,6 +96,7 @@ const funcEdition = (edit: boolean) => {
 .selected-tags {
   display: flex;
   gap: 4px;
+  flex-wrap: wrap;
 }
 .note-body {
   p {

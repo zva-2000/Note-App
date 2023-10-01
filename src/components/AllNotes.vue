@@ -1,6 +1,7 @@
 <template>
   <div class="notes" :class="viewMode">
     <NoteWithInputs
+      :emptyTitleError = "emptyTitleErrorInUpdatindNote"
       v-for="(note, index) in filteredNotesList"
       :key="index"
       :note="note"
@@ -21,7 +22,7 @@ import { useTags } from '../composables/useTags.js';
 
 import { useNotes } from '../composables/useNotes';
 
-const { updateNoteTeg, updateNote, deleteTag, filteredNotesList, removeNote } =
+const { updateNoteTeg, updateNote, deleteTag, filteredNotesList, removeNote, emptyTitleErrorInUpdatindNote } =
   useNotes();
 
 const { chooseImportanceTags } = useTags();

@@ -86,12 +86,12 @@
     </svg>
   </span>
 
-  <span v-if="name == 'svg-delete-teg'">
+  <span v-if="name == 'svg-delete-teg'"  class="delete-icon">
     <svg
       width="20"
       height="20"
       viewBox="0 0 24 24"
-      fill="var(--icon-color, #a2c9ff)"
+      fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
       <circle cx="12" cy="12" r="10" stroke="black" stroke-width="1.5" />
@@ -142,7 +142,8 @@ const props = defineProps<{
   box-shadow: inset;
 }
 
-.svg:hover {
-  --icon-color: red;
+.delete-icon:hover svg path, .delete-icon:hover svg circle {
+    stroke: white;
+    background-color: aquamarine;
 }
 </style>

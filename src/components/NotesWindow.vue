@@ -58,6 +58,7 @@
         class="tags-in-main-wndw"
         @choose-tag="setTag"
         :active="selectedTeg === teg"
+        :hover="true"
       ></BaseTag>
 
       <BaseTag
@@ -71,6 +72,7 @@
         class="tags-in-main-wndw"
         @choose-tag="setImpr"
         :active="importance === teg"
+        :hover="true"
       ></BaseTag>
     </div>
 
@@ -161,6 +163,7 @@ const addNoteMainFunc = (newNote: any) => {
   display: flex;
   gap: 5px;
   margin-bottom: 10px;
+  flex-wrap: wrap;
 }
 
 .inputs-window-main-content {
@@ -178,7 +181,6 @@ const addNoteMainFunc = (newNote: any) => {
   gap: 5px;
   font-size: 20px;
   text-align: center;
-  float: left;
 }
 
 .all-notes {

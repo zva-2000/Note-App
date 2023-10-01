@@ -1,5 +1,5 @@
 <template>
-  <BaseTag :tagsText="tagsText" :tagsStyle="tagsStyle" class="deletable-tag">
+  <BaseTag :tagsText="tagsText" :tagsStyle="tagsStyle" class="deletable-tag" :hover="true">
     <ButtonForDeleteTeg @click="deleteTag" class="deletable-btn" />
   </BaseTag>
 </template>

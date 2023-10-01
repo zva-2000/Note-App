@@ -7,6 +7,7 @@
         :readonly="isReadonly"
         v-model="model"
       />
+      <slot></slot>
     </FieldBase>
   </div>
 </template>
