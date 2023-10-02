@@ -19,10 +19,12 @@
         />
 
         <BaseInput
-          v-model:numberValue="note.date"
+          :value="dateSelected ? formatedNoteDate : ''"
+          :placeholder="dateSelected ? '' : 'дд.мм.гггг'"
           type="date"
           class="base-input"
           label="Сделать до:"
+          @update:value = "value => (note.date = value)"
         />
 
         <ComponentWithDropdown
@@ -37,10 +39,13 @@
           @chooseTeg="chooseTeg"
           :selectedTegs="note.teg"
           @deleteTag="deleteTag"
+          :valueTag = "newTagModal"
+          @update:modelValue="addNewTag"
+          @clearValueTag = "clearValueTag"
         />
       </div>
 
-      <base-button @click="() => emit('add-note', note)" class="save-button">
+      <base-button @click="() => emit('add-note', {id: note.id, teg: note.teg, impr: note.impr, title: note.title, descr: note.descr, date: formatedNoteDate, beginDate: note.beginDate})" class="save-button">
         <span>Сохранить</span>
       </base-button>
     </div>
@@ -48,7 +53,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 
 import BaseCanselButton from './buttons/BaseCanselButton.vue';
 
@@ -100,6 +105,28 @@ const updateImpr = (value: string) => {
   note.value.impr = value;
 };
 
+const newTagModal = ref('');
+
+const addNewTag = (value: string) => {
+  newTagModal.value = value;
+}
+
+const clearValueTag = () => {
+  newTagModal.value = '';
+}
+
+const dateSelected = ref(false);
+
+const formatedNoteDate = computed({
+  get: () => {
+    const date = new Date(note.value.date);
+    return date.toISOString().split('T')[0];
+  },
+  set: (newValue) => {
+    note.value.date = new Date(newValue).getTime();
+    dateSelected.value = true; 
+  }
+});
 </script>
 
 <style>

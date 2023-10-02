@@ -33,6 +33,9 @@
       @chooseTeg="addTagToNote"
       :selectedTegs="copiedNote.teg"
       @deleteTag="deleteTagInChangeNote"
+      :valueTag = "newTag"
+      @update:modelValue="addNewTag"
+      @clearValueTag = "clearValueTag"
     />
   </div>    
 </template>
@@ -66,6 +69,16 @@ const props = defineProps<{
 }>();
 
 const copiedNote = ref(props.note);
+
+const newTag = ref('');
+
+const addNewTag = (value: string) => {
+   newTag.value = value;
+}
+
+const clearValueTag = () => {
+  newTag.value = '';
+}
 
 const formatedNoteDate = computed({
   get: () => {

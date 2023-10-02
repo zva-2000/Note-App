@@ -8,16 +8,15 @@
         label="Теги:"
         :error="sameTagError"
         :anotherError="emptyTagError"
-      >
-    </BaseInput>
+      ></BaseInput>
 
-    <BaseButtonForSVG @click="add(props.valueTag)" class="plusButton">
+    <BaseButtonForSVG @click="add" class="plusButton">
         <SvgForButtons :name="'svg-plus'"></SvgForButtons>
       </BaseButtonForSVG>
 
     <BaseList
       v-click-outside="toggleVisibility"
-      :items="filteredTegs(newTag)"
+      :items="filteredTegs(props.valueTag)"
       @choose-item="chooseTeg"
       v-if="!isVisible"
     />
@@ -34,7 +33,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, Ref } from 'vue';
+import { ref, computed } from 'vue';
 
 import { useTags } from '../composables/useTags.js';
 
@@ -65,24 +64,27 @@ const toggleVisibility: any = () => {
   isVisible.value = !isVisible.value;
 };
 
-const add = (valueTag: Ref<string>) => {
-  addTegFunction(valueTag); 
-  newTag.value === '';
+const add = () => {
+  addTegFunction(props.valueTag);
+  emit('clearValueTag');
 }
 
 const emit = defineEmits<{
   [x: string]: any;
   (e: 'chooseTeg', tegOne: string): void;
   (e: 'deleteTag', index: number): void;
-  (e: 'update:value', valueTag: string): void;
+  (e: 'update:modelValue', tag: string): void;
+  (e: 'addTeg', tegOne: string): void;
+  (e: 'filteredTeg', tegOne: string): void;
+  (e: 'clearValueTag'): void;
 }>();
 
 const model = computed({
   get() {
     return props.valueTag ?? '';
   },
-  set(valueTag: string) {
-    emit('update:value', valueTag);
+  set(tag: string) {
+    emit('update:modelValue', tag);
   },
 });
 
@@ -91,9 +93,17 @@ const chooseTeg = (tegOne: string) => {
   isVisible.value = true;
 };
 
+// const addTeg = (tegOne: string) => {
+//   emit('addTeg', tegOne);
+// };
+
 const deleteTag = (index: number) => {
   emit('deleteTag', index);
 };
+
+// const filteredTeg = (tegOne: string[]) => {
+//   emit('filteredTeg', tegOne);
+// };
 
 </script>
 

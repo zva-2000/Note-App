@@ -19,17 +19,17 @@ export function useTags() {
   const addTag = (newTag: string) => {
     tags.value.push(newTag);
     tagsForMainWindow.value.push(newTag);
-
   }
 
-  const addTegFunction = (newTag:Ref<string>) => {
+  const addTegFunction = (newTag:string) => {
     let tagExists = false;
     tags.value.forEach((tag) => {
-      if (tag.toLowerCase() === newTag.value.toLowerCase()) {
+      if (tag.toLowerCase() === newTag.toLowerCase()) {
         tagExists = true;
       }
     });
-    if (newTag.value === '') {
+    console.log(newTag)
+    if (newTag === '') {
       emptyTagError.value = 'Введите тег, если хотите его добавить';
       sameTagError.value = '';
       return false
@@ -37,12 +37,12 @@ export function useTags() {
     if (tagExists) {
       sameTagError.value = 'Такой тег уже есть';
       emptyTagError.value = '';
-      newTag.value = '';
+      newTag = '';
       return false;
     } 
     else {
-      addTag(newTag.value);
-      newTag.value = '';
+      addTag(newTag);
+      newTag = '';
       emptyTagError.value = '';
       sameTagError.value = '';
     }

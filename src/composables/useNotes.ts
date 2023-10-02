@@ -28,7 +28,7 @@ const notes = ref([
     descr: 'Описан в документации Vue',
     impr: 'Важно',
     beginDate: 1689984100000,
-    date: 1692489600000,
+    date: 1692886900000,
     teg: ['Учеба'],
   },
   {
@@ -60,18 +60,6 @@ export function useNotes() {
     notes.value = notes.value.filter((note) => note.id !== id);
   };
 
-  // const pushNote = (newNote: {
-  //   id: number;
-  //   title: string;
-  //   descr: string;
-  //   impr: string;
-  //   beginDate: number;
-  //   date: number;
-  //   teg: string[];
-  //   }) => {
-  //   notes.value.push(newNote);
-  // }
-
   function addNote(newNote: {
     id: number;
     title: string;
@@ -81,8 +69,10 @@ export function useNotes() {
     date: number;
     teg: string[];
     }) {
+
     let timestampNoteDate = new Date(newNote.date).getTime();
     let timestampNoteDateBegin = new Date().getTime();
+    console.log(newNote.date)
 
     if (newNote.title === '' && newNote.descr === '') {
       emptyTitleError.value = 'Введите заголовок';
