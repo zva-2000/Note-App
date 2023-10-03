@@ -7,11 +7,17 @@
 
   <h1 class="note-header">{{ note.title }}</h1>
   <div class="note-body">
-    <p>{{ note.descr }}</p>
+    <p class="note-descr" :title="note.descr">{{ note.descr }}</p>
     <p class="note-date">Дата создания: {{ formatedNoteDateBegin }}</p>
     <p class="note-date">Сделать до: {{ formatedNoteDate }}</p>
-    <BaseTag :tagsText="note.impr" :tagsStyle="{[TagStyledMode.danger]: note.impr === 'Очень важно',
-    [TagStyledMode.success]: note.impr === 'Не важно', [TagStyledMode.warning]: note.impr === 'Важно'}"></BaseTag>
+    <BaseTag
+      :tagsText="note.impr"
+      :tagsStyle="{
+        [TagStyledMode.danger]: note.impr === 'Очень важно',
+        [TagStyledMode.success]: note.impr === 'Не важно',
+        [TagStyledMode.warning]: note.impr === 'Важно',
+      }"
+    ></BaseTag>
     <ul class="selected-tags">
       <BaseTag
         v-for="teg in note.teg"
@@ -85,6 +91,8 @@ const funcEdition = (edit: boolean) => {
   align-items: flex-start;
   justify-content: space-between;
   font-size: 32px;
+  max-width: 410px;
+  flex-wrap: wrap;
   p {
     margin-right: 16px;
     &:last-child {
@@ -93,12 +101,36 @@ const funcEdition = (edit: boolean) => {
   }
 }
 
+.note-descr {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  position: relative;
+  max-height: 65px;
+  text-overflow: ellipsis;
+}
+
+.note-descr:after {
+  content: '';
+  text-align: right;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  height: 1.2em;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0));
+  pointer-events: none;
+}
+
 .selected-tags {
   display: flex;
   gap: 4px;
   flex-wrap: wrap;
 }
 .note-body {
+  max-width: 410px;
+  flex-wrap: wrap;
   p {
     margin: 20px 0;
   }

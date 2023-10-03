@@ -52,6 +52,7 @@
 
     <div class="notes-window-main-content">
       <BaseTag
+        v-if="visibleTags"
         v-for="teg in tagsForMainWindow"
         :tagsText="teg"
         :tagsStyle="TagStyledMode.base"
@@ -60,6 +61,17 @@
         :active="selectedTeg === teg"
         :hover="true"
       ></BaseTag>
+
+      <DeletableTag
+        v-if="!visibleTags"
+        v-for="(teg, index) in tagsForMainWindow"
+        :tagsText="teg"
+        :tagsStyle="TagStyledMode.base"
+        class="tags-in-main-wndw"
+        :active="selectedTeg === teg"
+        :hover="true"
+        @deleteTag="deleteTag(index)"
+      />
 
       <BaseTag
         v-for="teg in chooseImportanceTags"
@@ -74,9 +86,15 @@
         :active="importance === teg"
         :hover="true"
       ></BaseTag>
+
+      <ChangeNoteButton @click="swowTags" v-if="visibleTags"></ChangeNoteButton>
+      <SaveButton @click="hideTags" v-if="!visibleTags"></SaveButton>
     </div>
 
-    <AllNotes />
+    <AllNotes v-if="!isEmptySearchResult" />
+    <p v-else="isEmptySearchResult" class="nothing-find">
+      Результатов не найдено
+    </p>
   </div>
 </template>
 
@@ -97,6 +115,12 @@ import BaseInput from './BaseInput.vue';
 
 import BaseTag from './BaseTag.vue';
 
+import DeletableTag from './DeletableTag.vue';
+
+import ChangeNoteButton from './buttons/ChangeNoteButton.vue';
+
+import SaveButton from './buttons/SaveButton.vue';
+
 import { useTags } from '../composables/useTags';
 
 import { useFilter } from '../composables/useFilter';
@@ -107,7 +131,7 @@ import { TagStyledMode } from '@/types.ts';
 
 const { tagsForMainWindow, chooseImportanceTags } = useTags();
 
-const { emptyTitleError, addNote } = useNotes();
+const { emptyTitleError, addNote, isEmptySearchResult } = useNotes();
 
 const {
   selectedTeg,
@@ -120,7 +144,18 @@ const {
   filterDateTwo,
 } = useFilter();
 
-let visibleModal = ref(true);
+const visibleModal = ref(true);
+
+const visibleTags = ref(true);
+
+const swowTags = () => {
+  visibleTags.value = false;
+};
+
+const hideTags = () => {
+  visibleTags.value = true;
+  emptyTitleError.value = '';
+};
 
 const openModal = () => {
   visibleModal.value = false;
@@ -128,6 +163,7 @@ const openModal = () => {
 
 const closeModal = () => {
   visibleModal.value = true;
+  emptyTitleError.value = '';
 };
 
 const addNoteMainFunc = (newNote: any) => {
@@ -135,6 +171,10 @@ const addNoteMainFunc = (newNote: any) => {
   if (emptyTitleError.value !== 'Введите заголовок') {
     closeModal();
   }
+};
+
+const deleteTag = (index: any) => {
+  tagsForMainWindow.value.splice(index, 1);
 };
 </script>
 
@@ -159,7 +199,7 @@ const addNoteMainFunc = (newNote: any) => {
 }
 
 .notes-window-main-content {
-  align-items: flex-end;
+  align-items: center;
   display: flex;
   gap: 5px;
   margin-bottom: 10px;
@@ -200,5 +240,13 @@ const addNoteMainFunc = (newNote: any) => {
   cursor: pointer;
   margin-bottom: 10px;
   display: flow;
+}
+
+.nothing-find {
+  display: flex;
+  justify-content: center;
+  margin-top: 152px;
+  font-size: 34px;
+  color: #9ba3ac;
 }
 </style>

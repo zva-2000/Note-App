@@ -2,7 +2,11 @@
   <div class="base-tag-list">
     <span
       class="base-tag"
-      :class="[tagsStyle, { active: props.active === true }, {hover: props.hover === true}]"
+      :class="[
+        tagsStyle,
+        { active: props.active === true },
+        { hover: props.hover === true },
+      ]"
       @click="chooseTag"
       tabindex="0"
     >
