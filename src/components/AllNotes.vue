@@ -46,7 +46,7 @@ const { viewMode } = useFilter();
 }
 
 .Grid {
-  align-items: center;
+  align-items: flex-start;
   flex-wrap: wrap;
   grid-template-columns: repeat(2, 1fr);
   row-gap: 15px;
@@ -54,7 +54,7 @@ const { viewMode } = useFilter();
 }
 
 .List {
-  padding: 15px 0;
+  padding: 13px 0;
   grid-template-columns: repeat(1, 1fr);
 }
 

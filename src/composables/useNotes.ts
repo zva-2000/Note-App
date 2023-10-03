@@ -123,12 +123,12 @@ export function useNotes() {
       if (filterDateOne.value || filterDateTwo.value) {
         if (timestampDateOne.value && timestampDateTwo.value) {
           dateCheck =
-            timestampDateOne.value <= note.beginDate &&
-            timestampDateTwo.value >= note.beginDate;
+            timestampDateOne.value <= note.date &&
+            timestampDateTwo.value >= note.date;
         } else if (timestampDateOne.value) {
-          dateCheck = timestampDateOne.value <= note.beginDate;
+          dateCheck = timestampDateOne.value <= note.date;
         } else if (timestampDateTwo.value) {
-          dateCheck = timestampDateTwo.value >= note.beginDate;
+          dateCheck = timestampDateTwo.value >= note.date;
         }
       }
       return tagAndImportanceCheck && dateCheck && searchCheck;
@@ -159,6 +159,10 @@ export function useNotes() {
     });
   }
 
+  const isEmptySearchResult = computed(() => {
+    return filteredNotesList.value.length === 0;
+  });
+
   return {
     notes,
     removeNote,
@@ -168,6 +172,7 @@ export function useNotes() {
     updateNoteTeg,
     updateNote,
     deleteTag,
-    emptyTitleErrorInUpdatindNote
+    emptyTitleErrorInUpdatindNote,
+    isEmptySearchResult
   };
 }

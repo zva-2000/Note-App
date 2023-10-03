@@ -79,7 +79,7 @@ const chooseTag = () => {
 }
 
 .active.base-style,
-.hover.base-style:hover {
+.hover.base-style:hover, .deletable-btn:hover {
   background-color: #3f8bf5;
   color: white;
 }

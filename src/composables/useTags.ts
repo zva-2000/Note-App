@@ -47,37 +47,6 @@ export function useTags() {
       sameTagError.value = '';
     }
   };
-  
-  // const addTegFunction = () => {
-  //   let tagExists = false;
-  
-  //   tags.value.forEach((tag) => {
-  //     if (tag.toLowerCase() === newTag.value.toLowerCase()) {
-  //       tagExists = true;
-  //     }
-  //   });
-  
-  //   if (tagExists) {
-  //     sameTagError.value = 'Такой тег уже есть';
-  //     emptyTagError.value = '';
-  //     newTag.value = '';
-  //     return false;
-  //   } else {
-  //     addTegFunctionForCompose();
-  //     sameTagError.value = '';
-  //   }
-  // };
-  
-  // const filteredTegs = computed((newTag: string) => {
-  //   if (newTag === '') {
-  //     return tags.value;
-  //   } else {
-  //     const inputLowerCase = newTag.toLowerCase();
-  //     return tags.value.filter((tag: string) =>
-  //       tag.toLowerCase().includes(inputLowerCase)
-  //     );
-  //   }
-  // });
 
   function filteredTegs(newTag: string) {
     if (newTag === '') {

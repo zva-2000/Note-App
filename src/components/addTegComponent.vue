@@ -93,17 +93,9 @@ const chooseTeg = (tegOne: string) => {
   isVisible.value = true;
 };
 
-// const addTeg = (tegOne: string) => {
-//   emit('addTeg', tegOne);
-// };
-
 const deleteTag = (index: number) => {
   emit('deleteTag', index);
 };
-
-// const filteredTeg = (tegOne: string[]) => {
-//   emit('filteredTeg', tegOne);
-// };
 
 </script>
 

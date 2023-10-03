@@ -26,7 +26,7 @@
       >Сбросить фильтры</base-button
     >
 
-    <p class="take-of-filter">Дата создания:</p>
+    <p class="take-of-filter">Сделать до:</p>
 
     <div class="inputs-window-main-content">
       <BaseInput
@@ -51,44 +51,49 @@
     </div>
 
     <div class="notes-window-main-content">
-      <BaseTag
-        v-if="visibleTags"
-        v-for="teg in tagsForMainWindow"
-        :tagsText="teg"
-        :tagsStyle="TagStyledMode.base"
-        class="tags-in-main-wndw"
-        @choose-tag="setTag"
-        :active="selectedTeg === teg"
-        :hover="true"
-      ></BaseTag>
 
-      <DeletableTag
-        v-if="!visibleTags"
-        v-for="(teg, index) in tagsForMainWindow"
-        :tagsText="teg"
-        :tagsStyle="TagStyledMode.base"
-        class="tags-in-main-wndw"
-        :active="selectedTeg === teg"
-        :hover="true"
-        @deleteTag="deleteTag(index)"
-      />
+      <div class="tags-wndw">
+        <BaseTag
+          v-for="teg in chooseImportanceTags"
+          :tagsText="teg"
+          :tagsStyle="{
+            [TagStyledMode.danger]: teg === 'Очень важно',
+            [TagStyledMode.success]: teg === 'Не важно',
+            [TagStyledMode.warning]: teg === 'Важно',
+          }"
+          class="tags-in-main-wndw"
+          @choose-tag="setImpr"
+          :active="importance === teg"
+          :hover="true"
+        ></BaseTag>
+     </div>  
+      
+      <div class="tags-wndw">  
+        <BaseTag
+          v-if="visibleTags"
+          v-for="teg in tagsForMainWindow"
+          :tagsText="teg"
+          :tagsStyle="TagStyledMode.base"
+          class="tags-in-main-wndw"
+          @choose-tag="setTag"
+          :active="selectedTeg === teg"
+          :hover="true"
+        ></BaseTag>
 
-      <BaseTag
-        v-for="teg in chooseImportanceTags"
-        :tagsText="teg"
-        :tagsStyle="{
-          [TagStyledMode.danger]: teg === 'Очень важно',
-          [TagStyledMode.success]: teg === 'Не важно',
-          [TagStyledMode.warning]: teg === 'Важно',
-        }"
-        class="tags-in-main-wndw"
-        @choose-tag="setImpr"
-        :active="importance === teg"
-        :hover="true"
-      ></BaseTag>
+        <DeletableTag
+          v-if="!visibleTags"
+          v-for="(teg, index) in tagsForMainWindow"
+          :tagsText="teg"
+          :tagsStyle="TagStyledMode.base"
+          class="tags-in-main-wndw"
+          :active="selectedTeg === teg"
+          :hover="true"
+          @deleteTag="deleteTag(index)"
+        />
 
-      <ChangeNoteButton @click="swowTags" v-if="visibleTags"></ChangeNoteButton>
-      <SaveButton @click="hideTags" v-if="!visibleTags"></SaveButton>
+        <ChangeNoteButton @click="swowTags" v-if="visibleTags"></ChangeNoteButton>
+        <SaveButton @click="hideTags" v-if="!visibleTags"></SaveButton>
+    </div>    
     </div>
 
     <AllNotes v-if="!isEmptySearchResult" />
@@ -129,7 +134,7 @@ import { useNotes } from '../composables/useNotes';
 
 import { TagStyledMode } from '@/types.ts';
 
-const { tagsForMainWindow, chooseImportanceTags } = useTags();
+const { tagsForMainWindow, chooseImportanceTags, sameTagError, emptyTagError } = useTags();
 
 const { emptyTitleError, addNote, isEmptySearchResult } = useNotes();
 
@@ -155,6 +160,8 @@ const swowTags = () => {
 const hideTags = () => {
   visibleTags.value = true;
   emptyTitleError.value = '';
+  sameTagError.value = '';
+  emptyTagError.value = '';
 };
 
 const openModal = () => {
@@ -170,6 +177,9 @@ const addNoteMainFunc = (newNote: any) => {
   addNote(newNote);
   if (emptyTitleError.value !== 'Введите заголовок') {
     closeModal();
+    console.log(sameTagError.value)
+    sameTagError.value = '';
+    emptyTagError.value = '';
   }
 };
 
@@ -199,11 +209,12 @@ const deleteTag = (index: any) => {
 }
 
 .notes-window-main-content {
-  align-items: center;
+  /* align-items: center; */
   display: flex;
-  gap: 5px;
+  gap: 20px;
   margin-bottom: 10px;
   flex-wrap: wrap;
+  flex-direction: column;
 }
 
 .inputs-window-main-content {
@@ -213,14 +224,20 @@ const deleteTag = (index: any) => {
   box-sizing: border-box;
   padding: 0px 0px 13px 0px;
   gap: 15px;
+
 }
 
 .tags-in-main-wndw {
   cursor: pointer;
   display: flex;
-  gap: 5px;
+  gap: 20px;
   font-size: 20px;
   text-align: center;
+}
+
+.tags-wndw {
+  display: flex;
+  gap: 5px;
 }
 
 .all-notes {
