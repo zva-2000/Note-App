@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import ButtonForDeleteTeg from './buttons/ButtonForDeleteTeg.vue';
+import ButtonForDeleteTeg from './ButtonForDeleteTeg.vue';
 
 import BaseTag from './BaseTag.vue';
 

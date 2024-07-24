@@ -8,8 +8,6 @@ const tags = ref(['Учеба', 'Работа', 'Семья']);
 
 const choosenTegs = ref<string[]>([]);
 
-// const newTag = ref('');
-
 let sameTagError = ref('');
 
 let emptyTagError = ref('');
@@ -60,14 +58,12 @@ export function useTags() {
   }
 
   return {
-    // newTag,
     tags,
     choosenTegs,
     tagsForMainWindow,
     chooseImportanceTags,
     addTegFunction,
     filteredTegs,
-    // addTegFunctionForCompose,
     sameTagError,
     emptyTagError
   };

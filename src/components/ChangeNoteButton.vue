@@ -5,9 +5,9 @@
   </template>
   
   <script setup lang="ts">
-  import BaseButtonForSVG from '../BaseButtonForSVG.vue';
+  import BaseButtonForSVG from './BaseButtonForSVG.vue';
   
-  import SvgForButtons from '../SvgForButtons.vue';
+  import SvgForButtons from './SvgForButtons.vue';
   
   </script>
 

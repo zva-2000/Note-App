@@ -43,7 +43,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 
-import SaveButton from './buttons/SaveButton.vue';
+import SaveButton from './SaveButton.vue';
 
 import BaseInput from './BaseInput.vue';
 

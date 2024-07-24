@@ -1,4 +1,4 @@
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 
 import { useFilter } from './useFilter';
 
@@ -55,7 +55,10 @@ const emptyTitleError = ref('');
 
 const emptyTitleErrorInUpdatindNote = ref('');
 
+const note = ref('')
+
 export function useNotes() {
+
   const removeNote = (id: number) => {
     notes.value = notes.value.filter((note) => note.id !== id);
   };
@@ -82,8 +85,6 @@ export function useNotes() {
     newNote.date = timestampNoteDate;
     newNote.beginDate = timestampNoteDateBegin;
 
-    // pushNote(newNote);
-
     notes.value.push(newNote);
 
     localStorage.setItem('notes', JSON.stringify(notes.value));
@@ -91,6 +92,22 @@ export function useNotes() {
 
     return notes.value;
   }
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch('https://jsonplaceholder.typicode.com/todos')
+      if (!response.ok) {
+        throw new Error('Network response was not ok')
+      }
+      const data = await response.json()
+      note.value = data
+    } catch (error: any) {
+    console.error('There was a problem with the fetch operation', error.message)
+  }
+  console.log(note)
+ }
+
+  onMounted(fetchData)
 
   const filteredNotesList = computed(() => {
     let valueOfSearch = search.value.trim().toLowerCase();
@@ -164,6 +181,7 @@ export function useNotes() {
   });
 
   return {
+    note,
     notes,
     removeNote,
     addNote,

@@ -29,6 +29,7 @@ const {
   filteredNotesList,
   removeNote,
   emptyTitleErrorInUpdatindNote,
+  note,
 } = useNotes();
 
 const { chooseImportanceTags } = useTags();
@@ -43,19 +44,6 @@ const { viewMode } = useFilter();
   display: grid;
   padding: 13px 0;
   gap: 15px;
-}
-
-.Grid {
-  align-items: flex-start;
-  flex-wrap: wrap;
-  grid-template-columns: repeat(2, 1fr);
-  row-gap: 15px;
-  column-gap: 15px;
-}
-
-.List {
-  padding: 13px 0;
-  grid-template-columns: repeat(1, 1fr);
 }
 
 .note-teg {

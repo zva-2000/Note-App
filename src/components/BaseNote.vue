@@ -46,7 +46,7 @@ const props = defineProps<{
   importanceStyle?: string;
 }>();
 
-import ChangeNoteButton from './buttons/ChangeNoteButton.vue';
+import ChangeNoteButton from './ChangeNoteButton.vue';
 
 import BaseDeleteButton from './BaseDeleteButton.vue';
 

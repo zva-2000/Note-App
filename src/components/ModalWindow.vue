@@ -55,7 +55,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 
-import BaseCanselButton from './buttons/BaseCanselButton.vue';
+import BaseCanselButton from './BaseCanselButton.vue';
 
 import BaseInput from './BaseInput.vue';
 

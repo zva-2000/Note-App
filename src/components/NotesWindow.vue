@@ -101,6 +101,8 @@
       Результатов не найдено
     </p>
   </div>
+
+  
 </template>
 
 <script setup lang="ts">
@@ -122,9 +124,9 @@ import BaseTag from './BaseTag.vue';
 
 import DeletableTag from './DeletableTag.vue';
 
-import ChangeNoteButton from './buttons/ChangeNoteButton.vue';
+import ChangeNoteButton from './ChangeNoteButton.vue';
 
-import SaveButton from './buttons/SaveButton.vue';
+import SaveButton from './SaveButton.vue';
 
 import { useTags } from '../composables/useTags';
 
@@ -136,7 +138,7 @@ import { TagStyledMode } from '@/types.ts';
 
 const { tagsForMainWindow, chooseImportanceTags, sameTagError, emptyTagError } = useTags();
 
-const { emptyTitleError, addNote, isEmptySearchResult } = useNotes();
+const { emptyTitleError, addNote, isEmptySearchResult, note } = useNotes();
 
 const {
   selectedTeg,
@@ -209,7 +211,7 @@ const deleteTag = (index: any) => {
 }
 
 .notes-window-main-content {
-  /* align-items: center; */
+
   display: flex;
   gap: 20px;
   margin-bottom: 10px;

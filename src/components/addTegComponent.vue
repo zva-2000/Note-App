@@ -10,7 +10,7 @@
         :anotherError="emptyTagError"
       ></BaseInput>
 
-    <BaseButtonForSVG @click="add" class="plusButton">
+    <BaseButtonForSVG @click="add" class="plus-button">
         <SvgForButtons :name="'svg-plus'"></SvgForButtons>
       </BaseButtonForSVG>
 
@@ -101,7 +101,7 @@ const deleteTag = (index: number) => {
 
 <style>
 
-.plusButton {
+.plus-button {
   width: 35px;
   height: 35px;
   background: transparent;
