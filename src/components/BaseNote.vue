@@ -17,14 +17,14 @@
         [TagStyledMode.success]: note.impr === 'Не важно',
         [TagStyledMode.warning]: note.impr === 'Важно',
       }"
-    ></BaseTag>
+    />
     <ul class="selected-tags">
       <BaseTag
         v-for="teg in note.teg"
         :tagsText="teg"
         :tagsStyle="TagStyledMode.base"
         class="tags-in-note"
-      ></BaseTag>
+      />
     </ul>
   </div>
 </template>
